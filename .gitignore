@@ -1,0 +1,14 @@
+# 교재 PDF (대용량)
+선형대수/Linear Algebra and Its Applications*.pdf
+
+# 임시/백업 파일
+*.bak
+*.zip
+
+# Claude 설정
+.claude/
+
+# OS 파일
+.DS_Store
+Thumbs.db
+desktop.ini
