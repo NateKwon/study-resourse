@@ -1901,12 +1901,6 @@ $$T(\mathbf{u} + \mathbf{v}) = T(\mathbf{u}) + T(\mathbf{v})$$
           <p>$A$의 열들이 $\mathbb{R}^m$을 span $\iff$ 모든 $\mathbf{b}$에 대해 $A\mathbf{x}=\mathbf{b}$ consistent $\iff$ $A$의 모든 행에 피벗<br>
           → 최소한 $n \geq m$ (열 수 $\geq$ 행 수) 이어야 함. 하지만 충분 조건은 아님.</p>
         </div>
-        <div class="note-block">
-          <div class="label">Rank-Nullity 정리 (미리 보기)</div>
-          <p>$A$가 $m \times n$일 때: $\underbrace{\mathrm{rank}(A)}_{\text{피벗 수}=\dim\mathrm{Col}\,A} + \underbrace{\mathrm{nullity}(A)}_{\text{자유변수 수}=\dim\mathrm{Nul}\,A} = n$</p>
-          <p>이 관계식이 선형대수의 핵심 구조를 담고 있다.</p>
-        </div>
-      
         <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#9_matrix_equation_handout.pdf</code> — <strong>pp. 1–3 전체</strong><br><span class="pdf-ref-detail">p.1 T(0)=0 &amp; superposition · p.2 spanning 조건 정리 · p.3 최대 피벗 수</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§1.4 The Matrix Equation Ax=b + §1.9</strong> — <strong>pp. 61–68, 99–108</strong><span class="tb-ref-detail"> (Ax=b 성질, T(0)=0, Superposition)</span></span></div>
       </div>
 
@@ -2436,35 +2430,6 @@ det(A) = 0
 <p><strong>결과: 숫자 하나 → 정보 압축</strong></p>
 <b class="qs">외적 (Outer Product)</b>
 <p>$$\mathbf{a}\mathbf{b}^T = \begin{bmatrix} a_1 \\ a_2 \\ a_3 \end{bmatrix}\begin{bmatrix} b_1 &amp; b_2 &amp; b_3 \end{bmat ...</p></article>
-      </details>
-      <details class="qa-toggle">
-        <summary class="qa-sum">Q: rank-1은 뭔뜻이야?</summary>
-        <article class="qa-ans"><b class="qs">Rank-1 행렬의 의미</b>
-<b class="qs">정의</b>
-<p>&gt; <strong>&quot;독립인 열(또는 행)이 딱 1개인 행렬&quot;</strong></p>
-<p>$$\text{rank}(A) = 1$$</p>
-<b class="qs">직관적으로</b>
-<p><strong>모든 열이 하나의 벡터의 스칼라 배수야.</strong></p>
-<p>$$A = \begin{bmatrix} 1 & 2 & 3 \\ 2 & 4 & 6 \\ 3 & 6 & 9 \end{bmatrix}$$</p>
-<ul class="ql"><li>2열 = 2×1열</li>
-<li>3열 = 3×1열</li></ul>
-<p><strong>독립인 열이 1개뿐 → rank = 1</strong></p>
-<b class="qs">외적이 왜 rank-1이냐?</b>
-<p>$$\mathbf{a}\mathbf{b}^T = \begin{bmatrix} a_1 \\ a_2 \\ a_3 \end{bmatrix}\begin{bmatrix} b_1 & b_2 & b_3 \end{bmatrix} = \begin{bmatrix} a_1b_1 & a_1b_2 & a_1b_3 \\ a_2b_1 & a_2b_2 & a_2b_3 \\ a_3b_1 & a_3b_2 & a_3b_3 \end{bmatrix}$$</p>
-<ul class="ql"><li>1열 = $b_1 \cdot \mathbf{a}$</li>
-<li>2열 = $b_2 \cdot \mathbf{a}$</li>
-<li>3열 = $b_3 \cdot \mathbf{a}$</li></ul>
-<p><strong>모든 열이 $\mathbf{a}$의 스칼라 배수 → rank = 1</strong></p>
-<b class="qs">Rank 비교</b>
-<p>| rank | 의미 | 예시 | |------|------|------| | <strong>0</strong> | 영행렬 | $\begin{bmatrix} 0 & 0 \\ 0 & 0 \end{bmatrix}$ | | <strong>1</strong> | 독립 열 1개 | $\begin{bmatrix} 1 & 2 \\ 2 & 4 \end{bmatrix}$ | | <strong>2</strong> | 독립 열 2개 | $\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}$ |</p>
-<b class="qs">기하학적으로</b>
-<pre class="qpre">rank 0 → 점 (원점)
-rank 1 → 직선
-rank 2 → 평면
-rank 3 → 공간 전체</pre>
-<p><strong>rank-1 행렬은 공간을 직선으로 찌그러뜨리는 변환이야.</strong></p>
-<b class="qs">핵심 한 줄</b>
-<p>&gt; <strong>Rank-1 = &quot;독립인 열이 딱 1개&quot; = &quot;모든 열이 하나의 벡터의 스칼라 배수&quot; = &quot;공간을 직선으로 압축하는 가장 단순한 행렬&quot;이야.</strong></p></article>
       </details>
     </section>
     </div>
@@ -4191,7 +4156,7 @@ LU 방법:      LU구하기 + 28 × 10 = LU + 280 flops</pre>
     <div class="section-body">
       <div class="note-block">
         <div class="label">📌 이 개념의 의의</div>
-        <p>$\mathrm{Nul}\,A$와 $\mathrm{Col}\,A$는 선형변환 $T(\mathbf{x})=A\mathbf{x}$의 본질적 구조를 드러내는 두 부분공간이다: <strong>"무엇이 $\mathbf{0}$으로 사라지는가"</strong>(Nul A = 커널)와 <strong>"어디에 도달할 수 있는가"</strong>(Col A = 치역). Rank-Nullity 정리 $\mathrm{rank}(A)+\mathrm{nullity}(A)=n$은 이 두 공간이 항상 전체 차원을 분담함을 보장하며, 해의 존재·유일성 분석의 핵심이다.</p>
+        <p>$\mathrm{Nul}\,A$와 $\mathrm{Col}\,A$는 선형변환 $T(\mathbf{x})=A\mathbf{x}$의 본질적 구조를 드러내는 두 부분공간이다: <strong>"무엇이 $\mathbf{0}$으로 사라지는가"</strong>(Nul A = 커널)와 <strong>"어디에 도달할 수 있는가"</strong>(Col A = 치역).</p>
       </div>
       <div class="def-block">
         <div class="label">정의 · Null Space (영공간(null space))</div>
@@ -4276,38 +4241,7 @@ LU 방법:      LU구하기 + 28 × 10 = LU + 280 flops</pre>
         <p>예: $c = 1$이면 $y'' + y = 0$의 일반해 $y = A\sin t + B\cos t$ — 이 해공간은 2차원 벡터공간이고 $\{\sin t,\, \cos t\}$가 기저다.</p>
         <p><em>의의: 미분방정식 이론이 선형대수의 특수한 경우임을 보여준다. $\ker L$의 차원 = 해의 자유도 = 방정식의 차수.</em></p>
       </div>
-      <div class="deepdive-block">
-        <p class="deepdive-label">📐 개념 심화 — 영공간과 열공간의 구조 비교</p>
-        <p class="deepdive-intro"><strong>영공간 $\mathrm{Nul}\,A$와 열공간 $\mathrm{Col}\,A$는 행렬 $A$의 두 핵심 부분공간으로, 각각 '$A$가 무엇을 $\mathbf{0}$으로 보내는가'와 '$A$가 무엇을 만들어낼 수 있는가'를 나타낸다.</strong> $\mathrm{Nul}\,A$는 $\mathbb{R}^n$의 부분공간(입력 공간), $\mathrm{Col}\,A$는 $\mathbb{R}^m$의 부분공간(출력 공간)이다. Rank-Nullity 정리 $\mathrm{rank}(A)+\mathrm{nullity}(A)=n$은 두 공간의 차원이 항상 총 열 수를 이룬다는 것을 보장한다.</p>
-        <div class="def-block">
-          <div class="label">$\mathrm{Nul}\,A$ vs $\mathrm{Col}\,A$ — 핵심 비교</div>
-          <p><strong>$\mathrm{Nul}\,A$</strong> (null space, 영공간)<br>
-          &nbsp; 정의: $\{\mathbf{x}\in\mathbb{R}^n : A\mathbf{x}=\mathbf{0}\}$ — 암묵적 (방정식으로 정의)<br>
-          &nbsp; $\mathbb{R}^n$의 부분공간, $\dim = \mathrm{nullity}(A)$ = 자유변수 수<br>
-          &nbsp; 기저: RREF에서 자유변수에 대응하는 매개변수 벡터</p>
-          <p><strong>$\mathrm{Col}\,A$</strong> (column space, 열공간)<br>
-          &nbsp; 정의: $\{A\mathbf{x}: \mathbf{x}\in\mathbb{R}^n\}$ — 명시적 (열들의 span)<br>
-          &nbsp; $\mathbb{R}^m$의 부분공간, $\dim = \mathrm{rank}(A)$ = 피벗 수<br>
-          &nbsp; 기저: $A$의 피벗 열(pivot columns)</p>
-        </div>
-        <div class="example-block">
-          <div class="label">$\mathrm{Nul}\,A$ 기저 구하기 — 전체 계산</div>
-          <p>$A=\begin{bmatrix}-3&6&-1&1&-7\\1&-2&2&3&-1\\2&-4&5&8&-4\end{bmatrix}$</p>
-          <p>RREF: $\begin{bmatrix}1&-2&0&-1&3\\0&0&1&2&-2\\0&0&0&0&0\end{bmatrix}$</p>
-          <p>피벗: $x_1, x_3$ / 자유: $x_2=s,\; x_4=t,\; x_5=u$<br>
-          $x_1 = 2s+t-3u$, $\quad x_3 = -2t+2u$</p>
-          <p>$\mathbf{x} = s\begin{bmatrix}2\\1\\0\\0\\0\end{bmatrix} + t\begin{bmatrix}1\\0\\-2\\1\\0\end{bmatrix} + u\begin{bmatrix}-3\\0\\2\\0\\1\end{bmatrix}$</p>
-          <p>$\dim(\mathrm{Nul}\,A)=3$, $\dim(\mathrm{Col}\,A)=\mathrm{rank}(A)=2$, $n=5$.<br>
-          Rank-Nullity: $2+3=5$ ✓</p>
-        </div>
-        <div class="note-block">
-          <div class="label">Rank-Nullity 정리 (Dimension Theorem)</div>
-          <p>$A$가 $m\times n$일 때: $\mathrm{rank}(A) + \mathrm{nullity}(A) = n$<br>
-          이는 선형대수의 핵심 구조 정리 — 행렬의 입력 공간($\mathbb{R}^n$)이 "정보 보존 부분"(Col에 사상)과 "소멸 부분"(Nul)으로 완전히 분해됨을 의미.</p>
-        </div>
-      
-        <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#21_NulA_ColA_handout.pdf</code> — <strong>pp. 1–2</strong><br><span class="pdf-ref-detail">p.1 Nul A 정의 &amp; 부분공간 · p.2 기저 구하기 &amp; Rank-Nullity</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§4.2 Null Spaces and Column Spaces</strong> — <strong>pp. 235–245</strong><span class="tb-ref-detail"> (Nul A/Col A 비교, 기저 구하기, Rank-Nullity)</span></span></div>
-      </div>
+      <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#21_NulA_ColA_handout.pdf</code> — <strong>pp. 1–2</strong><br><span class="pdf-ref-detail">p.1 Nul A 정의 &amp; 부분공간 · p.2 기저 구하기</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§4.2 Null Spaces and Column Spaces</strong> — <strong>pp. 235–245</strong><span class="tb-ref-detail"> (Nul A/Col A 비교, 기저 구하기)</span></span></div>
 
 
       <div class="practice-section">
