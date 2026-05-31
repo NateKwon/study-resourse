@@ -4053,15 +4053,7 @@ LU 방법:      LU구하기 + 28 × 10 = LU + 280 flops</pre>
           <p><strong>일반 영역 확장:</strong> 임의의 유한 넓이 영역은 작은 정사각형들로 근사할 수 있다. 각 정사각형의 상이 $|\det A|$배의 넓이를 가지므로, 극한 논증에 의해 일반 영역에도 성립.<br>
           ⚠️ <em>$|\det A|=0$이면 $T$가 공간을 찌그러뜨려 넓이/부피 $=0$.</em></p>
         </div>
-        <div class="example-block">
-          <div class="label">응용 예시 &mdash; 타원의 넓이 (Lay §3.3 Example 5)</div>
-          <p>타원 $\dfrac{x_1^2}{a^2} + \dfrac{x_2^2}{b^2} = 1$으로 둘러싸인 영역 $E$의 넓이를 구하라.</p>
-          <p><strong>풀이:</strong> $E$는 단위 원판 $D$(넓이 $\pi$)를 선형변환 $T(\mathbf{x})=A\mathbf{x}$, $A=\begin{bmatrix}a&0\\0&b\end{bmatrix}$으로 변환한 상이다.<br>
-          $|\det A|=ab$이므로:</p>
-          $$\text{area of }E = |\det A|\cdot\pi = \pi ab$$
-          <p><em>$a=b=r$이면 원의 넓이 $\pi r^2$이 자연스럽게 복원된다.</em></p>
-        </div>
-        <div class="def-block">
+<div class="def-block">
           <div class="label">수반행렬(adjugate)과 역행렬 공식</div>
           <p>$\mathrm{adj}\,A = (C_{ij})^T$ (여인수 행렬의 전치)<br>
           $A^{-1} = \dfrac{1}{\det A}\,\mathrm{adj}\,A$</p>
