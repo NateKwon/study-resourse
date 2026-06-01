@@ -4491,16 +4491,161 @@ LU 방법:      LU구하기 + 28 × 10 = LU + 280 flops</pre>
       </div>
 
       <div class="practice-section">
-        <div class="practice-label">📝 연습문제</div>
-        <div style="display:flex; flex-direction:column; gap:10px; margin-top:12px;">
-          <a href="../../선대 연습문제/Practice_problems_#22_ColA_KerT.pdf" target="_blank" style="display:flex; align-items:center; gap:10px; padding:10px 16px; background:#f0f4f8; border:1px solid #c5d8ec; border-radius:8px; text-decoration:none; color:#1a1a1a; font-size:0.9rem;">
-            <span style="font-size:1.2rem;">📄</span>
-            <span><strong>Practice #22</strong> — Col A &amp; Ker T</span>
-          </a>
-          <a href="../../선대 연습문제/Practice_problems_#23_bases.pdf" target="_blank" style="display:flex; align-items:center; gap:10px; padding:10px 16px; background:#f0f4f8; border:1px solid #c5d8ec; border-radius:8px; text-decoration:none; color:#1a1a1a; font-size:0.9rem;">
-            <span style="font-size:1.2rem;">📄</span>
-            <span><strong>Practice #23</strong> — Bases</span>
-          </a>
+        <div class="practice-label">📝 Practice #22 · Col A &amp; Ker T</div>
+
+        <div class="practice-item">
+          <div class="q-num">Problem 1</div>
+          <div class="q-body">
+            <p>Find $A$ such that the given set is $\text{Col}\,A$:</p>
+            $$\left\{ \begin{bmatrix} b-c \\ 2b+c+d \\ 5c-4d \\ d \end{bmatrix} : b,c,d \in \mathbb{R} \right\}$$
+          </div>
+          <div class="toggle-row">
+            <details class="sol-detail">
+              <summary>✅ 정답 보기</summary>
+              <div class="toggle-body">
+                $$A = \begin{bmatrix} 1 & -1 & 0 \\ 2 & 1 & 1 \\ 0 & 5 & -4 \\ 0 & 0 & 1 \end{bmatrix}$$
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="practice-item">
+          <div class="q-num">Problem 2</div>
+          <div class="q-body">
+            <p>Let $T: V \to W$ be a linear transformation from a vector space $V$ into a vector space $W$. Prove that $\text{Range}\,T$ is a subspace of $W$.</p>
+          </div>
+          <div class="toggle-row">
+            <details class="sol-detail">
+              <summary>✅ 정답 보기</summary>
+              <div class="toggle-body">
+                <p>$\text{Range}\,T = \{\mathbf{b} \in W : T(\mathbf{x}) = \mathbf{b} \text{ for some } \mathbf{x} \in V\}$. $\text{Range}\,T \subseteq W$은 명확하다.</p>
+                <p><strong>① 영벡터:</strong> $T(\mathbf{0}) = \mathbf{0}$이므로 $W$의 영벡터가 Range $T$에 속한다.</p>
+                <p><strong>② 덧셈에 닫힘:</strong> $\mathbf{b}_1, \mathbf{b}_2 \in \text{Range}\,T$이면 $T(\mathbf{x}_1)=\mathbf{b}_1$, $T(\mathbf{x}_2)=\mathbf{b}_2$인 $\mathbf{x}_1, \mathbf{x}_2 \in V$가 존재. $T(\mathbf{x}_1+\mathbf{x}_2) = \mathbf{b}_1+\mathbf{b}_2$이므로 $\mathbf{b}_1+\mathbf{b}_2 \in \text{Range}\,T$.</p>
+                <p><strong>③ 스칼라 배에 닫힘:</strong> $\mathbf{b} \in \text{Range}\,T$, $c$ 임의의 스칼라이면 $T(c\mathbf{x}) = c\mathbf{b}$이므로 $c\mathbf{b} \in \text{Range}\,T$. $\square$</p>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="practice-item">
+          <div class="q-num">Problem 3</div>
+          <div class="q-body">
+            <p>Define a linear transformation $T: \mathbf{P}_2 \to \mathbb{R}^2$ by $T(p) = \begin{bmatrix} p(0) \\ p(1) \end{bmatrix}$. For instance, if $p(t) = 3+5t+7t^2$, then $T(p) = \begin{bmatrix} 3 \\ 15 \end{bmatrix}$.</p>
+            <ol type="a">
+              <li>Show that $T$ is a linear transformation.</li>
+              <li>Find a polynomial $p \in \mathbf{P}_2$ that spans the Kernel of $T$.</li>
+              <li>Describe the range of $T$.</li>
+            </ol>
+          </div>
+          <div class="toggle-row">
+            <details class="sol-detail">
+              <summary>✅ 정답 보기</summary>
+              <div class="toggle-body">
+                <p><strong>(a)</strong> $p, q \in \mathbf{P}_2$에 대해:
+                $$T(p+q) = \begin{bmatrix}(p+q)(0)\\(p+q)(1)\end{bmatrix} = \begin{bmatrix}p(0)+q(0)\\p(1)+q(1)\end{bmatrix} = T(p)+T(q)$$
+                마찬가지로 $T(cp) = cT(p)$. ✓</p>
+                <p><strong>(b)</strong> $\ker T = \{p \in \mathbf{P}_2 : p(0)=0 \text{ and } p(1)=0\} = \{\alpha t(t-1) : \alpha \in \mathbb{R}\}$<br>
+                따라서 spanning set: $\{t(t-1)\}$</p>
+                <p><strong>(c)</strong> 임의의 $\begin{bmatrix}\alpha\\\beta\end{bmatrix} \in \mathbb{R}^2$에 대해 $p(t) = (\beta-\alpha)t + \alpha$로 놓으면 $p(0)=\alpha$, $p(1)=\beta$. 따라서 $\text{Range}\,T = \mathbb{R}^2$.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-section">
+        <div class="practice-label">📝 Practice #23 · Bases</div>
+
+        <div class="practice-item">
+          <div class="q-num">Problem 1</div>
+          <div class="q-body">
+            <p><strong>True or False.</strong> Justify your answer.</p>
+            <ol type="a">
+              <li>The set $B = \{1+t^2,\; t+t^2,\; 1+2t+t^2\}$ in $\mathbf{P}_2$ is linearly independent.</li>
+              <li>The set $B = \left\{ \begin{bmatrix}1&2&-5&11&-3\\2&4&-5&15&2\\1&2&0&4&5\\3&6&-5&19&-2\end{bmatrix},\; \begin{bmatrix}0&2&-5&11&-3\\2&4&-5&15&2\\1&2&0&4&5\\3&6&-5&19&-2\end{bmatrix} \right\}$ in $\mathbb{R}^{4\times5}$ is linearly independent.</li>
+            </ol>
+          </div>
+          <div class="toggle-row">
+            <details class="sol-detail">
+              <summary>✅ 정답 보기</summary>
+              <div class="toggle-body">
+                <p><strong>(a) True.</strong> $c_1(1+t^2)+c_2(t+t^2)+c_3(1+2t+t^2)=0$을 세우면 $c_1=c_2=c_3=0$만 성립.</p>
+                <p><strong>(b) True.</strong> 두 행렬의 차이는 첫 행의 $(1,1)$ 원소뿐이므로 어느 쪽도 다른 쪽의 스칼라 배가 아님.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="practice-item">
+          <div class="q-num">Problem 2</div>
+          <div class="q-body">
+            <p>Find a basis for the set of vectors $(x,y,z)$ in $\mathbb{R}^3$ such that $x+2y+z=0$.</p>
+          </div>
+          <div class="toggle-row">
+            <details class="sol-detail">
+              <summary>✅ 정답 보기</summary>
+              <div class="toggle-body">
+                <p>$\text{Nul}\,A$ ($A = \begin{bmatrix}1&2&1\end{bmatrix}$)의 기저 문제와 동일.</p>
+                $$\left\{ \begin{bmatrix}-2\\1\\0\end{bmatrix},\; \begin{bmatrix}-1\\0\\1\end{bmatrix} \right\}$$
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="practice-item">
+          <div class="q-num">Problem 3</div>
+          <div class="q-body">
+            <p>Find bases for $\text{Nul}\,A$ and $\text{Col}\,A$, where $A$ is row equivalent to $B$:</p>
+            $$A = \begin{bmatrix}1&2&-5&11&-3\\2&4&-5&15&2\\1&2&0&4&5\\3&6&-5&19&-2\end{bmatrix}, \quad B = \begin{bmatrix}1&2&0&4&5\\0&0&5&-7&8\\0&0&0&0&-9\\0&0&0&0&0\end{bmatrix}$$
+          </div>
+          <div class="toggle-row">
+            <details class="sol-detail">
+              <summary>✅ 정답 보기</summary>
+              <div class="toggle-body">
+                <p><strong>Basis for Nul $A$:</strong>
+                $$\left\{ \begin{bmatrix}-2\\1\\0\\0\\0\end{bmatrix},\; \begin{bmatrix}-4\\0\\7/5\\1\\0\end{bmatrix} \right\}$$</p>
+                <p><strong>Basis for Col $A$:</strong> ($A$의 pivot column인 1, 3, 5열)
+                $$\left\{ \begin{bmatrix}1\\2\\1\\3\end{bmatrix},\; \begin{bmatrix}-5\\-5\\0\\-5\end{bmatrix},\; \begin{bmatrix}-3\\2\\5\\-2\end{bmatrix} \right\}$$</p>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="practice-item">
+          <div class="q-num">Problem 4</div>
+          <div class="q-body">
+            <p>Let $\mathbf{v}_1 = \begin{bmatrix}4\\-3\\7\end{bmatrix}$, $\mathbf{v}_2 = \begin{bmatrix}1\\9\\-2\end{bmatrix}$, $\mathbf{v}_3 = \begin{bmatrix}7\\11\\6\end{bmatrix}$, and $H = \text{Span}\{\mathbf{v}_1,\mathbf{v}_2,\mathbf{v}_3\}$. It can be verified that $4\mathbf{v}_1 + 5\mathbf{v}_2 - 3\mathbf{v}_3 = \mathbf{0}$. Use this information to find a basis for $H$.</p>
+          </div>
+          <div class="toggle-row">
+            <details class="sol-detail">
+              <summary>✅ 정답 보기</summary>
+              <div class="toggle-body">
+                <p>$4\mathbf{v}_1+5\mathbf{v}_2-3\mathbf{v}_3=\mathbf{0}$이므로 $\mathbf{v}_3$는 $\mathbf{v}_1, \mathbf{v}_2$의 선형결합. 따라서 $\{\mathbf{v}_1,\mathbf{v}_2\}$, $\{\mathbf{v}_1,\mathbf{v}_3\}$, $\{\mathbf{v}_2,\mathbf{v}_3\}$ 모두 가능한 기저.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="practice-item">
+          <div class="q-num">Problem 5</div>
+          <div class="q-body">
+            <p><strong>True or False.</strong> Justify.</p>
+            <ol type="a">
+              <li>Suppose $\mathbf{v}_1,\cdots,\mathbf{v}_4$ are vectors in $\mathbb{R}^4$ such that $\mathbb{R}^4 = \text{Span}\{\mathbf{v}_1,\cdots,\mathbf{v}_4\}$. Then $\{\mathbf{v}_1,\cdots,\mathbf{v}_4\}$ is a basis for $\mathbb{R}^4$.</li>
+              <li>Let $B = \{\mathbf{v}_1,\cdots,\mathbf{v}_n\}$ be a linearly independent set in $\mathbb{R}^n$. Then $B$ is a basis for $\mathbb{R}^n$.</li>
+              <li>Every vector space has a basis.</li>
+            </ol>
+          </div>
+          <div class="toggle-row">
+            <details class="sol-detail">
+              <summary>✅ 정답 보기</summary>
+              <div class="toggle-body">
+                <p><strong>(a) True.</strong> $A = [\mathbf{v}_1\cdots\mathbf{v}_4]$는 $4\times4$ 행렬. $\mathbb{R}^4 = \text{Span}\{\mathbf{v}_i\}$이면 모든 행에 pivot이 존재 → 열들도 선형독립 → 기저.</p>
+                <p><strong>(b) True.</strong> $A = [\mathbf{v}_1\cdots\mathbf{v}_n]$은 $n\times n$. 선형독립이므로 $n$개의 pivot → 모든 $\mathbb{R}^n$을 span → 기저.</p>
+                <p><strong>(c) False.</strong> 예: 기저가 없는 벡터공간 존재 (무한차원 벡터공간에서 Axiom of Choice 없이는 기저 구성 불가).</p>
+              </div>
+            </details>
+          </div>
         </div>
       </div>
 
