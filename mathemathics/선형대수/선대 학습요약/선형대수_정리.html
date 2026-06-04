@@ -3806,7 +3806,7 @@ LU 방법:      LU구하기 + 28 × 10 = LU + 280 flops</pre>
     <div class="section-body">
       <div class="note-block">
         <div class="label">📌 이 개념의 의의</div>
-        <p>행 연산과 $\det$의 관계를 이용하면 <strong>행 축소로 $\det$를 $O(n^3)$에 계산</strong>할 수 있다 — 여인수 전개의 $O(n!)$ 대비 비약적으로 효율적이다. 더 중요한 것은 $\det(AB)=\det A \cdot \det B$로, 가역성이 행렬 곱에서 보존됨을 보장하고($A$ 가역 $\Leftrightarrow \det A \neq 0$), 선형변환의 부피 배율이 합성 시 곱해진다는 기하학적 사실이 뒤따른다.</p>
+        <p>행 연산과 $\det$의 관계를 이용하면 <strong>행 축소로 $\det$를 빠르게 계산</strong>할 수 있다 — 행렬의 크기가 커져도 효율적으로 계산 가능하며, cofactor expansion보다 훨씬 빠르다. 더 중요한 것은 $\det(AB)=\det A \cdot \det B$로, invertible 여부가 행렬 곱에서 보존됨을 보장하고($A$ invertible $\Leftrightarrow \det A \neq 0$), 선형변환의 부피 배율이 합성 시 곱해진다는 기하학적 사실이 뒤따른다.</p>
       </div>
       <h3>행 연산과 행렬식</h3>
       <div class="thm-block">
