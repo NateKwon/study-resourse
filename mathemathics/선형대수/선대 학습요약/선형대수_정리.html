@@ -242,6 +242,31 @@
       border-top: 2px solid #d0bef5;
       padding-top: 14px; margin-top: 18px; margin-bottom: 10px;
     }
+    /* 토글 적용 시 summary로 변환된 practice-label */
+    details.practice-toggle > summary.practice-label {
+      cursor: pointer;
+      user-select: none;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 0;
+    }
+    details.practice-toggle > summary.practice-label::before {
+      content: '▶';
+      font-size: 9px;
+      color: #9b7fd4;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+    details.practice-toggle[open] > summary.practice-label::before {
+      transform: rotate(90deg);
+    }
+    details.practice-toggle > summary.practice-label:hover {
+      color: #7a2e9a;
+    }
+    details.practice-toggle > summary::-webkit-details-marker { display: none; }
+    details.practice-toggle .practice-items-wrap { margin-top: 10px; }
     .practice-item {
       background: #faf7ff;
       border: 1px solid #d0bef5;
@@ -476,6 +501,10 @@
     <li><a href="#c20">Class 20 · Cramer's Rule</a></li>
     <li><a href="#c21">Class 21 · Nul A & Col A</a></li>
     <li><a href="#c22">Class 22 · Basis &amp; Coordinates</a></li>
+    <li><a href="#c23">Class 23 · Dimension</a></li>
+    <li><a href="#c24">Class 24 · Change of Basis</a></li>
+    <li><div id="nav-section-label">행 공간 & IMT</div></li>
+    <li><a href="#c25">Class 25 · Row Space</a></li>
   </ul>
 </nav>
 
@@ -2867,53 +2896,84 @@ R²가 아니라 직선으로 찌그러졌어!
       Block Matrix (블록 행렬)
     </div>
     <div class="section-body">
+
+      <!-- ★ 핵심 요약 -->
       <div class="note-block">
-        <div class="label">📌 이 개념의 의의</div>
-        <p>열-행 전개 $AB = \sum_k \mathrm{col}_k(A)\,\mathrm{row}_k(B)$는 행렬 곱을 <strong>rank-1 행렬의 합</strong>으로 해석하는 시각을 제공한다. 이 관점은 SVD·PCA 등 현대 데이터 분석의 수학적 기반이며, 큰 행렬을 저랭크(low-rank) 근사로 압축하는 데 직결된다. 블록 행렬은 대형 행렬의 구조적 패턴(삼각·대각)을 활용해 역행렬과 분해를 단순화하며, 제어이론·회로 해석·분산 컴퓨팅에서 자연스럽게 등장한다.</p>
+        <div class="label">⚡ 핵심 요약</div>
+        <p><strong>행렬 곱을 분해하는 두 가지 시각</strong> — 열-행 전개는 $AB$를 rank-1 행렬의 합으로, 블록 행렬은 부분 행렬을 스칼라처럼 다루는 구조적 계산법이다.</p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <tr style="background:#e8f0f7;">
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">개념</th>
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">정의 / 공식</th>
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">결과 유형</th>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Inner product</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$\mathbf{u}^T\mathbf{v}$</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">스칼라</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Outer product</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$\mathbf{u}\mathbf{v}^T$</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$m\times n$ rank-1 행렬</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Column-Row 전개</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$AB = \displaystyle\sum_{k=1}^{n}\mathrm{col}_k(A)\cdot\mathrm{row}_k(B)$</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">rank-1 행렬 $n$개의 합</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">블록 행렬 곱</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$\begin{bmatrix}A_{11}&A_{12}\\A_{21}&A_{22}\end{bmatrix}\begin{bmatrix}B_1\\B_2\end{bmatrix} = \begin{bmatrix}A_{11}B_1+A_{12}B_2\\A_{21}B_1+A_{22}B_2\end{bmatrix}$</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">블록을 스칼라처럼 (순서 주의)</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">블록 상삼각 역행렬</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$\begin{bmatrix}A&B\\0&C\end{bmatrix}^{-1} = \begin{bmatrix}A^{-1}&-A^{-1}BC^{-1}\\0&C^{-1}\end{bmatrix}$</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$A$, $C$ 각각 가역일 때 성립</td>
+          </tr>
+        </table>
+        <p style="margin-top:10px;font-size:13px;color:#555;">⚠️ 블록 곱셈에서 <strong>$A$의 블록이 반드시 왼쪽</strong>, $B$의 블록이 오른쪽 — 행렬 곱은 교환법칙이 성립하지 않는다.</p>
       </div>
+
+      <hr class="divider"/>
+
+      <!-- 상세 개념 -->
+      <h3>1. Inner Product vs Outer Product</h3>
       <div class="def-block">
-        <div class="label">정의 · Inner & Outer Product</div>
-        <ul>
-          <li><strong>Inner product (scalar product)</strong>: $\mathbf{u}^T\mathbf{v}$ → 스칼라</li>
-          <li><strong>Outer product</strong>: $\mathbf{u}\mathbf{v}^T$ → 행렬</li>
-        </ul>
+        <div class="label">정의 · Inner &amp; Outer Product</div>
+        <p><strong>Inner product (내적)</strong>: $\mathbf{u}^T\mathbf{v} \in \mathbb{R}$ — 스칼라. 두 벡터의 "유사도"를 측정.</p>
+        <p><strong>Outer product (외적)</strong>: $\mathbf{u}\mathbf{v}^T \in \mathbb{R}^{m\times n}$ — rank-1 행렬. 모든 열이 $\mathbf{u}$의 스칼라 배, 모든 행이 $\mathbf{v}^T$의 스칼라 배.</p>
+        <p><em>예: $\mathbf{u} = \begin{bmatrix}1\\2\\3\end{bmatrix}$, $\mathbf{v}^T = \begin{bmatrix}4&5\end{bmatrix}$이면 $\mathbf{u}\mathbf{v}^T = \begin{bmatrix}4&5\\8&10\\12&15\end{bmatrix}$ — rank 1.</em></p>
       </div>
 
+      <h3>2. Column-Row Expansion of AB</h3>
       <div class="thm-block">
-        <div class="label">Column-Row Expansion of AB</div>
-        <p>$A \in \mathbb{R}^{m \times n}$, $B \in \mathbb{R}^{n \times p}$이면:</p>
-        $$AB = \sum_{k=1}^{n} \text{col}_k(A)\cdot\text{row}_k(B)$$
-        <p>각 항은 rank-1 행렬(outer product)이고, 이 합이 $AB$이다.</p>
+        <div class="label">Theorem · Column-Row 전개</div>
+        <p>$A \in \mathbb{R}^{m\times n}$, $B \in \mathbb{R}^{n\times p}$이면:</p>
+        $$AB = \sum_{k=1}^{n} \underbrace{\mathrm{col}_k(A)}_{\in\mathbb{R}^m} \cdot \underbrace{\mathrm{row}_k(B)}_{\in\mathbb{R}^{1\times p}} = \mathbf{a}_1\mathbf{b}_1^T + \mathbf{a}_2\mathbf{b}_2^T + \cdots + \mathbf{a}_n\mathbf{b}_n^T$$
+        <p>각 항은 <strong>rank-1 행렬</strong>(outer product). $AB$는 이 rank-1 행렬 $n$개의 합이다.</p>
+        <p><strong>응용:</strong> $\text{rank}(AB) \leq \min(\text{rank}(A), \text{rank}(B))$, SVD·PCA·저랭크 근사의 기반.</p>
       </div>
 
-      <h3>블록 행렬 곱</h3>
-      <p>행렬을 블록(부분 행렬)으로 나누고, 블록끼리 일반 행렬처럼 곱할 수 있다. (분할이 "conformable"한 경우)</p>
-      $$\begin{bmatrix}A_{11} & A_{12} \\ A_{21} & A_{22}\end{bmatrix}\begin{bmatrix}B_1 \\ B_2\end{bmatrix} = \begin{bmatrix}A_{11}B_1 + A_{12}B_2 \\ A_{21}B_1 + A_{22}B_2\end{bmatrix}$$
-
-      <div class="deepdive-block">
-        <p class="deepdive-label">📐 개념 심화 — 분할행렬과 열-행 전개</p>
-        <p class="deepdive-intro"><strong>분할행렬(block matrix)은 큰 행렬을 작은 블록으로 나누어 마치 스칼라처럼 곱셈·역행렬을 계산하는 기법이다.</strong> 블록 연산이 유효하려면 블록 크기가 행렬 곱에 호환되어야 한다. 특히 열-행 전개(column-row expansion)는 $AB$를 rank-1 행렬들의 합으로 분해하여 저랭크(low-rank) 구조를 드러내는 강력한 도구다.</p>
-        <div class="def-block">
-          <div class="label">분할행렬(partitioned matrix) 곱셈 규칙</div>
-          <p>블록 행렬 곱은 각 블록을 단일 원소처럼 취급 (블록 크기가 곱셈에 적합해야 함):</p>
-          <p>$\begin{bmatrix}A_{11}&A_{12}\\A_{21}&A_{22}\end{bmatrix}\begin{bmatrix}B_{11}\\B_{21}\end{bmatrix} = \begin{bmatrix}A_{11}B_{11}+A_{12}B_{21}\\A_{21}B_{11}+A_{22}B_{21}\end{bmatrix}$</p>
-        </div>
-        <div class="thm-block">
-          <div class="label">열-행 전개 (Column-Row Expansion of $AB$)</div>
-          <p>$A$가 $m \times n$, $B$가 $n \times p$이면:</p>
-          <p>$AB = \sum_{k=1}^{n} (\mathrm{col}_k A)(\mathrm{row}_k B) = \mathbf{a}_1\mathbf{b}_1^T + \mathbf{a}_2\mathbf{b}_2^T + \cdots + \mathbf{a}_n\mathbf{b}_n^T$</p>
-          <p>각 항 $\mathbf{a}_k\mathbf{b}_k^T$는 rank-1 행렬. 따라서 $AB$는 rank-1 행렬들의 합으로 분해됨.</p>
-          <p>응용: 희소(sparse) 행렬이나 저랭크(low-rank) 근사에 활용.</p>
-        </div>
-        <div class="example-block">
-          <div class="label">블록 상삼각 행렬의 역행렬</div>
-          <p>$M=\begin{bmatrix}A&B\\0&C\end{bmatrix}$ ($A$: $p\times p$ 가역, $C$: $q\times q$ 가역):</p>
-          <p>$M^{-1}=\begin{bmatrix}A^{-1}&-A^{-1}BC^{-1}\\0&C^{-1}\end{bmatrix}$</p>
-          <p><em>검증:</em> $MM^{-1}=\begin{bmatrix}AA^{-1}&-ABC^{-1}\cdot\text{...} + BC^{-1}\\0&CC^{-1}\end{bmatrix}=I$ (블록 곱 전개로 확인)</p>
-        </div>
-      
-        <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#14_block_matrix_handout.pdf</code> — <strong>pp. 1–2 전체</strong><br><span class="pdf-ref-detail">p.1 내적/외적 &amp; 열-행 전개 · p.2 분할행렬 &amp; 블록 행렬 곱</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§2.4 Partitioned Matrices</strong> — <strong>pp. 150–155</strong><span class="tb-ref-detail"> (내적/외적, 블록 행렬, 열-행 전개)</span></span></div>
+      <h3>3. 블록(분할) 행렬 곱</h3>
+      <div class="def-block">
+        <div class="label">블록 행렬 곱셈 (Partitioned Matrix Multiplication)</div>
+        <p>행렬을 블록으로 분할하면, 블록끼리 스칼라처럼 곱할 수 있다. 단, 블록 크기가 <strong>conformable</strong>해야 한다 (왼쪽 행렬의 열 분할 = 오른쪽 행렬의 행 분할).</p>
+        $$\begin{bmatrix}A_{11}&A_{12}\\A_{21}&A_{22}\end{bmatrix}\begin{bmatrix}B_{11}\\B_{21}\end{bmatrix} = \begin{bmatrix}A_{11}B_{11}+A_{12}B_{21}\\A_{21}B_{11}+A_{22}B_{21}\end{bmatrix}$$
+        <p>⚠️ <strong>순서 필수</strong>: $A_{11}B_{11} \neq B_{11}A_{11}$ — 행렬 곱은 교환법칙 불성립.</p>
       </div>
+
+      <h3>4. 블록 상삼각 행렬의 역행렬</h3>
+      <div class="example-block">
+        <div class="label">블록 상삼각 역행렬 공식</div>
+        <p>$A$: $p\times p$ 가역, $C$: $q\times q$ 가역일 때:</p>
+        $$\begin{bmatrix}A&B\\0&C\end{bmatrix}^{-1} = \begin{bmatrix}A^{-1}&-A^{-1}BC^{-1}\\0&C^{-1}\end{bmatrix}$$
+        <p><strong>검증:</strong> $\begin{bmatrix}A&B\\0&C\end{bmatrix}\begin{bmatrix}A^{-1}&-A^{-1}BC^{-1}\\0&C^{-1}\end{bmatrix} = \begin{bmatrix}AA^{-1}+B\cdot0 & -AA^{-1}BC^{-1}+BC^{-1}\\0 & CC^{-1}\end{bmatrix} = \begin{bmatrix}I&0\\0&I\end{bmatrix}$ ✓</p>
+        <p><em>Schur complement 응용: Problem 2의 $B_{22} = A_{22} - A_{21}A_{11}^{-1}A_{12}$도 이 구조에서 자연스럽게 등장한다.</em></p>
+      </div>
+
+      <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#14_block_matrix_handout.pdf</code> — <strong>pp. 1–2 전체</strong><br><span class="pdf-ref-detail">p.1 내적/외적 &amp; 열-행 전개 · p.2 분할행렬 &amp; 블록 행렬 곱</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§2.4 Partitioned Matrices</strong> — <strong>pp. 150–155</strong><span class="tb-ref-detail"> (내적/외적, 블록 행렬, 열-행 전개)</span></span></div>
 
       <div class="practice-section">
         <div class="practice-label">📝 Practice #14 · Block Matrix &amp; Column-Row Expansion</div>
@@ -3032,66 +3092,105 @@ x → (B로 변환) → Bx → (A로 변환) → A(Bx)
       LU Factorization
     </div>
     <div class="section-body">
+      <!-- ══ 핵심 개념 1: LU 분해 정의 ══ -->
       <div class="note-block">
-        <div class="label">📌 이 개념의 의의</div>
-        <p>$A=LU$ 분해의 핵심 장점은 계수행렬 $A$가 동일하고 우변 $\mathbf{b}$만 바뀌는 연립방정식을 <strong>반복 풀이</strong>할 때 나타난다. 한 번의 분해($O(n^3)$) 후, 각 새로운 우변마다 전진 대입(Ly=b)·후진 대입(Ux=y)으로 $O(n^2)$에 해를 구할 수 있다. 구조해석·회로 시뮬레이션·경제 모형 등 같은 시스템에 수백~수천 번 다른 입력을 적용하는 공학·산업 환경에서 결정적으로 유리하다.</p>
+        <div class="label">⚡ 핵심 요약 1 — LU 분해 정의</div>
+        <p>행 교환 없이 echelon form으로 환원 가능한 $A \in \mathbb{R}^{m \times n}$을 <strong>단위 하삼각행렬 $L$</strong>과 <strong>echelon form $U$</strong>의 곱으로 표현한다.</p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <tr style="background:#e8f0f7;"><th style="padding:6px 8px;border:1px solid #ccc;text-align:left;">항목</th><th style="padding:6px 8px;border:1px solid #ccc;text-align:left;">내용</th></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">분해식</td><td style="padding:6px 8px;border:1px solid #ccc;">$A = LU$ (행 교환 없이 행 축소 가능한 경우에 존재)</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">$L$ (unit lower triangular)</td><td style="padding:6px 8px;border:1px solid #ccc;">$m \times m$, 대각 원소 모두 1인 하삼각행렬</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">$U$ (echelon form)</td><td style="padding:6px 8px;border:1px solid #ccc;">$m \times n$, $A$의 행 축소 결과 (상삼각)</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">$L$은 항상 가역</td><td style="padding:6px 8px;border:1px solid #ccc;">$\det L = 1 \neq 0$ — $A$가 비가역이어도 무관. 비가역성은 $U$의 영행(zero row)이 담당</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">닫힘 성질</td><td style="padding:6px 8px;border:1px solid #ccc;">$L,\,M$이 unit lower triangular이면 $LM$도 unit lower triangular</td></tr>
+        </table>
       </div>
+      <hr class="divider"/>
+
+      <h3>1. LU 분해 정의 및 구조</h3>
       <div class="def-block">
         <div class="label">정의 · LU Factorization</div>
-        <p>행 교환 없이 echelon form으로 환원 가능한 $A \in \mathbb{R}^{m \times n}$에 대해:</p>
+        <p>$A \in \mathbb{R}^{m \times n}$이 행 교환 없이 echelon form으로 환원 가능하면:</p>
         $$A = LU$$
         <ul>
-          <li>$L$: $m \times m$ <strong>unit lower triangular</strong> (대각이 모두 1인 하삼각(lower triangular) 행렬(lower triangular matrix))</li>
-          <li>$U$: $m \times n$ <strong>echelon form</strong> of $A$ (상삼각(upper triangular) 형태(upper triangular form))</li>
+          <li>$L$: $m \times m$ <strong>unit lower triangular</strong> — 대각 원소 모두 1인 하삼각행렬</li>
+          <li>$U$: $m \times n$ <strong>echelon form</strong> of $A$ — 행 축소의 결과</li>
         </ul>
-        <p>$L$은 항상 invertible하다.</p>
       </div>
-
-      <h3>왜 유용한가?</h3>
-      <p>$Ax = b$를 여러 $b$에 대해 풀 때: $A = LU$이면 $LU\mathbf{x} = \mathbf{b}$를 두 단계로 분리:</p>
-      <ol>
-        <li>$L\mathbf{y} = \mathbf{b}$ 풀기 (forward substitution)</li>
-        <li>$U\mathbf{x} = \mathbf{y}$ 풀기 (back substitution)</li>
-      </ol>
       <div class="note-block">
-        <div class="label">계산 효율</div>
-        <p>$A^{-1}$: $2n^3$ flops / LU 분해 후 각 $b$에 대해 풀기: $2n^2$ flops → 훨씬 효율적!</p>
+        <div class="label">⚠️ $L$은 항상 가역 (A가 비가역이어도)</div>
+        <p>$L$은 대각 원소가 모두 1이므로 $\det L = 1 \neq 0$ → 항상 invertible.<br>
+        $A$가 비가역이면 $U$에 영행(zero row)이 생겨 $\det U = 0$이 된다. <strong>비가역성은 $U$가 담당하고, $L$은 분해 과정의 기록(multiplier 저장)을 담당.</strong></p>
+        <p>또한, $L^{-1}$의 대각 원소도 모두 <strong>1</strong>이다 (unit lower triangular의 역행렬도 unit lower triangular).</p>
       </div>
 
-      <div class="deepdive-block">
-        <p class="deepdive-label">📐 개념 심화 — LU 분해 알고리즘 전체</p>
-        <p class="deepdive-intro"><strong>$A=LU$ 분해는 행렬 $A$를 단위 하삼각행렬 $L$과 상삼각행렬 $U$의 곱으로 분해하여 선형 시스템을 반복 풀이할 때 효율을 극대화한다.</strong> 분해 비용은 $O(n^3)$이지만 한 번 분해하면 새 우변 $\mathbf{b}$마다 $O(n^2)$의 전진/후진 대입만으로 해를 구할 수 있다. 승수(multiplier)를 하삼각에 기록하면 추가 메모리 없이 $L$을 자동으로 얻는다.</p>
-        <div class="thm-block">
-          <div class="label">LU 분해 존재 조건과 구조</div>
-          <p>행 교환 없이 행 축소 가능하면 $A = LU$ 분해 존재.</p>
-          <p>$L$: 단위 하삼각(unit lower triangular) — 대각 원소 모두 1, 아래삼각에 승수(multiplier) 저장<br>
-          $U$: 상삼각(upper triangular, echelon form) — 행 축소 결과</p>
-        </div>
-        <div class="note-block">
-          <div class="label">⚠️ 중요한 성질 — $L$은 항상 가역</div>
-          <p>$A$가 가역이 아니어도 $L$은 항상 가역이다. $L$은 대각 원소가 모두 1인 단위 하삼각(unit lower triangular)이므로 $\det L = 1 \neq 0$. 또한 단위 하삼각행렬끼리의 곱도 단위 하삼각행렬이다: $L, M$이 단위 하삼각이면 $LM$도 단위 하삼각.</p>
-          <p>$U$는 행 축소 결과이므로 $A$가 비가역이면 $U$에 영행이 생긴다 → $\det U = 0$. 비가역성은 $U$가 담당하고, $L$은 분해 과정의 기록(승수 저장)을 담당한다.</p>
-        </div>
-        <div class="example-block">
-          <div class="label">$A = LU$ 전체 계산</div>
-          <p>$A=\begin{bmatrix}2&4&-2\\4&9&-3\\-2&-3&7\end{bmatrix}$</p>
-          <p><strong>Step 1 — $U$ 구하기 (행 축소):</strong><br>
-          $R_2 - 2R_1$: $\ell_{21}=2$ &nbsp; $R_3 + R_1$: $\ell_{31}=-1$<br>
-          $\to \begin{bmatrix}2&4&-2\\0&1&1\\0&1&5\end{bmatrix}$ &nbsp; $R_3 - R_2$: $\ell_{32}=1$<br>
-          $\to \begin{bmatrix}2&4&-2\\0&1&1\\0&0&4\end{bmatrix} = U$</p>
-          <p><strong>Step 2 — $L$ 구하기</strong> (승수를 하삼각에 기록):<br>
-          $L=\begin{bmatrix}1&0&0\\2&1&0\\-1&1&1\end{bmatrix}$</p>
-          <p><strong>검증:</strong> $LU=\begin{bmatrix}1&0&0\\2&1&0\\-1&1&1\end{bmatrix}\begin{bmatrix}2&4&-2\\0&1&1\\0&0&4\end{bmatrix}=\begin{bmatrix}2&4&-2\\4&9&-3\\-2&-3&7\end{bmatrix}=A$ ✓</p>
-        </div>
-        <div class="note-block">
-          <div class="label">$A\mathbf{x}=\mathbf{b}$ 풀기: 2단계 과정</div>
-          <p>① $L\mathbf{y}=\mathbf{b}$ 풀기 (전진 대입, forward substitution) — $O(n^2)$<br>
-          ② $U\mathbf{x}=\mathbf{y}$ 풀기 (후진 대입, back substitution) — $O(n^2)$<br>
-          LU 분해 1회 비용 $O(n^3)$이지만, 이후 새 $\mathbf{b}$마다 $O(n^2)$으로 재사용 가능.</p>
-        </div>
-      
-        <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#15_LU_handout.pdf</code> — <strong>pp. 1–3 전체</strong><br><span class="pdf-ref-detail">p.1 분해 정의 &amp; 동기 · p.2 LU 예시(4×4) · p.3 LU 계산 연습</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§2.5 Matrix Factorizations</strong> — <strong>pp. 156–163</strong><span class="tb-ref-detail"> (LU 분해 알고리즘, 전진/후진 대입)</span></span></div>
+      <hr class="divider"/>
+
+      <!-- ══ 핵심 개념 2: 반복 풀이 활용 ══ -->
+      <div class="note-block">
+        <div class="label">⚡ 핵심 요약 2 — 반복 풀이 활용 (왜 유용한가)</div>
+        <p>같은 $A$에 우변 $\mathbf{b}$만 바꿔 $A\mathbf{x}=\mathbf{b}_1,\, \mathbf{b}_2,\, \ldots$ 를 반복 풀 때, LU 분해를 한 번만 해두면 이후 각 $\mathbf{b}$마다 $O(n^2)$로 해결할 수 있다.</p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <tr style="background:#e8f0f7;"><th style="padding:6px 8px;border:1px solid #ccc;text-align:left;">방법</th><th style="padding:6px 8px;border:1px solid #ccc;text-align:left;">분해 비용 (1회)</th><th style="padding:6px 8px;border:1px solid #ccc;text-align:left;">각 $\mathbf{b}$ 풀이 비용</th><th style="padding:6px 8px;border:1px solid #ccc;text-align:left;">비고</th></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">$A^{-1}$ 계산 후 $A^{-1}\mathbf{b}$</td><td style="padding:6px 8px;border:1px solid #ccc;">$2n^3$ flops</td><td style="padding:6px 8px;border:1px solid #ccc;">$2n^2$ flops</td><td style="padding:6px 8px;border:1px solid #ccc;">반올림 오차 발생 가능</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">LU 분해 후 전진/후진 대입</td><td style="padding:6px 8px;border:1px solid #ccc;">$\tfrac{2}{3}n^3$ flops</td><td style="padding:6px 8px;border:1px solid #ccc;">$2n^2$ flops</td><td style="padding:6px 8px;border:1px solid #ccc;">수치적으로 안정, 분해 비용 1/3</td></tr>
+        </table>
+        <p style="margin-top:8px;">→ <strong>분해 비용이 $A^{-1}$ 계산의 약 1/3</strong>이고, 이후 각 $\mathbf{b}$마다 동일하게 $2n^2$. 반복 횟수가 많을수록 LU 분해가 압도적으로 유리.</p>
       </div>
+      <hr class="divider"/>
+
+      <h3>2. 반복 풀이: 전진 대입 → 후진 대입</h3>
+      <p>$A = LU$이면 $A\mathbf{x} = \mathbf{b}$를 두 단계로 분리:</p>
+      <ol>
+        <li><strong>Forward substitution (전진 대입)</strong>: $L\mathbf{y} = \mathbf{b}$ 풀기 — $O(n^2)$</li>
+        <li><strong>Back substitution (후진 대입)</strong>: $U\mathbf{x} = \mathbf{y}$ 풀기 — $O(n^2)$</li>
+      </ol>
+      <div class="example-block">
+        <div class="label">예제 — 4×4 시스템: $A\mathbf{x}=\mathbf{b}$, $\;\mathbf{b}=(-9,5,7,11)^T$</div>
+        <p>$A=\begin{bmatrix}3&-7&-2&2\\-3&5&1&0\\6&-4&0&-5\\-9&5&-5&12\end{bmatrix}=LU$, 여기서 $L=\begin{bmatrix}1&0&0&0\\-1&1&0&0\\2&-5&1&0\\-3&8&3&1\end{bmatrix}$, $U=\begin{bmatrix}3&-7&-2&2\\0&-2&-1&2\\0&0&-1&1\\0&0&0&-1\end{bmatrix}$</p>
+        <p><strong>Step 1.</strong> $[L \mid \mathbf{b}]$ 행 축소 (전진 대입) → $\mathbf{y}=(-9,-4,5,1)^T$</p>
+        <p><strong>Step 2.</strong> $[U \mid \mathbf{y}]$ 행 축소 (후진 대입) → $\mathbf{x}$ 획득</p>
+        <p>$[A\mid\mathbf{b}]$를 처음부터 축소하는 것보다 연산 수가 적다 — $L$과 $U$ 모두 삼각구조라 소거가 빠르다.</p>
+      </div>
+
+      <hr class="divider"/>
+
+      <!-- ══ 핵심 개념 3: LU 분해 알고리즘 ══ -->
+      <div class="note-block">
+        <div class="label">⚡ 핵심 요약 3 — LU 분해 알고리즘 (L 구하는 법)</div>
+        <p>행 교환 없이 $A \to U$ 로의 행 축소에서 <strong>각 단계의 multiplier(승수)를 $L$의 해당 위치에 그대로 기록</strong>하면 $L$이 자동으로 완성된다.</p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <tr style="background:#e8f0f7;"><th style="padding:6px 8px;border:1px solid #ccc;text-align:left;">단계</th><th style="padding:6px 8px;border:1px solid #ccc;text-align:left;">내용</th></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">① 행 축소 (replacement only)</td><td style="padding:6px 8px;border:1px solid #ccc;">$E_p \cdots E_1 A = U$. 각 $E_i$는 unit lower triangular elementary matrix</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">② $L$ 구성</td><td style="padding:6px 8px;border:1px solid #ccc;">$L = E_1^{-1} \cdots E_p^{-1}$ → unit lower triangular들의 곱이므로 unit lower triangular</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">③ 실전 요령</td><td style="padding:6px 8px;border:1px solid #ccc;">$R_j \leftarrow R_j - m_{ji}R_i$ 시, $m_{ji}$를 $L$의 $(j,i)$ 위치에 직접 채움. $E_i^{-1}$ 별도 계산 불필요</td></tr>
+        </table>
+      </div>
+      <hr class="divider"/>
+
+      <h3>3. LU 분해 알고리즘 — 구체적 절차</h3>
+      <div class="thm-block">
+        <div class="label">LU 분해 알고리즘</div>
+        <p>$A$가 행 교환 없이 echelon form $U$로 환원 가능하면, replacement 연산만으로 $A \to U$ 가능하며 사용된 elementary matrix $E_1,\ldots,E_p$는 모두 unit lower triangular이다.</p>
+        $$E_p \cdots E_1 A = U \;\implies\; A = \underbrace{E_1^{-1}\cdots E_p^{-1}}_{= L}\, U$$
+        <p>$L = E_1^{-1}\cdots E_p^{-1}$는 unit lower triangular들의 곱 → <strong>unit lower triangular</strong>.</p>
+      </div>
+      <div class="note-block">
+        <div class="label">💡 실전 요령 — multiplier 직접 기록</div>
+        <p>행 축소 시 $R_j \leftarrow R_j - m_{ji}R_i$ 연산을 수행할 때마다, 승수 $m_{ji}$를 $L$의 $(j,i)$ 위치에 바로 써넣으면 된다. $L$의 대각은 항상 1, 위삼각은 항상 0.</p>
+      </div>
+      <div class="example-block">
+        <div class="label">예제 — 4×5 행렬 LU 분해</div>
+        <p>$A=\begin{bmatrix}2&4&-1&5&-2\\-4&-5&3&-8&1\\2&-5&-4&1&8\\-6&0&7&-3&1\end{bmatrix}$</p>
+        <p><strong>행 축소 (multiplier 기록):</strong><br>
+        열 1 소거: $m_{21}=-2,\; m_{31}=1,\; m_{41}=-3$<br>
+        열 2 소거: $m_{32}=-3,\; m_{42}=4$<br>
+        열 4 소거: $m_{43}=2$</p>
+        $$U=\begin{bmatrix}2&4&-1&5&-2\\0&3&1&2&3\\0&0&0&2&1\\0&0&0&0&5\end{bmatrix},\qquad L=\begin{bmatrix}1&0&0&0\\-2&1&0&0\\1&-3&1&0\\-3&4&2&1\end{bmatrix}$$
+        <p>→ 각 multiplier가 $L$의 해당 위치(열 번호 = 소거된 열, 행 번호 = 소거된 행)에 그대로 들어간 것을 확인.</p>
+      </div>
+
+      <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#15_LU_handout.pdf</code> — <strong>pp. 1–3 전체</strong><br><span class="pdf-ref-detail">p.1 분해 정의 &amp; 동기 · p.2 LU 예시(4×4) · p.3 LU 계산 연습(4×5)</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§2.5 Matrix Factorizations</strong> — <strong>pp. 156–163</strong><span class="tb-ref-detail"> (LU 분해 알고리즘, 전진/후진 대입)</span></span></div>
 
       <div class="practice-section">
         <div class="practice-label">📝 Practice #15 · LU Factorization</div>
@@ -3200,53 +3299,109 @@ LU 방법:      LU구하기 + 28 × 10 = LU + 280 flops</pre>
       Permuted LU (PA = LU)
     </div>
     <div class="section-body">
+      <!-- ══ 핵심 개념 1: Partial Pivoting ══ -->
       <div class="note-block">
-        <div class="label">📌 이 개념의 의의</div>
-        <p>부분 피벗팅(partial pivoting)의 목적은 <strong>수치 안정성(numerical stability)</strong>이다. 절댓값이 작은 피벗으로 나누면 부동소수점 연산에서 오차가 폭발적으로 증폭되므로, 각 단계에서 절댓값이 가장 큰 원소를 선택한다. $PA=LU$는 모든 가역 행렬에 적용되는 표준 분해법으로, NumPy·LAPACK 등 현대 수치해석 라이브러리가 내부적으로 사용하는 알고리즘이다.</p>
+        <div class="label">⚡ 핵심 요약 1 — Partial Pivoting (부분 피벗팅)</div>
+        <p>피벗이 0이거나 매우 작으면 나눗셈에서 반올림 오차(round-off error)가 폭발적으로 증폭된다. 이를 막기 위해 각 열에서 <strong>절댓값이 가장 큰 원소를 피벗 위치로 행 교환</strong>하는 전략이 부분 피벗팅이다.</p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <tr style="background:#e8f0f7;"><th style="padding:6px 8px;border:1px solid #ccc;text-align:left;">항목</th><th style="padding:6px 8px;border:1px solid #ccc;text-align:left;">내용</th></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">문제 상황</td><td style="padding:6px 8px;border:1px solid #ccc;">피벗 $\approx 0$이면 multiplier $= \frac{\text{원소}}{\text{피벗}} \gg 1$ → 오차 증폭</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">해결책</td><td style="padding:6px 8px;border:1px solid #ccc;">각 단계에서 해당 열의 절댓값 최대 원소 행을 피벗 위치로 교환 (partial pivoting)</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">결과</td><td style="padding:6px 8px;border:1px solid #ccc;">행 교환을 포함하므로 $A = LU$ 대신 $PA = LU$ 형태로 확장</td></tr>
+        </table>
       </div>
+      <hr class="divider"/>
+
+      <h3>1. Partial Pivoting — 수치 안정성 문제</h3>
       <div class="def-block">
-        <div class="label">Partial Pivoting</div>
-        <p>수치 안정성을 위해 각 열에서 절대값이 가장 큰 원소를 pivot으로 선택하는 전략. 행 교환이 필요해진다.</p>
+        <div class="label">정의 · Partial Pivoting</div>
+        <p>행 교환을 통해 각 열에서 <strong>절댓값이 가장 큰 원소</strong>를 pivot 위치로 선택하는 전략.</p>
+      </div>
+      <div class="example-block">
+        <div class="label">왜 필요한가? — 수치 오차 예시</div>
+        <p>$A = \begin{bmatrix}0.0001 & 1 \\ 1 & 1\end{bmatrix}$에서 피벗을 그대로 $0.0001$로 쓰면:</p>
+        <p>multiplier $\ell_{21} = \dfrac{1}{0.0001} = 10000$ → $R_2 - 10000 \cdot R_1$ 연산에서 <strong>반올림 오차 $\times 10000$배 증폭</strong>.</p>
+        <p><strong>Partial pivoting 적용:</strong> 1열에서 절댓값 최대 원소 = $1$ (2행) → 행 교환.</p>
+        $$\begin{bmatrix}1 & 1 \\ 0.0001 & 1\end{bmatrix} \to \text{multiplier } \ell_{21}=0.0001 \ll 1 \;\Rightarrow\; \text{오차 최소}$$
       </div>
 
+      <hr class="divider"/>
+
+      <!-- ══ 핵심 개념 2: Permutation Matrix ══ -->
+      <div class="note-block">
+        <div class="label">⚡ 핵심 요약 2 — Permutation Matrix (순열 행렬)</div>
+        <p>각 행·열에 정확히 하나의 1만 있고 나머지는 0인 정방 행렬. 단위행렬 $I$의 행들을 재배열한 것과 같다.</p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <tr style="background:#e8f0f7;"><th style="padding:6px 8px;border:1px solid #ccc;text-align:left;">항목</th><th style="padding:6px 8px;border:1px solid #ccc;text-align:left;">내용</th></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">$PA$</td><td style="padding:6px 8px;border:1px solid #ccc;">$A$의 <strong>행</strong>을 순열에 따라 재배열 (row permutation)</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">$AP$</td><td style="padding:6px 8px;border:1px solid #ccc;">$A$의 <strong>열</strong>을 순열에 따라 재배열 (column permutation)</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">$P^{-1}$</td><td style="padding:6px 8px;border:1px solid #ccc;">$P^T$ — 순열 행렬은 직교행렬이므로 $P^T P = I$</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">곱 닫힘</td><td style="padding:6px 8px;border:1px solid #ccc;">두 순열 행렬의 곱도 순열 행렬</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">개수</td><td style="padding:6px 8px;border:1px solid #ccc;">$n \times n$ 순열 행렬의 수 = $n!$</td></tr>
+        </table>
+      </div>
+      <hr class="divider"/>
+
+      <h3>2. Permutation Matrix 정의 및 성질</h3>
       <div class="def-block">
         <div class="label">정의 · Permutation Matrix</div>
-        <p>각 행과 각 열에 정확히 하나의 1이 있고 나머지는 0인 정방 행렬 $P$.</p>
-        <p>$PA$는 $A$의 행을 재배열한 행렬이다.</p>
+        <p>$(\alpha_1, \alpha_2, \ldots, \alpha_n)$이 $(1, 2, \ldots, n)$의 순열(permutation)일 때,</p>
+        $$P = \begin{bmatrix} e_{\alpha_1}^T \\ e_{\alpha_2}^T \\ \vdots \\ e_{\alpha_n}^T \end{bmatrix}$$
+        <p>여기서 $e_i$는 $n \times n$ 단위행렬의 $i$번째 열벡터. 즉 <strong>단위행렬의 행들을 재배열</strong>한 행렬.</p>
+      </div>
+      <div class="example-block">
+        <div class="label">예시 — 순열 $(2,3,1)$에 대응하는 $P$</div>
+        <p>$(α_1, α_2, α_3) = (2,3,1)$이면:</p>
+        $$P = \begin{bmatrix} e_2^T \\ e_3^T \\ e_1^T \end{bmatrix} = \begin{bmatrix}0&1&0\\0&0&1\\1&0&0\end{bmatrix}$$
+        <p>$PA$: $A$의 1행→2행 위치, 2행→3행 위치, 3행→1행 위치로 재배열.<br>
+        $AP$: $A$의 열을 같은 순열로 재배열.</p>
+        <p><strong>역행렬 확인:</strong> $P^T = \begin{bmatrix}0&0&1\\1&0&0\\0&1&0\end{bmatrix}$, $\;P^T P = I$ ✓</p>
+      </div>
+      <div class="note-block">
+        <div class="label">성질 정리</div>
+        <p>(a) $P^{-1} = P^T$ — 순열 행렬은 직교행렬(orthogonal matrix)이다.<br>
+        (b) 두 순열 행렬의 곱 $PQ$도 순열 행렬이다.</p>
       </div>
 
+      <hr class="divider"/>
+
+      <!-- ══ 핵심 개념 3: PA = LU 분해 ══ -->
+      <div class="note-block">
+        <div class="label">⚡ 핵심 요약 3 — Permuted LU Factorization ($PA = LU$)</div>
+        <p>행 교환(partial pivoting)을 포함한 LU 분해. 어떤 가역 행렬에도 적용 가능한 범용 분해법이다.</p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <tr style="background:#e8f0f7;"><th style="padding:6px 8px;border:1px solid #ccc;text-align:left;">항목</th><th style="padding:6px 8px;border:1px solid #ccc;text-align:left;">내용</th></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">분해식</td><td style="padding:6px 8px;border:1px solid #ccc;">$PA = LU$ — $P$가 partial pivoting의 행 교환을 기록</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">$Ax=b$ 풀이</td><td style="padding:6px 8px;border:1px solid #ccc;">① $\mathbf{b}' = P\mathbf{b}$ 계산 → ② $L\mathbf{y}=\mathbf{b}'$ (전진 대입) → ③ $U\mathbf{x}=\mathbf{y}$ (후진 대입)</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">적용 범위</td><td style="padding:6px 8px;border:1px solid #ccc;">행 교환 없이 안 되는 경우도 처리 → 모든 가역 행렬에 대해 성립</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">실용</td><td style="padding:6px 8px;border:1px solid #ccc;">NumPy, LAPACK 등 현대 수치해석 라이브러리의 표준 알고리즘</td></tr>
+        </table>
+      </div>
+      <hr class="divider"/>
+
+      <h3>3. $PA = LU$ 분해 및 $A\mathbf{x}=\mathbf{b}$ 풀이</h3>
       <div class="thm-block">
         <div class="label">Permuted LU Factorization</div>
+        <p>임의의 가역 행렬 $A$에 대해, 적절한 순열 행렬 $P$가 존재하여</p>
         $$PA = LU$$
-        <p>어떤 $A$에 대해서도 적절한 순열 행렬 $P$가 존재하여 $PA = LU$가 성립한다.</p>
-        <p>성질: $P^{-1} = P^T$ (순열 행렬의 역행렬은 전치)</p>
+        <p>가 성립한다. ($L$: unit lower triangular, $U$: echelon form)</p>
+      </div>
+      <div class="note-block">
+        <div class="label">$A\mathbf{x}=\mathbf{b}$ 풀이 — 3단계</div>
+        <p>$PA\mathbf{x} = P\mathbf{b}$, 즉 $LU\mathbf{x} = P\mathbf{b}$이므로:</p>
+        <p>① $\mathbf{b}' = P\mathbf{b}$ 계산 ($\mathbf{b}$의 원소를 $P$의 행 순서로 재배열)<br>
+        ② $L\mathbf{y} = \mathbf{b}'$ → forward substitution으로 $\mathbf{y}$ 계산<br>
+        ③ $U\mathbf{x} = \mathbf{y}$ → back substitution으로 $\mathbf{x}$ 계산</p>
+      </div>
+      <div class="example-block">
+        <div class="label">예시 — $0.0001$ 문제의 $PA=LU$</div>
+        <p>$A = \begin{bmatrix}0.0001&1\\1&1\end{bmatrix}$에서 partial pivoting 적용 (1열 최대값 = 1, 2행):</p>
+        <p>행 교환: $P = \begin{bmatrix}0&1\\1&0\end{bmatrix}$, $\;PA = \begin{bmatrix}1&1\\0.0001&1\end{bmatrix}$</p>
+        <p>$PA$ 행 축소: multiplier $\ell_{21}=0.0001$, $U=\begin{bmatrix}1&1\\0&0.9999\end{bmatrix}$, $L=\begin{bmatrix}1&0\\0.0001&1\end{bmatrix}$</p>
+        <p>→ multiplier가 $0.0001 \ll 1$ 이므로 오차 전혀 증폭되지 않는다.</p>
       </div>
 
-      <div class="deepdive-block">
-        <p class="deepdive-label">📐 개념 심화 — 부분 피벗팅과 순열 행렬</p>
-        <p class="deepdive-intro"><strong>LU 분해에서 피벗이 0이거나 매우 작을 때 수치적 오류가 급증하므로, 부분 피벗팅(partial pivoting)이 필요하다.</strong> 각 단계에서 해당 열의 절댓값이 가장 큰 원소를 피벗 위치로 교환하고, 이 행 교환을 순열행렬 $P$로 기록하여 $PA=LU$ 형태로 확장한다. 순열행렬은 직교행렬이므로 $P^{-1}=P^T$이다.</p>
-        <div class="def-block">
-          <div class="label">부분 피벗팅(partial pivoting)이 필요한 이유</div>
-          <p>피벗이 수치적으로 0에 가까울 때 나눗셈에서 반올림 오류(round-off error)가 급격히 증폭된다.</p>
-          <p>예: $\begin{bmatrix}0.0001&1\\1&1\end{bmatrix}$에서 피벗 $0.0001$을 그대로 사용하면 $\ell_{21}=10000$이 되어 숫자 오류 증폭.</p>
-          <p><strong>부분 피벗팅 규칙:</strong> 각 단계에서 해당 열에서 절댓값이 가장 큰 원소의 행을 피벗 위치로 교환.</p>
-        </div>
-        <div class="thm-block">
-          <div class="label">$PA = LU$ 분해</div>
-          <p>행 교환이 포함된 LU 분해: $PA = LU$<br>
-          $P$: 순열 행렬(permutation matrix) — 단위행렬 $I$의 행을 재배열한 행렬<br>
-          $P^{-1} = P^T$ (직교 행렬 성질)</p>
-          <p>풀이: $PA\mathbf{x}=P\mathbf{b}$, 즉 $L\mathbf{y}=P\mathbf{b}$ → $U\mathbf{x}=\mathbf{y}$ 2단계.</p>
-        </div>
-        <div class="example-block">
-          <div class="label">순열 행렬 성질</div>
-          <p>$P=\begin{bmatrix}0&1&0\\0&0&1\\1&0&0\end{bmatrix}$: 1행→2행, 2행→3행, 3행→1행 순환 치환.</p>
-          <p>$P^T P = I$ 확인: $P^T=\begin{bmatrix}0&0&1\\1&0&0\\0&1&0\end{bmatrix}$, $P^T P = I$ ✓</p>
-          <p>$n \times n$ 순열 행렬의 수: $n!$ (모든 행 순열의 수)</p>
-        </div>
-      
-        <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#16_permuted_LU_handout.pdf</code> — <strong>pp. 1–2 전체</strong><br><span class="pdf-ref-detail">p.1 부분 피벗팅 동기(0.0001 예시) · p.2 순열 행렬 정의</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§2.5 Matrix Factorizations</strong> — <strong>pp. 156–163</strong><span class="tb-ref-detail"> (PA=LU, 순열 행렬, 부분 피벗팅)</span></span></div>
-      </div>
+      <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#16_permuted_LU_handout.pdf</code> — <strong>pp. 1–2 전체</strong><br><span class="pdf-ref-detail">p.1 partial pivoting 동기 &amp; 정의 · p.2 순열 행렬 정의 &amp; 성질</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§2.5 Matrix Factorizations</strong> — <strong>pp. 156–163</strong><span class="tb-ref-detail"> (PA=LU, 순열 행렬, 부분 피벗팅)</span></span></div>
 
       <div class="practice-section">
         <div class="practice-label">📝 Practice #16 · LU Factorization with Permutation</div>
@@ -3408,67 +3563,121 @@ LU 방법:      LU구하기 + 28 × 10 = LU + 280 flops</pre>
       Vector Spaces and Subspaces
     </div>
     <div class="section-body">
+      <!-- ══ 핵심 개념 1: Vector Space 정의 & 10가지 공리 ══ -->
       <div class="note-block">
-        <div class="label">📌 이 개념의 의의</div>
-        <p>벡터공간 공리는 $\mathbb{R}^n$을 넘어 <strong>다항식·행렬·함수 등을 하나의 추상적 틀로 통합</strong>한다. 10가지 공리를 만족하면 선형대수의 모든 정리가 그 공간에서 자동으로 성립하므로, 한 번의 증명이 무수히 많은 수학적 구조에 동시에 적용된다. 이 추상화는 미분방정식 해공간, 확률이론, 양자역학의 상태공간 등 수학·물리 전반의 언어가 된다.</p>
+        <div class="label">⚡ 핵심 요약 1 — Vector Space 정의 & 10가지 공리</div>
+        <p>덧셈과 스칼라 곱이 정의된 집합 $V$가 아래 <strong>10가지 공리를 모두 만족</strong>할 때 벡터공간이라 한다. $\mathbb{R}^n$뿐 아니라 행렬·다항식·함수 등 다양한 구조가 이 틀 안에 들어온다.</p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <tr style="background:#e8f0f7;"><th style="padding:6px 8px;border:1px solid #ccc;text-align:center;">번호</th><th style="padding:6px 8px;border:1px solid #ccc;text-align:left;">공리</th><th style="padding:6px 8px;border:1px solid #ccc;text-align:left;">이름</th></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;text-align:center;">①</td><td style="padding:6px 8px;border:1px solid #ccc;">$\mathbf{u}+\mathbf{v} \in V$</td><td style="padding:6px 8px;border:1px solid #ccc;">덧셈 닫힘 (closure under addition)</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;text-align:center;">②</td><td style="padding:6px 8px;border:1px solid #ccc;">$\mathbf{u}+\mathbf{v}=\mathbf{v}+\mathbf{u}$</td><td style="padding:6px 8px;border:1px solid #ccc;">교환법칙 (commutativity)</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;text-align:center;">③</td><td style="padding:6px 8px;border:1px solid #ccc;">$(\mathbf{u}+\mathbf{v})+\mathbf{w}=\mathbf{u}+(\mathbf{v}+\mathbf{w})$</td><td style="padding:6px 8px;border:1px solid #ccc;">결합법칙 (associativity)</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;text-align:center;">④</td><td style="padding:6px 8px;border:1px solid #ccc;">$\exists\,\mathbf{0} \in V:\; \mathbf{u}+\mathbf{0}=\mathbf{u}$</td><td style="padding:6px 8px;border:1px solid #ccc;">영벡터 존재 (additive identity)</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;text-align:center;">⑤</td><td style="padding:6px 8px;border:1px solid #ccc;">$\exists\,{-\mathbf{u}} \in V:\; \mathbf{u}+(-\mathbf{u})=\mathbf{0}$</td><td style="padding:6px 8px;border:1px solid #ccc;">역원 존재 (additive inverse)</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;text-align:center;">⑥</td><td style="padding:6px 8px;border:1px solid #ccc;">$c\mathbf{u} \in V$</td><td style="padding:6px 8px;border:1px solid #ccc;">스칼라 곱 닫힘 (closure under scalar mult.)</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;text-align:center;">⑦</td><td style="padding:6px 8px;border:1px solid #ccc;">$c(\mathbf{u}+\mathbf{v})=c\mathbf{u}+c\mathbf{v}$</td><td style="padding:6px 8px;border:1px solid #ccc;">분배법칙 (벡터 방향)</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;text-align:center;">⑧</td><td style="padding:6px 8px;border:1px solid #ccc;">$(c+d)\mathbf{u}=c\mathbf{u}+d\mathbf{u}$</td><td style="padding:6px 8px;border:1px solid #ccc;">분배법칙 (스칼라 방향)</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;text-align:center;">⑨</td><td style="padding:6px 8px;border:1px solid #ccc;">$c(d\mathbf{u})=(cd)\mathbf{u}$</td><td style="padding:6px 8px;border:1px solid #ccc;">스칼라 결합법칙</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;text-align:center;">⑩</td><td style="padding:6px 8px;border:1px solid #ccc;">$1\cdot\mathbf{u}=\mathbf{u}$</td><td style="padding:6px 8px;border:1px solid #ccc;">단위원 (scalar identity)</td></tr>
+        </table>
       </div>
+      <hr class="divider"/>
+
+      <h3>1. Vector Space 정의 및 예시</h3>
       <div class="def-block">
-        <div class="label">정의 · Vector Space</div>
-        <p>덧셈과 스칼라 곱이 정의된 집합 $V$가 다음 10가지 공리를 만족하면 <strong>벡터 공간</strong>이다:</p>
-        <ol>
-          <li>$\mathbf{u}+\mathbf{v} \in V$ (closure under addition)</li>
-          <li>$\mathbf{u}+\mathbf{v} = \mathbf{v}+\mathbf{u}$ (commutativity)</li>
-          <li>$(\mathbf{u}+\mathbf{v})+\mathbf{w} = \mathbf{u}+(\mathbf{v}+\mathbf{w})$ (associativity)</li>
-          <li>영벡터 $\mathbf{0}$이 존재: $\mathbf{u}+\mathbf{0} = \mathbf{u}$</li>
-          <li>$-\mathbf{u}$가 존재: $\mathbf{u}+(-\mathbf{u}) = \mathbf{0}$</li>
-          <li>$c\mathbf{u} \in V$ (closure under scalar mult.)</li>
-          <li>$c(\mathbf{u}+\mathbf{v}) = c\mathbf{u}+c\mathbf{v}$</li>
-          <li>$(c+d)\mathbf{u} = c\mathbf{u}+d\mathbf{u}$</li>
-          <li>$c(d\mathbf{u}) = (cd)\mathbf{u}$</li>
-          <li>$1\cdot\mathbf{u} = \mathbf{u}$</li>
-        </ol>
-        <p><strong>예시</strong>: $\mathbb{R}^n$, $\mathbb{R}^{m \times n}$, 다항식 집합 $P_n$, 연속함수 집합 $C([a,b])$</p>
+        <div class="label">정의 · Vector Space (벡터공간)</div>
+        <p>덧셈(+)과 스칼라 곱(·)이 정의된 집합 $V$가 위 10가지 공리를 모두 만족하면 <strong>(실수) 벡터공간</strong>이라 한다. $V$의 원소를 벡터(vector)라 부른다.</p>
+      </div>
+      <div class="note-block">
+        <div class="label">벡터공간의 예시</div>
+        <p>(a) $\mathbb{R}^n$ — $n$차원 실수 열벡터 공간<br>
+        (b) $\mathbb{R}^{m \times n}$ — $m \times n$ 실수 행렬 전체<br>
+        (c) $\mathbf{P}_n := \{p(t) = a_0 + a_1 t + \cdots + a_n t^n : a_i \in \mathbb{R}\}$ — $n$차 이하 다항식 전체<br>
+        (d) $C(I)$ — 집합 $I$ 위에서 정의된 연속함수 전체<br>
+        (e) 집합 $I$ 위 미분가능 함수 전체 (연속함수의 부분공간)<br>
+        (f) $\{(a_0, a_1, a_2, \ldots) : a_i \in \mathbb{R}\}$ — 실수 무한수열 전체</p>
+        <p>→ 이 모두가 벡터공간이다. "벡터"는 $\mathbb{R}^n$의 화살표만이 아님!</p>
       </div>
 
-      <div class="def-block">
-        <div class="label">정의 · Subspace</div>
-        <p>$V$의 부분집합 $H$가 <strong>부분공간(subspace)</strong>이다 ↔ 다음 세 조건:</p>
-        <ul>
-          <li>$V$의 영벡터 $\mathbf{0} \in H$</li>
-          <li>$\mathbf{u}, \mathbf{v} \in H \Rightarrow \mathbf{u}+\mathbf{v} \in H$</li>
-          <li>$\mathbf{u} \in H, c \in \mathbb{R} \Rightarrow c\mathbf{u} \in H$</li>
-        </ul>
+      <hr class="divider"/>
+
+      <!-- ══ 핵심 개념 2: 공리에서 유도되는 사실들 ══ -->
+      <div class="note-block">
+        <div class="label">⚡ 핵심 요약 2 — 공리에서 유도되는 5가지 사실</div>
+        <p>10공리만으로 다음 사실들이 자동으로 증명된다. 벡터공간이면 어디서나 성립.</p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <tr style="background:#e8f0f7;"><th style="padding:6px 8px;border:1px solid #ccc;text-align:left;">사실</th><th style="padding:6px 8px;border:1px solid #ccc;text-align:left;">핵심 아이디어</th></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">(a) 영벡터 $\mathbf{0}$은 유일하다</td><td style="padding:6px 8px;border:1px solid #ccc;">$\mathbf{w}$도 항등원이면 $\mathbf{0} = \mathbf{0}+\mathbf{w} = \mathbf{w}$</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">(b) $-\mathbf{u}$는 유일하다</td><td style="padding:6px 8px;border:1px solid #ccc;">$\mathbf{w}$도 역원이면 $-\mathbf{u} = -\mathbf{u}+(\mathbf{u}+\mathbf{w}) = \mathbf{w}$</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">(c) $0\mathbf{u} = \mathbf{0}$</td><td style="padding:6px 8px;border:1px solid #ccc;">$0\mathbf{u}=(0+0)\mathbf{u}=0\mathbf{u}+0\mathbf{u}$ → 양변에서 $0\mathbf{u}$ 빼면 $\mathbf{0}=0\mathbf{u}$</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">(d) $c\mathbf{0} = \mathbf{0}$</td><td style="padding:6px 8px;border:1px solid #ccc;">$c\mathbf{0}=c(\mathbf{0}+\mathbf{0})=c\mathbf{0}+c\mathbf{0}$ → 같은 방식</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">(e) $(-1)\mathbf{u} = -\mathbf{u}$</td><td style="padding:6px 8px;border:1px solid #ccc;">$\mathbf{u}+(-1)\mathbf{u}=(1+(-1))\mathbf{u}=0\mathbf{u}=\mathbf{0}$ → $(-1)\mathbf{u}$가 역원이므로 $=-\mathbf{u}$</td></tr>
+        </table>
+      </div>
+      <hr class="divider"/>
+
+      <h3>2. 공리 유도 사실 — 증명</h3>
+      <div class="thm-block">
+        <div class="label">유도 사실 (c) — $0\mathbf{u} = \mathbf{0}$</div>
+        <p>$0\mathbf{u} = (0+0)\mathbf{u}$ &ensp; (공리 ④)<br>
+        $= 0\mathbf{u} + 0\mathbf{u}$ &ensp; (공리 ⑧)<br>
+        양변에 $-(0\mathbf{u})$를 더하면: $\mathbf{0} = 0\mathbf{u}$. $\square$</p>
+      </div>
+      <div class="thm-block">
+        <div class="label">유도 사실 (d) — $c\mathbf{0} = \mathbf{0}$</div>
+        <p>$c\mathbf{0} = c(\mathbf{0}+\mathbf{0})$ &ensp; (공리 ④)<br>
+        $= c\mathbf{0}+c\mathbf{0}$ &ensp; (공리 ⑦)<br>
+        양변에 $-(c\mathbf{0})$를 더하면: $\mathbf{0} = c\mathbf{0}$. $\square$</p>
+      </div>
+      <div class="thm-block">
+        <div class="label">유도 사실 (e) — $(-1)\mathbf{u} = -\mathbf{u}$</div>
+        <p>$\mathbf{u}+(-1)\mathbf{u} = 1\cdot\mathbf{u}+(-1)\mathbf{u} = (1+(-1))\mathbf{u}$ &ensp; (공리 ⑧)<br>
+        $= 0\mathbf{u} = \mathbf{0}$ &ensp; (사실 c)<br>
+        따라서 $(-1)\mathbf{u}$는 $\mathbf{u}$의 역원 → $(-1)\mathbf{u} = -\mathbf{u}$. $\square$</p>
       </div>
 
-      <div class="deepdive-block">
-        <p class="deepdive-label">📐 개념 심화 — 벡터공간 공리와 부분공간 판별</p>
-        <p class="deepdive-intro"><strong>벡터공간은 덧셈과 스칼라 곱에 대해 10가지 공리를 만족하는 집합으로, $\mathbb{R}^n$을 포함한 다양한 수학적 구조를 통합하는 추상적 틀이다.</strong> 부분공간은 벡터공간의 부분집합 중 스스로 벡터공간을 이루는 것으로, ① 영벡터 포함 ② 덧셈에 닫힘 ③ 스칼라 곱에 닫힘의 세 조건으로 판별한다. $\mathrm{Nul}\,A$와 $\mathrm{Col}\,A$는 모두 이 세 조건을 만족하는 부분공간이다.</p>
-        <div class="def-block">
-          <div class="label">벡터공간(vector space) 10개 공리</div>
-          <p>집합 $V$에 덧셈($+$)과 스칼라 곱($\cdot$)이 정의되어 다음 만족 시 <strong>벡터공간</strong>:</p>
-          <p>① $\mathbf{u}+\mathbf{v} \in V$ &nbsp; ② $\mathbf{u}+\mathbf{v}=\mathbf{v}+\mathbf{u}$ &nbsp; ③ $(\mathbf{u}+\mathbf{v})+\mathbf{w}=\mathbf{u}+(\mathbf{v}+\mathbf{w})$<br>
-          ④ $\exists\,\mathbf{0}: \mathbf{u}+\mathbf{0}=\mathbf{u}$ &nbsp; ⑤ $\exists\,{-\mathbf{u}}: \mathbf{u}+(-\mathbf{u})=\mathbf{0}$<br>
-          ⑥ $c\mathbf{u} \in V$ &nbsp; ⑦ $c(\mathbf{u}+\mathbf{v})=c\mathbf{u}+c\mathbf{v}$ &nbsp; ⑧ $(c+d)\mathbf{u}=c\mathbf{u}+d\mathbf{u}$<br>
-          ⑨ $c(d\mathbf{u})=(cd)\mathbf{u}$ &nbsp; ⑩ $1\cdot\mathbf{u}=\mathbf{u}$</p>
-          <p>공리에서 유도: $0\mathbf{u}=\mathbf{0}$, $(-1)\mathbf{u}=-\mathbf{u}$, $c\mathbf{0}=\mathbf{0}$</p>
-        </div>
-        <div class="thm-block">
-          <div class="label">부분공간(subspace) — 3가지 조건</div>
-          <p>$H \subseteq V$가 부분공간 $\iff$<br>
-          ① $\mathbf{0} \in H$ &nbsp; ② $\mathbf{u},\mathbf{v}\in H \Rightarrow \mathbf{u}+\mathbf{v}\in H$ &nbsp; ③ $\mathbf{u}\in H, c\in\mathbb{R} \Rightarrow c\mathbf{u}\in H$</p>
-          <p>②③ 합쳐서: $c\mathbf{u}+d\mathbf{v}\in H$ (선형결합에 닫혀 있음 = closed under linear combinations)</p>
-        </div>
-        <div class="example-block">
-          <div class="label">$\mathrm{Nul}\,A$가 부분공간임을 증명</div>
-          <p>$\mathrm{Nul}\,A = \{\mathbf{x} \in \mathbb{R}^n : A\mathbf{x}=\mathbf{0}\}$</p>
-          <p>① $A\mathbf{0}=\mathbf{0}$ → $\mathbf{0} \in \mathrm{Nul}\,A$ ✓<br>
-          ② $A\mathbf{u}=\mathbf{0}$, $A\mathbf{v}=\mathbf{0}$이면 $A(\mathbf{u}+\mathbf{v})=\mathbf{0}+\mathbf{0}=\mathbf{0}$ ✓<br>
-          ③ $A(c\mathbf{u})=cA\mathbf{u}=c\mathbf{0}=\mathbf{0}$ ✓ $\square$</p>
-          <p>마찬가지로 $\mathrm{Col}\,A = \{A\mathbf{x}: \mathbf{x}\in\mathbb{R}^n\}$도 부분공간 (열들의 선형결합 집합).</p>
-        </div>
-      
-        <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#17_vector_space_handout.pdf</code> — <strong>pp. 1–4 전체</strong><br><span class="pdf-ref-detail">p.1 10개 공리 · p.2 공리 유도 사실 · p.3 부분공간 예시 · p.4 Nul A 증명</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§4.1 Vector Spaces and Subspaces</strong> — <strong>pp. 226–234</strong><span class="tb-ref-detail"> (10개 공리, 부분공간 3조건, Nul A 증명)</span></span></div>
+      <hr class="divider"/>
+
+      <!-- ══ 핵심 개념 3: Subspace (부분공간) ══ -->
+      <div class="note-block">
+        <div class="label">⚡ 핵심 요약 3 — Subspace (부분공간)</div>
+        <p>벡터공간 $V$의 부분집합 $H$가 <strong>그 자체로 벡터공간</strong>을 이루는 경우, $H$를 $V$의 부분공간이라 한다. 10공리 전체를 확인할 필요 없이, 아래 <strong>3가지 조건</strong>만 확인하면 된다.</p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <tr style="background:#e8f0f7;"><th style="padding:6px 8px;border:1px solid #ccc;text-align:left;">조건</th><th style="padding:6px 8px;border:1px solid #ccc;text-align:left;">내용</th></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">① 영벡터 포함</td><td style="padding:6px 8px;border:1px solid #ccc;">$V$의 영벡터 $\mathbf{0} \in H$</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">② 덧셈에 닫힘</td><td style="padding:6px 8px;border:1px solid #ccc;">$\mathbf{u},\mathbf{v} \in H \Rightarrow \mathbf{u}+\mathbf{v} \in H$</td></tr>
+          <tr><td style="padding:6px 8px;border:1px solid #ccc;">③ 스칼라 곱에 닫힘</td><td style="padding:6px 8px;border:1px solid #ccc;">$\mathbf{u} \in H,\, c \in \mathbb{R} \Rightarrow c\mathbf{u} \in H$</td></tr>
+        </table>
+        <p style="margin-top:8px;">②③ 합쳐 말하면: <strong>선형결합에 닫혀 있음</strong> ($c\mathbf{u}+d\mathbf{v} \in H$).<br>나머지 7개 공리는 $V$에서 자동으로 상속된다.</p>
       </div>
+      <hr class="divider"/>
+
+      <h3>3. Subspace 정의 및 예시</h3>
+      <div class="def-block">
+        <div class="label">정의 · Subspace (부분공간)</div>
+        <p>$H \subseteq V$가 부분공간 $\iff$ 위 3가지 조건 ①②③ 모두 만족.</p>
+        <p><strong>특수 예시:</strong> $\{\mathbf{0}\}$ (zero subspace)와 $V$ 전체는 항상 부분공간.</p>
+      </div>
+      <div class="note-block">
+        <div class="label">주의 — $\mathbb{R}^2$는 $\mathbb{R}^3$의 부분공간이 아니다</div>
+        <p>$\mathbb{R}^2$의 원소는 2성분 벡터이고 $\mathbb{R}^3$의 원소는 3성분 벡터로 서로 다른 집합이다. $\mathbb{R}^3$의 부분공간이 되려면 원소가 $\mathbb{R}^3$에 속해야 한다. ($xy$-평면 $\{(x,y,0)\}$은 부분공간 ○)</p>
+      </div>
+      <div class="thm-block">
+        <div class="label">정리 · Span은 부분공간</div>
+        <p>$\mathbf{v}_1, \ldots, \mathbf{v}_p \in V$이면, $H = \mathrm{Span}\{\mathbf{v}_1,\ldots,\mathbf{v}_p\}$는 $V$의 부분공간이다.</p>
+        <p>이때 $\{\mathbf{v}_1,\ldots,\mathbf{v}_p\}$를 $H$의 <strong>spanning set (생성 집합)</strong>이라 한다.</p>
+        <p>예: $V=C([0,1])$, $H=\mathbf{P}_n$이면 $\{1, t, t^2, \ldots, t^n\}$이 $H$의 생성 집합.</p>
+      </div>
+      <div class="example-block">
+        <div class="label">$\mathrm{Nul}\,A$가 부분공간임을 증명</div>
+        <p>$\mathrm{Nul}\,A = \{\mathbf{x} \in \mathbb{R}^n : A\mathbf{x}=\mathbf{0}\}$</p>
+        <p>① $A\mathbf{0}=\mathbf{0}$ → $\mathbf{0} \in \mathrm{Nul}\,A$ ✓<br>
+        ② $A\mathbf{u}=\mathbf{0}$, $A\mathbf{v}=\mathbf{0}$이면 $A(\mathbf{u}+\mathbf{v})=\mathbf{0}+\mathbf{0}=\mathbf{0}$ ✓<br>
+        ③ $A(c\mathbf{u})=cA\mathbf{u}=c\mathbf{0}=\mathbf{0}$ ✓ $\;\square$</p>
+        <p>마찬가지로 $\mathrm{Col}\,A = \{A\mathbf{x}: \mathbf{x}\in\mathbb{R}^n\}$ (열들의 Span)도 부분공간.</p>
+      </div>
+
+      <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#17_vector_space_handout.pdf</code> — <strong>pp. 1–4 전체</strong><br><span class="pdf-ref-detail">p.1 10개 공리 &amp; 예시 · p.2 유도 사실 5가지 · p.3 Subspace 정의 &amp; Span 정리 · p.4 Nul A 증명</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§4.1 Vector Spaces and Subspaces</strong> — <strong>pp. 226–234</strong><span class="tb-ref-detail"> (10개 공리, 부분공간 3조건, Nul A 증명)</span></span></div>
 
       <div class="practice-section">
         <div class="practice-label">📝 Practice #17 · Vector Spaces &amp; Subspaces</div>
@@ -4561,16 +4770,25 @@ LU 방법:      LU구하기 + 28 × 10 = LU + 280 flops</pre>
           <div class="q-body">
             <p><strong>True or False.</strong> Justify your answer.</p>
             <ol type="a">
-              <li>The set $B = \{1+t^2,\; t+t^2,\; 1+2t+t^2\}$ in $\mathbf{P}_2$ is linearly independent.</li>
-              <li>The set $B = \left\{ \begin{bmatrix}1&2&-5&11&-3\\2&4&-5&15&2\\1&2&0&4&5\\3&6&-5&19&-2\end{bmatrix},\; \begin{bmatrix}0&2&-5&11&-3\\2&4&-5&15&2\\1&2&0&4&5\\3&6&-5&19&-2\end{bmatrix} \right\}$ in $\mathbb{R}^{4\times5}$ is linearly independent.</li>
+              <li>The set $\mathcal{B} = \{1+t^2,\; t+t^2,\; 1+2t+t^2\}$ in $\mathbf{P}_2$ is linearly independent.</li>
+              <li>The set $\mathcal{B} = \left\{ \begin{bmatrix}1&2&-5&11&-3\\2&4&-5&15&2\\1&2&0&4&5\\3&6&-5&19&-2\end{bmatrix},\; \begin{bmatrix}0&2&-5&11&-3\\2&4&-5&15&2\\1&2&0&4&5\\3&6&-5&19&-2\end{bmatrix} \right\}$ in $\mathbb{R}^{4\times5}$ is linearly independent.</li>
             </ol>
           </div>
           <div class="toggle-row">
             <details class="sol-detail">
-              <summary>✅ 정답 보기</summary>
+              <summary>✅ 완전한 해설 보기</summary>
               <div class="toggle-body">
-                <p><strong>(a) True.</strong> $c_1(1+t^2)+c_2(t+t^2)+c_3(1+2t+t^2)=0$을 세우면 $c_1=c_2=c_3=0$만 성립.</p>
-                <p><strong>(b) True.</strong> 두 행렬의 차이는 첫 행의 $(1,1)$ 원소뿐이므로 어느 쪽도 다른 쪽의 스칼라 배가 아님.</p>
+                <p><strong>(a) True.</strong></p>
+                <p class='sol-step'>$c_1(1+t^2)+c_2(t+t^2)+c_3(1+2t+t^2)=0$ 전개:</p>
+                <p class='sol-step'>$(c_1+c_3) + (c_2+2c_3)t + (c_1+c_2+c_3)t^2 = 0$</p>
+                <p class='sol-step'>계수 비교: $\begin{cases}c_1+c_3=0\\c_2+2c_3=0\\c_1+c_2+c_3=0\end{cases}$</p>
+                <p class='sol-step'>(1)→$c_1=-c_3$, (2)→$c_2=-2c_3$을 (3)에 대입: $-c_3-2c_3+c_3=0 \Rightarrow c_3=0$</p>
+                <p class='sol-step'>$\Rightarrow c_1=0,\; c_2=0$ → trivial solution만 존재 → <strong>선형 독립 ✓</strong></p>
+
+                <p style="margin-top:12px"><strong>(b) True.</strong></p>
+                <p class='sol-step'>두 행렬 $M_1, M_2$는 $(1,1)$ 원소만 다르다: $M_1$은 1, $M_2$는 0.</p>
+                <p class='sol-step'>$c_1M_1 + c_2M_2 = 0$이면 $(1,1)$ 원소: $c_1\cdot1 + c_2\cdot0 = 0 \Rightarrow c_1=0$</p>
+                <p class='sol-step'>$(1,2)$ 원소: $c_1\cdot2 + c_2\cdot2 = 0 \Rightarrow c_2=0$ → <strong>선형 독립 ✓</strong></p>
               </div>
             </details>
           </div>
@@ -4583,10 +4801,13 @@ LU 방법:      LU구하기 + 28 × 10 = LU + 280 flops</pre>
           </div>
           <div class="toggle-row">
             <details class="sol-detail">
-              <summary>✅ 정답 보기</summary>
+              <summary>✅ 완전한 해설 보기</summary>
               <div class="toggle-body">
-                <p>$\text{Nul}\,A$ ($A = \begin{bmatrix}1&2&1\end{bmatrix}$)의 기저 문제와 동일.</p>
-                $$\left\{ \begin{bmatrix}-2\\1\\0\end{bmatrix},\; \begin{bmatrix}-1\\0\\1\end{bmatrix} \right\}$$
+                <p>이 집합은 $A = \begin{bmatrix}1&2&1\end{bmatrix}$에 대한 $\text{Nul}\,A$와 동일하다.</p>
+                <p class='sol-step'>$x + 2y + z = 0$에서 $y=s$, $z=t$ (free)로 놓으면 $x = -2s - t$</p>
+                <p class='sol-step'>$$\begin{bmatrix}x\\y\\z\end{bmatrix} = s\begin{bmatrix}-2\\1\\0\end{bmatrix} + t\begin{bmatrix}-1\\0\\1\end{bmatrix}$$</p>
+                <p class='sol-step'>$$\text{Basis} = \left\{ \begin{bmatrix}-2\\1\\0\end{bmatrix},\; \begin{bmatrix}-1\\0\\1\end{bmatrix} \right\}$$</p>
+                <p><em>(두 벡터는 자명하게 선형 독립이며 조건을 만족하는 모든 벡터를 span한다.)</em></p>
               </div>
             </details>
           </div>
@@ -4600,12 +4821,21 @@ LU 방법:      LU구하기 + 28 × 10 = LU + 280 flops</pre>
           </div>
           <div class="toggle-row">
             <details class="sol-detail">
-              <summary>✅ 정답 보기</summary>
+              <summary>✅ 완전한 해설 보기</summary>
               <div class="toggle-body">
-                <p><strong>Basis for Nul $A$:</strong>
-                $$\left\{ \begin{bmatrix}-2\\1\\0\\0\\0\end{bmatrix},\; \begin{bmatrix}-4\\0\\7/5\\1\\0\end{bmatrix} \right\}$$</p>
-                <p><strong>Basis for Col $A$:</strong> ($A$의 pivot column인 1, 3, 5열)
-                $$\left\{ \begin{bmatrix}1\\2\\1\\3\end{bmatrix},\; \begin{bmatrix}-5\\-5\\0\\-5\end{bmatrix},\; \begin{bmatrix}-3\\2\\5\\-2\end{bmatrix} \right\}$$</p>
+                <p><strong>Pivot 분석:</strong> $B$에서 pivot 열 = 1, 3, 5열. Free variables: $x_2, x_4$.</p>
+                <p><strong>Basis for Nul $A$:</strong></p>
+                <p class='sol-step'>$x_2=s$, $x_4=t$로 놓고 $B$의 각 행에서 back-substitution:</p>
+                <p class='sol-step'>Row 3: $-9x_5=0 \Rightarrow x_5=0$</p>
+                <p class='sol-step'>Row 2: $5x_3 - 7x_4 + 8x_5 = 0 \Rightarrow x_3 = \tfrac{7}{5}t$</p>
+                <p class='sol-step'>Row 1: $x_1 + 2x_2 + 4x_4 + 5x_5 = 0 \Rightarrow x_1 = -2s - 4t$</p>
+                <p class='sol-step'>$$\begin{bmatrix}x_1\\x_2\\x_3\\x_4\\x_5\end{bmatrix} = s\begin{bmatrix}-2\\1\\0\\0\\0\end{bmatrix} + t\begin{bmatrix}-4\\0\\7/5\\1\\0\end{bmatrix}$$</p>
+                <p class='sol-step'>$$\text{Basis for Nul}\,A = \left\{ \begin{bmatrix}-2\\1\\0\\0\\0\end{bmatrix},\; \begin{bmatrix}-4\\0\\7/5\\1\\0\end{bmatrix} \right\}$$</p>
+
+                <p style="margin-top:12px"><strong>Basis for Col $A$:</strong></p>
+                <p class='sol-step'>pivot 열은 $B$에서 1, 3, 5열 → <em>원래 행렬 $A$</em>의 1, 3, 5열을 선택.</p>
+                <p class='sol-step'>$$\text{Basis for Col}\,A = \left\{ \begin{bmatrix}1\\2\\1\\3\end{bmatrix},\; \begin{bmatrix}-5\\-5\\0\\-5\end{bmatrix},\; \begin{bmatrix}-3\\2\\5\\-2\end{bmatrix} \right\}$$</p>
+                <p><em>주의: $B$의 pivot column을 그대로 쓰면 안 된다 — $\text{Col}\,A \neq \text{Col}\,B$.</em></p>
               </div>
             </details>
           </div>
@@ -4618,9 +4848,13 @@ LU 방법:      LU구하기 + 28 × 10 = LU + 280 flops</pre>
           </div>
           <div class="toggle-row">
             <details class="sol-detail">
-              <summary>✅ 정답 보기</summary>
+              <summary>✅ 완전한 해설 보기</summary>
               <div class="toggle-body">
-                <p>$4\mathbf{v}_1+5\mathbf{v}_2-3\mathbf{v}_3=\mathbf{0}$이므로 $\mathbf{v}_3$는 $\mathbf{v}_1, \mathbf{v}_2$의 선형결합. 따라서 $\{\mathbf{v}_1,\mathbf{v}_2\}$, $\{\mathbf{v}_1,\mathbf{v}_3\}$, $\{\mathbf{v}_2,\mathbf{v}_3\}$ 모두 가능한 기저.</p>
+                <p class='sol-step'>$4\mathbf{v}_1+5\mathbf{v}_2-3\mathbf{v}_3=\mathbf{0}$을 $\mathbf{v}_3$에 대해 풀면:</p>
+                <p class='sol-step'>$\mathbf{v}_3 = \tfrac{4}{3}\mathbf{v}_1 + \tfrac{5}{3}\mathbf{v}_2 \in \text{Span}\{\mathbf{v}_1,\mathbf{v}_2\}$</p>
+                <p class='sol-step'>따라서 $H = \text{Span}\{\mathbf{v}_1,\mathbf{v}_2,\mathbf{v}_3\} = \text{Span}\{\mathbf{v}_1,\mathbf{v}_2\}$.</p>
+                <p class='sol-step'>$\mathbf{v}_1$과 $\mathbf{v}_2$는 비례하지 않으므로 선형 독립 → $\{\mathbf{v}_1,\mathbf{v}_2\}$는 $H$의 기저.</p>
+                <p>같은 논리로 $\mathbf{v}_1,\mathbf{v}_3$도 표현 가능: $\{\mathbf{v}_1,\mathbf{v}_3\}$, $\{\mathbf{v}_2,\mathbf{v}_3\}$ 모두 가능한 기저.</p>
               </div>
             </details>
           </div>
@@ -4632,17 +4866,22 @@ LU 방법:      LU구하기 + 28 × 10 = LU + 280 flops</pre>
             <p><strong>True or False.</strong> Justify.</p>
             <ol type="a">
               <li>Suppose $\mathbf{v}_1,\cdots,\mathbf{v}_4$ are vectors in $\mathbb{R}^4$ such that $\mathbb{R}^4 = \text{Span}\{\mathbf{v}_1,\cdots,\mathbf{v}_4\}$. Then $\{\mathbf{v}_1,\cdots,\mathbf{v}_4\}$ is a basis for $\mathbb{R}^4$.</li>
-              <li>Let $B = \{\mathbf{v}_1,\cdots,\mathbf{v}_n\}$ be a linearly independent set in $\mathbb{R}^n$. Then $B$ is a basis for $\mathbb{R}^n$.</li>
+              <li>Let $\mathcal{B} = \{\mathbf{v}_1,\cdots,\mathbf{v}_n\}$ be a linearly independent set in $\mathbb{R}^n$. Then $\mathcal{B}$ is a basis for $\mathbb{R}^n$.</li>
               <li>Every vector space has a basis.</li>
             </ol>
           </div>
           <div class="toggle-row">
             <details class="sol-detail">
-              <summary>✅ 정답 보기</summary>
+              <summary>✅ 완전한 해설 보기</summary>
               <div class="toggle-body">
-                <p><strong>(a) True.</strong> $A = [\mathbf{v}_1\cdots\mathbf{v}_4]$는 $4\times4$ 행렬. $\mathbb{R}^4 = \text{Span}\{\mathbf{v}_i\}$이면 모든 행에 pivot이 존재 → 열들도 선형독립 → 기저.</p>
-                <p><strong>(b) True.</strong> $A = [\mathbf{v}_1\cdots\mathbf{v}_n]$은 $n\times n$. 선형독립이므로 $n$개의 pivot → 모든 $\mathbb{R}^n$을 span → 기저.</p>
-                <p><strong>(c) False.</strong> 예: 기저가 없는 벡터공간 존재 (무한차원 벡터공간에서 Axiom of Choice 없이는 기저 구성 불가).</p>
+                <p><strong>(a) True.</strong></p>
+                <p class='sol-step'>$A = [\mathbf{v}_1\cdots\mathbf{v}_4]$는 $4\times4$ 행렬. $\mathbb{R}^4 = \text{Span}\{\mathbf{v}_i\}$이면 $A\mathbf{x}=\mathbf{b}$가 모든 $\mathbf{b}$에 대해 consistent → 모든 행에 pivot → 총 4개의 pivot → 열들이 선형 독립 → 기저. ($n$차원 공간에서 $n$개 spanning = 자동으로 LI)</p>
+
+                <p style="margin-top:12px"><strong>(b) True.</strong></p>
+                <p class='sol-step'>$A = [\mathbf{v}_1\cdots\mathbf{v}_n]$은 $n\times n$ 행렬. 선형 독립이면 pivot이 $n$개 → $A$가 invertible → 모든 $\mathbf{b} \in \mathbb{R}^n$에 대해 $A\mathbf{x}=\mathbf{b}$ 유일해 → $\text{Span} = \mathbb{R}^n$ → 기저. ($n$차원 공간에서 $n$개 LI = 자동으로 spanning)</p>
+
+                <p style="margin-top:12px"><strong>(c) False.</strong> (이 수업 맥락에서)</p>
+                <p class='sol-step'>표준 집합론(ZFC)에서는 선택 공리(Axiom of Choice)에 의해 모든 벡터공간이 기저를 가진다. 그러나 선택 공리 없이는 기저를 "명시적으로 구성"할 수 없는 무한차원 벡터공간이 존재할 수 있다.</p>
               </div>
             </details>
           </div>
@@ -4654,9 +4893,474 @@ LU 방법:      LU구하기 + 28 × 10 = LU + 280 flops</pre>
   </div>
 
 
+  <!-- ────────── CLASS 23 ────────── -->
+  <div class="section" id="c23">
+    <div class="section-header">
+      <span class="class-num">Class 23</span>
+      The Dimension of a Vector Space (차원)
+    </div>
+    <div class="section-body">
+      <div class="note-block">
+        <div class="label">📌 이 개념의 의의</div>
+        <p><strong>차원(dimension)</strong>은 벡터공간을 기술하는 데 필요한 "최소한의 벡터 개수"다. 동형사상(isomorphism)이 추상 벡터공간과 $\mathbb{R}^n$을 연결한다는 사실, 그리고 모든 기저의 크기는 동일하다는 정리가 차원을 잘 정의되게(well-defined) 만든다. Rank-Nullity 정리는 이 차원 개념으로 행렬의 구조를 정량화한다.</p>
+      </div>
+
+      <h3>1. 동형사상 (Isomorphism)</h3>
+      <div class="def-block">
+        <div class="label">정의 · 동형사상 (Isomorphism)</div>
+        <p>벡터공간 $V$에서 $W$로의 <strong>전단사(one-to-one &amp; onto) 선형변환</strong>을 $V$에서 $W$로의 <strong>동형사상(isomorphism)</strong>이라 한다.</p>
+        <p><em>어원: iso = 같음(equal), morph = 형태(form) → "같은 형태"</em></p>
+        <p>$V$와 $W$ 사이에 동형사상이 존재하면 $V \cong W$라 쓰고 "$V$와 $W$는 동형이다"고 한다.</p>
+      </div>
+
+      <div class="example-block">
+        <div class="label">예시 — Span의 동형</div>
+        <p>$\mathbf{v}_1, \mathbf{v}_2$가 $\mathbb{R}^3$에서 선형 독립인 벡터이고 $H = \text{Span}\{\mathbf{v}_1, \mathbf{v}_2\}$이면,</p>
+        <p>좌표 사상 $\mathbf{x} \mapsto [\mathbf{x}]_{\mathcal{B}}$는 $H$에서 $\mathbb{R}^2$로의 동형사상이다. 즉 $H \cong \mathbb{R}^2$.</p>
+        <p><em>직관: $H$는 원점을 지나는 평면. 기저 $\{\mathbf{v}_1, \mathbf{v}_2\}$를 "좌표축"으로 삼으면 $H$가 익숙한 $\mathbb{R}^2$처럼 보인다.</em></p>
+      </div>
+
+      <div class="example-block">
+        <div class="label">예시 — 좌표 사상으로 선형 종속 판별 ($P_2$에서)</div>
+        <p>$1+2t^2$, $4+t+5t^2$, $3+2t$가 $P_2$에서 선형 종속임을 확인하라.</p>
+        <p><strong>좌표 표현:</strong> 표준 기저 $\{1,t,t^2\}$에 대해</p>
+        <p class='sol-step'>$1+2t^2 \;\leftrightarrow\; (1,0,2)$, $\quad 4+t+5t^2 \;\leftrightarrow\; (4,1,5)$, $\quad 3+2t \;\leftrightarrow\; (3,2,0)$</p>
+        <p class='sol-step'>$$\det\begin{bmatrix}1&4&3\\0&1&2\\2&5&0\end{bmatrix} = 1(0-10) - 4(0-4) + 3(0-2) = -10+16-6 = 0$$</p>
+        <p>행렬식이 0이므로 선형 종속. $\square$</p>
+        <p><em>핵심: $V \cong \mathbb{R}^n$이면 선형 독립·종속 관계가 보존된다 → $\mathbb{R}^n$에서 행렬식으로 판별 가능.</em></p>
+      </div>
+
+      <h3>2. 차원 (Dimension)</h3>
+
+      <div class="thm-block">
+        <div class="label">Theorem — 기저의 벡터 수 유일성</div>
+        <p><strong>(1)</strong> 벡터공간 $V$가 $n$개 벡터로 이루어진 기저를 가지면, $V$에서 $n$개 초과의 벡터를 포함하는 집합은 반드시 <strong>선형 종속</strong>이다.</p>
+        <p><strong>(2)</strong> 따라서 $V$의 모든 기저는 정확히 $n$개의 벡터로 구성된다.</p>
+        <p><em>증명 아이디어: $V \cong \mathbb{R}^n$이고, $\mathbb{R}^n$에서 $n$초과 벡터는 선형 종속임이 이미 증명되었다. 동형사상은 선형 종속 관계를 보존하므로 $V$에서도 성립한다.</em></p>
+      </div>
+
+      <div class="def-block">
+        <div class="label">정의 · 차원 (Dimension)</div>
+        <p>$V$가 유한 집합으로 span되면 $V$는 <strong>유한차원(finite-dimensional)</strong>이며, $V$의 <strong>차원(dimension)</strong></p>
+        $$\dim V := \text{(V의 기저의 벡터 수)}$$
+        <p>는 잘 정의된다(any two bases have the same size). 영벡터 공간 $\{0\}$의 차원은 $0$으로 정의한다. $V$가 유한 집합으로 span되지 않으면 <strong>무한차원(infinite-dimensional)</strong>이라 한다.</p>
+      </div>
+
+      <div class="example-block">
+        <div class="label">표준 차원 예시</div>
+        <p>$\dim \mathbb{R}^n = n$ &emsp; (표준 기저 $\mathbf{e}_1, \ldots, \mathbf{e}_n$)</p>
+        <p>$\dim P_n = n+1$ &emsp; (표준 기저 $\{1, t, t^2, \ldots, t^n\}$: $n+1$개)</p>
+        <p>$\dim P = \infty$ &emsp; ($P$는 모든 차수의 다항식 공간; 임의의 유한 집합으로 span 불가)</p>
+      </div>
+
+      <div class="example-block">
+        <div class="label">예시 — 부분공간의 차원 계산</div>
+        <p>다음 부분공간 $H$의 차원을 구하라.</p>
+        $$H = \left\{ \begin{bmatrix}a-3b+6c\\5a+4d\\b-2c-d\\5d\end{bmatrix} : a,b,c,d \in \mathbb{R} \right\}$$
+        <p><strong>생성 집합 추출:</strong></p>
+        <p class='sol-step'>$= a\begin{bmatrix}1\\5\\0\\0\end{bmatrix} + b\begin{bmatrix}-3\\0\\1\\0\end{bmatrix} + c\begin{bmatrix}6\\0\\-2\\0\end{bmatrix} + d\begin{bmatrix}0\\4\\-1\\5\end{bmatrix}$</p>
+        <p><strong>핵심 관찰:</strong> $\mathbf{v}_3 = \begin{bmatrix}6\\0\\-2\\0\end{bmatrix} = -2\begin{bmatrix}-3\\0\\1\\0\end{bmatrix} = -2\mathbf{v}_2$이므로 $\mathbf{v}_3$은 제거 가능.</p>
+        <p><strong>나머지 $\{\mathbf{v}_1, \mathbf{v}_2, \mathbf{v}_4\}$의 선형 독립 확인:</strong></p>
+        <p class='sol-step'>$$\begin{bmatrix}1&-3&0\\5&0&4\\0&1&-1\\0&0&5\end{bmatrix} \xrightarrow{R_2-5R_1} \begin{bmatrix}1&-3&0\\0&15&4\\0&1&-1\\0&0&5\end{bmatrix} \xrightarrow{R_3-\frac{1}{15}R_2} \begin{bmatrix}1&-3&0\\0&15&4\\0&0&-\frac{19}{15}\\0&0&5\end{bmatrix}$$</p>
+        <p class='sol-step'>마지막 두 행의 3열: $-\frac{19}{15}$와 $5$. $R_4 \to R_4 + \frac{75}{19}R_3$하면 $R_4 = \mathbf{0}$. → pivot 3개.</p>
+        <p>$\Rightarrow$ $\{\mathbf{v}_1, \mathbf{v}_2, \mathbf{v}_4\}$은 선형 독립 → $H$의 기저 → $\dim H = \boxed{3}$</p>
+      </div>
+
+      <div class="example-block">
+        <div class="label">예시 — $\mathbb{R}^3$의 $k$차원 부분공간</div>
+        <p>$k=0$: $\{\mathbf{0}\}$ (영공간)</p>
+        <p>$k=1$: 원점을 지나는 <strong>직선</strong> ($\text{Span}\{\mathbf{v}\}$, $\mathbf{v} \neq \mathbf{0}$)</p>
+        <p>$k=2$: 원점을 지나는 <strong>평면</strong> ($\text{Span}\{\mathbf{v}_1, \mathbf{v}_2\}$, 선형 독립)</p>
+        <p>$k=3$: $\mathbb{R}^3$ 전체</p>
+      </div>
+
+      <h3>3. 차원에 관한 주요 정리들</h3>
+
+      <div class="thm-block">
+        <div class="label">Theorem — 부분공간의 기저 확장</div>
+        <p>유한차원 벡터공간 $V$의 부분공간 $H$에 대해:</p>
+        <ol>
+          <li>$H$의 선형 독립 집합은 $H$의 기저로 <strong>확장</strong>될 수 있다.</li>
+          <li>$H$는 유한차원이며 $\dim H \leq \dim V$.</li>
+        </ol>
+      </div>
+
+      <div class="thm-block">
+        <div class="label">Theorem — $n$차원 공간에서의 기저 판별 (편리한 동치)</div>
+        <p>$\dim V = n \geq 1$일 때:</p>
+        <p>① 정확히 $n$개인 <strong>선형 독립</strong> 집합 → 자동으로 $V$의 <strong>기저</strong></p>
+        <p>② 정확히 $n$개이고 $V$를 <strong>span</strong>하는 집합 → 자동으로 $V$의 <strong>기저</strong></p>
+        <p><em>직관: $n$개짜리 LI면 "누락 없이" span도 자동. $n$개짜리 spanning이면 "중복 없이" LI도 자동.</em></p>
+      </div>
+
+      <h3>4. Rank-Nullity 정리</h3>
+
+      <div class="def-block">
+        <div class="label">정의 · Rank &amp; Nullity</div>
+        <p>$A \in \mathbb{R}^{m \times n}$에 대해:</p>
+        <p>$\text{nullity}\, A := \dim \text{Nul}\, A$ = <strong>free variable의 수</strong> (= $n$ - pivot 수)</p>
+        <p>$\text{rank}\, A := \dim \text{Col}\, A$ = <strong>pivot column의 수</strong></p>
+      </div>
+
+      <div class="thm-block">
+        <div class="label">Rank-Nullity Theorem (Rank 정리)</div>
+        $$\text{rank}\, A + \text{nullity}\, A = n \quad (A\text{의 열 수})$$
+        <p><em>직관: $n$개의 열 = pivot column(정보 있는 것) + free variable column(정보 없는 것). 이 둘의 차원이 정확히 $n$을 이룬다.</em></p>
+        <p>예: $A$가 $3 \times 5$ 행렬이고 rank $A = 2$이면 nullity $A = 5 - 2 = 3$.</p>
+      </div>
+
+      <div class="deepdive-block">
+        <p class="deepdive-label">📐 개념 심화 — 차원의 의미와 Rank-Nullity</p>
+        <p class="deepdive-intro"><strong>차원은 벡터공간의 "자유도"를 수치로 요약한 것이다.</strong> Rank-Nullity 정리는 $A\mathbf{x} = \mathbf{b}$의 구조를 한 줄로 요약한다: 행렬의 $n$개 열 중 일부는 Col A를 구성하고(rank), 나머지는 Nul A의 자유도를 결정한다(nullity). 둘을 합치면 항상 $n$.</p>
+        <div class="example-block">
+          <div class="label">Rank-Nullity 활용 예</div>
+          <p>$A$가 $7 \times 9$ 행렬이고 $\text{Nul}\, A$의 기저가 2개 벡터라면?</p>
+          <p class='sol-step'>nullity $A = 2$ $\Rightarrow$ rank $A = 9 - 2 = 7$</p>
+          <p>즉 Col $A = \mathbb{R}^7$ (모든 행이 pivot) — $A\mathbf{x} = \mathbf{b}$는 모든 $\mathbf{b} \in \mathbb{R}^7$에 대해 consistent.</p>
+        </div>
+      </div>
+
+      <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#23_dimension_handout.pdf</code> — <strong>pp. 1–3 전체</strong><br><span class="pdf-ref-detail">p.1 동형사상 정의 &amp; 예시 · p.2 차원 정의, 표준 예시, dim H 계산 · p.3 기저 확장 정리, Rank-Nullity</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§4.5 The Dimension of a Vector Space</strong> — <strong>pp. 264–272</strong><span class="tb-ref-detail"> (dimension, rank-nullity theorem)</span></span></div>
+
+      <div class="practice-section">
+        <div class="practice-label">📝 Practice #24 · Coordinate Mapping</div>
+
+        <div class="practice-item">
+          <div class="q-num">Problem 1</div>
+          <div class="q-body">
+            <p>Let $V$ be a vector space with a basis $\mathcal{B} = \{\mathbf{b}_1, \mathbf{b}_2, \cdots, \mathbf{b}_n\}$. Show that the coordinate mapping $T: V \to \mathbb{R}^n$ defined by $T(\mathbf{x}) = [\mathbf{x}]_{\mathcal{B}}$ satisfies $T(c\mathbf{x}) = cT(\mathbf{x})$ for all $\mathbf{x} \in V$ and for all scalars $c$.</p>
+          </div>
+          <div class="toggle-row">
+            <details class="sol-detail">
+              <summary>✅ 완전한 해설 보기</summary>
+              <div class="toggle-body">
+                <p>$\mathbf{x} \in V$이면 기저의 유일 표현 정리에 의해 $\mathbf{x} = c_1\mathbf{b}_1 + c_2\mathbf{b}_2 + \cdots + c_n\mathbf{b}_n$인 유일한 스칼라 $c_1,\ldots,c_n$이 존재한다. 따라서:</p>
+                <p class='sol-step'>$c\mathbf{x} = (cc_1)\mathbf{b}_1 + (cc_2)\mathbf{b}_2 + \cdots + (cc_n)\mathbf{b}_n$</p>
+                <p class='sol-step'>$\Rightarrow\; T(c\mathbf{x}) = [c\mathbf{x}]_{\mathcal{B}} = \begin{bmatrix}cc_1\\cc_2\\\vdots\\cc_n\end{bmatrix} = c\begin{bmatrix}c_1\\c_2\\\vdots\\c_n\end{bmatrix} = c\,[\mathbf{x}]_{\mathcal{B}} = cT(\mathbf{x})$</p>
+                <p>$\square$</p>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="practice-item">
+          <div class="q-num">Problem 2</div>
+          <div class="q-body">
+            <p>Find the vector $\mathbf{x}$ determined by the given coordinate vector $[\mathbf{x}]_{\mathcal{B}}$ and the given basis $\mathcal{B} = \{\mathbf{b}_1, \mathbf{b}_2, \mathbf{b}_3\}$.</p>
+            $$\mathbf{b}_1 = \begin{bmatrix}1\\-4\\3\end{bmatrix},\quad \mathbf{b}_2 = \begin{bmatrix}5\\2\\-2\end{bmatrix},\quad \mathbf{b}_3 = \begin{bmatrix}4\\-7\\0\end{bmatrix},\quad [\mathbf{x}]_{\mathcal{B}} = \begin{bmatrix}3\\0\\-1\end{bmatrix}$$
+          </div>
+          <div class="toggle-row">
+            <details class="sol-detail">
+              <summary>✅ 완전한 해설 보기</summary>
+              <div class="toggle-body">
+                <p>$[\mathbf{x}]_{\mathcal{B}} = \begin{bmatrix}3\\0\\-1\end{bmatrix}$이므로 $\mathbf{x} = 3\mathbf{b}_1 + 0\mathbf{b}_2 + (-1)\mathbf{b}_3$.</p>
+                <p class='sol-step'>$$\mathbf{x} = 3\begin{bmatrix}1\\-4\\3\end{bmatrix} - 1\begin{bmatrix}4\\-7\\0\end{bmatrix} = \begin{bmatrix}3\\-12\\9\end{bmatrix} + \begin{bmatrix}-4\\7\\0\end{bmatrix} = \boxed{\begin{bmatrix}-1\\-5\\9\end{bmatrix}}$$</p>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="practice-item">
+          <div class="q-num">Problem 3</div>
+          <div class="q-body">
+            <p>Prove that the set $\mathcal{B} = \{1+t^2,\; t+t^2,\; 1+2t+t^2\}$ is a basis for $\mathbf{P}_2$.</p>
+          </div>
+          <div class="toggle-row">
+            <details class="sol-detail">
+              <summary>✅ 완전한 해설 보기</summary>
+              <div class="toggle-body">
+                <p>$P_2$의 표준 기저 $\{1, t, t^2\}$에 대한 좌표로 표현하면:</p>
+                <p class='sol-step'>$1+t^2 \;\leftrightarrow\; (1,0,1)$, $\quad t+t^2 \;\leftrightarrow\; (0,1,1)$, $\quad 1+2t+t^2 \;\leftrightarrow\; (1,2,1)$</p>
+                <p><strong>선형 독립 확인:</strong></p>
+                <p class='sol-step'>$$\det\begin{bmatrix}1&0&1\\0&1&1\\1&2&1\end{bmatrix} = 1(1-2) - 0 + 1(0-1) = -1 - 1 = -2 \neq 0$$</p>
+                <p>행렬식이 $0$이 아니므로 세 좌표 벡터는 $\mathbb{R}^3$에서 선형 독립 → $P_2$에서도 선형 독립.</p>
+                <p><strong>결론:</strong> $\dim P_2 = 3$이고 선형 독립인 벡터가 정확히 3개 → 자동으로 $P_2$의 기저. $\square$</p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-section">
+        <div class="practice-label">📝 Practice #25 · Dimension</div>
+
+        <div class="practice-item">
+          <div class="q-num">Problem 1</div>
+          <div class="q-body">
+            <p>$V$는 영이 아닌 유한차원 벡터공간이고, 아래의 벡터들은 $V$에 속한다.</p>
+            <p><strong>True or False.</strong> Justify:</p>
+            <ol type="a">
+              <li>If there exists a set $\{v_1, \cdots, v_p\}$ that spans $V$, then $\dim V \leq p$.</li>
+              <li>If there exists a linearly independent set $\{v_1, \cdots, v_p\}$ in $V$, then $\dim V \geq p$.</li>
+              <li>If $\dim V = p$, then there exists a spanning set of $p+1$ vectors in $V$.</li>
+              <li>If there exists a linearly dependent set $\{v_1, \cdots, v_p\}$ in $V$, then $\dim V \leq p$.</li>
+            </ol>
+          </div>
+          <div class="toggle-row">
+            <details class="sol-detail">
+              <summary>✅ 완전한 해설 보기</summary>
+              <div class="toggle-body">
+                <p><strong>(a) True.</strong></p>
+                <p class='sol-step'>$\{v_1,\cdots,v_p\}$가 $V$를 span하면, 이 집합에서 기저를 추출할 수 있다. 추출된 기저의 크기 $\leq p$이므로 $\dim V \leq p$.</p>
+
+                <p style="margin-top:12px"><strong>(b) True.</strong></p>
+                <p class='sol-step'>$\dim V = n$이라 하면, $V$의 LI 집합은 최대 $n$개의 벡터를 포함할 수 있다(더 많으면 LD). 따라서 $\{v_1,\cdots,v_p\}$가 LI이면 $p \leq n = \dim V$.</p>
+
+                <p style="margin-top:12px"><strong>(c) True.</strong></p>
+                <p class='sol-step'>$\dim V = p$이면 기저 $\{\mathbf{b}_1,\cdots,\mathbf{b}_p\}$가 존재. 임의의 $\mathbf{v} \in V$에 대해 $\{\mathbf{b}_1,\cdots,\mathbf{b}_p,\mathbf{v}\}$는 $p+1$개의 벡터로 이루어진 spanning set. (기저가 $V$를 이미 span하므로 벡터를 추가해도 span 성질 유지.)</p>
+
+                <p style="margin-top:12px"><strong>(d) False.</strong></p>
+                <p class='sol-step'>반례: $V = \mathbb{R}^{100}$에서 $\{\mathbf{e}_1, \mathbf{e}_1\}$은 $p=2$인 LD 집합이지만 $\dim V = 100 \gg 2 = p$. LD 집합이 존재한다는 것은 차원에 대한 상한을 주지 않는다.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="practice-item">
+          <div class="q-num">Problem 2</div>
+          <div class="q-body">
+            <p>Prove that the first four Hermite polynomials $1,\; 2t,\; -2+4t^2,\; -12t+8t^3$ are linearly independent in $\mathbf{P}_3$ using the coordinate mapping idea. Then explain why $S = \{1,\; 2t,\; -2+4t^2,\; -12t+8t^3\}$ must be a basis of $\mathbf{P}_3$.</p>
+          </div>
+          <div class="toggle-row">
+            <details class="sol-detail">
+              <summary>✅ 완전한 해설 보기</summary>
+              <div class="toggle-body">
+                <p><strong>좌표 벡터 표현:</strong> $P_3$의 표준 기저 $\{1, t, t^2, t^3\}$에 대해</p>
+                <p class='sol-step'>$1 \;\leftrightarrow\; \begin{bmatrix}1\\0\\0\\0\end{bmatrix}$, $\quad 2t \;\leftrightarrow\; \begin{bmatrix}0\\2\\0\\0\end{bmatrix}$, $\quad -2+4t^2 \;\leftrightarrow\; \begin{bmatrix}-2\\0\\4\\0\end{bmatrix}$, $\quad -12t+8t^3 \;\leftrightarrow\; \begin{bmatrix}0\\-12\\0\\8\end{bmatrix}$</p>
+                <p><strong>좌표 행렬의 행렬식 계산:</strong></p>
+                <p class='sol-step'>$$M = \begin{bmatrix}1&0&-2&0\\0&2&0&-12\\0&0&4&0\\0&0&0&8\end{bmatrix}$$</p>
+                <p class='sol-step'>$M$은 상삼각행렬(upper triangular) → $\det M = 1 \cdot 2 \cdot 4 \cdot 8 = 64 \neq 0$</p>
+                <p>행렬식이 $0$이 아니므로 네 좌표 벡터는 $\mathbb{R}^4$에서 선형 독립 → 동형사상이 선형 독립을 보존하므로 $S$는 $P_3$에서도 <strong>선형 독립</strong>.</p>
+                <p style="margin-top:10px"><strong>기저임을 보이는 이유:</strong></p>
+                <p class='sol-step'>$\dim P_3 = 4$이고 $S$는 $P_3$에서 선형 독립인 벡터 정확히 4개를 포함한다. $n$차원 공간에서 "정확히 $n$개의 LI 벡터 → 자동으로 기저" 정리에 의해 $S$는 $P_3$의 기저다. $\square$</p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ────────── CLASS 24 ────────── -->
+  <div class="section" id="c24">
+    <div class="section-header">
+      <span class="class-num">Class 24</span>
+      Change of Basis (기저 변환)
+    </div>
+    <div class="section-body">
+
+      <!-- ★ 핵심 요약 -->
+      <div class="note-block">
+        <div class="label">⚡ 핵심 요약</div>
+        <p><strong>기저가 바뀌면 좌표는 어떻게 바뀌는가?</strong> — 기저 $\mathcal{B}$에서의 좌표 $[\mathbf{x}]_{\mathcal{B}}$를 기저 $\mathcal{S}$에서의 좌표 $[\mathbf{x}]_{\mathcal{S}}$로 변환하는 행렬이 <strong>기저 변환 행렬(change-of-coordinates matrix)</strong> $M_{\mathcal{S} \leftarrow \mathcal{B}}$이다.</p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <tr style="background:#e8f0f7;">
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">항목</th>
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">내용</th>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">변환 공식</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$[\mathbf{x}]_{\mathcal{S}} = M_{\mathcal{S}\leftarrow\mathcal{B}}\,[\mathbf{x}]_{\mathcal{B}}$</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">행렬 구성</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$M_{\mathcal{S}\leftarrow\mathcal{B}} = \bigl[[\mathbf{b}_1]_{\mathcal{S}}\ \cdots\ [\mathbf{b}_n]_{\mathcal{S}}\bigr]$ — $\mathcal{B}$의 각 벡터를 $\mathcal{S}$-좌표로 열에 나열</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">역행렬</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$(M_{\mathcal{S}\leftarrow\mathcal{B}})^{-1} = M_{\mathcal{B}\leftarrow\mathcal{S}}$ — 반대 방향 변환</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">$\mathbb{R}^n$ 특수 경우</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$[\mathcal{S}\,|\,\mathbf{b}_i]$ 행 축소로 $[\mathbf{b}_i]_{\mathcal{S}}$ 계산 → 전체 열을 한 번에 구하려면 $[\mathcal{S}\,|\,\mathcal{B}] \xrightarrow{\text{행축소}} [I\,|\,M_{\mathcal{S}\leftarrow\mathcal{B}}]$</td>
+          </tr>
+        </table>
+      </div>
+
+      <hr class="divider"/>
+
+      <!-- 상세 개념 -->
+      <h3>1. 기저와 좌표 복습</h3>
+      <div class="def-block">
+        <div class="label">배경</div>
+        <p>$n$차원 벡터공간 $V$에 기저 $\mathcal{B} = \{\mathbf{b}_1,\ldots,\mathbf{b}_n\}$를 고정하면 각 $\mathbf{x} \in V$는 유일한 좌표 벡터 $[\mathbf{x}]_{\mathcal{B}} \in \mathbb{R}^n$으로 "이름표"가 붙는다. 같은 $\mathbf{x}$라도 기저가 달라지면 이름표(좌표)가 달라진다. <strong>기저 변환 행렬</strong>은 두 이름표 사이의 변환 규칙을 담는다.</p>
+      </div>
+
+      <h3>2. 기저 변환 행렬 (Change-of-Coordinates Matrix)</h3>
+      <div class="thm-block">
+        <div class="label">정의 & 정리 · $M_{\mathcal{S}\leftarrow\mathcal{B}}$</div>
+        <p>$\mathcal{B} = \{\mathbf{b}_1,\ldots,\mathbf{b}_n\}$과 $\mathcal{S} = \{\mathbf{s}_1,\ldots,\mathbf{s}_n\}$가 벡터공간 $V$의 기저이면, 모든 $\mathbf{x}\in V$에 대해</p>
+        $$[\mathbf{x}]_{\mathcal{S}} = M_{\mathcal{S}\leftarrow\mathcal{B}}\,[\mathbf{x}]_{\mathcal{B}}$$
+        <p>을 만족하는 $n\times n$ 행렬 $M_{\mathcal{S}\leftarrow\mathcal{B}}$가 유일하게 존재하며:</p>
+        $$M_{\mathcal{S}\leftarrow\mathcal{B}} = \bigl[[\mathbf{b}_1]_{\mathcal{S}}\ [\mathbf{b}_2]_{\mathcal{S}}\ \cdots\ [\mathbf{b}_n]_{\mathcal{S}}\bigr]$$
+        <p>$M_{\mathcal{S}\leftarrow\mathcal{B}}$의 열들은 $\mathcal{S}$에 대한 선형 독립 벡터 → $M_{\mathcal{S}\leftarrow\mathcal{B}}$는 <strong>가역</strong>이며:</p>
+        $$(M_{\mathcal{S}\leftarrow\mathcal{B}})^{-1} = M_{\mathcal{B}\leftarrow\mathcal{S}}$$
+      </div>
+
+      <h3>3. 예시</h3>
+      <div class="example-block">
+        <div class="label">예시 1 — 직접 계산 (추상 벡터공간)</div>
+        <p>$\mathcal{B} = \{\mathbf{b}_1,\mathbf{b}_2\}$, $\mathcal{S} = \{\mathbf{s}_1,\mathbf{s}_2\}$가 $V$의 기저이고 $\mathbf{b}_1 = 4\mathbf{s}_1+\mathbf{s}_2$, $\mathbf{b}_2 = -6\mathbf{s}_1+\mathbf{s}_2$. $\mathbf{x} = 3\mathbf{b}_1+\mathbf{b}_2$일 때 $[\mathbf{x}]_{\mathcal{S}}$ 구하기.</p>
+        <p class='sol-step'>$[\mathbf{b}_1]_{\mathcal{S}} = \begin{bmatrix}4\\1\end{bmatrix}$, $[\mathbf{b}_2]_{\mathcal{S}} = \begin{bmatrix}-6\\1\end{bmatrix}$ $\;\Rightarrow\;$ $M_{\mathcal{S}\leftarrow\mathcal{B}} = \begin{bmatrix}4&-6\\1&1\end{bmatrix}$</p>
+        <p class='sol-step'>$[\mathbf{x}]_{\mathcal{B}} = \begin{bmatrix}3\\1\end{bmatrix}$ $\;\Rightarrow\;$ $[\mathbf{x}]_{\mathcal{S}} = \begin{bmatrix}4&-6\\1&1\end{bmatrix}\begin{bmatrix}3\\1\end{bmatrix} = \begin{bmatrix}12-6\\3+1\end{bmatrix} = \boxed{\begin{bmatrix}6\\4\end{bmatrix}}$</p>
+        <p><em>검증: $\mathbf{x} = 3\mathbf{b}_1+\mathbf{b}_2 = 3(4\mathbf{s}_1+\mathbf{s}_2)+(-6\mathbf{s}_1+\mathbf{s}_2) = 6\mathbf{s}_1+4\mathbf{s}_2$ ✓</em></p>
+      </div>
+
+      <div class="example-block">
+        <div class="label">예시 2 — $\mathbb{R}^2$에서 행 축소로 구하기</div>
+        <p>$\mathbf{b}_1 = \begin{bmatrix}-9\\1\end{bmatrix}$, $\mathbf{b}_2 = \begin{bmatrix}-5\\-1\end{bmatrix}$, $\mathbf{s}_1 = \begin{bmatrix}1\\-4\end{bmatrix}$, $\mathbf{s}_2 = \begin{bmatrix}3\\-5\end{bmatrix}$</p>
+        <p><strong>(a) $M_{\mathcal{S}\leftarrow\mathcal{B}}$ 구하기</strong> — $[\mathcal{S}\,|\,\mathcal{B}]$를 행 축소하면 $[I\,|\,M_{\mathcal{S}\leftarrow\mathcal{B}}]$:</p>
+        <p class='sol-step'>$$\left[\begin{array}{cc|cc}1&3&-9&-5\\-4&-5&1&-1\end{array}\right] \xrightarrow{R_2+4R_1} \left[\begin{array}{cc|cc}1&3&-9&-5\\0&7&-35&-21\end{array}\right] \xrightarrow{\frac{1}{7}R_2} \left[\begin{array}{cc|cc}1&3&-9&-5\\0&1&-5&-3\end{array}\right]$$</p>
+        <p class='sol-step'>$$\xrightarrow{R_1-3R_2} \left[\begin{array}{cc|cc}1&0&6&4\\0&1&-5&-3\end{array}\right] \;\Rightarrow\; M_{\mathcal{S}\leftarrow\mathcal{B}} = \begin{bmatrix}6&4\\-5&-3\end{bmatrix}$$</p>
+        <p><strong>(b) $M_{\mathcal{B}\leftarrow\mathcal{S}}$ 구하기</strong> — $(M_{\mathcal{S}\leftarrow\mathcal{B}})^{-1}$:</p>
+        <p class='sol-step'>$\det\begin{bmatrix}6&4\\-5&-3\end{bmatrix} = -18+20 = 2$ $\;\Rightarrow\;$ $M_{\mathcal{B}\leftarrow\mathcal{S}} = \dfrac{1}{2}\begin{bmatrix}-3&-4\\5&6\end{bmatrix} = \begin{bmatrix}-3/2&-2\\5/2&3\end{bmatrix}$</p>
+      </div>
+
+      <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#24-Change_of_Basis_handout.pdf</code> — <strong>pp. 1–2 전체</strong><br><span class="pdf-ref-detail">p.1 기저 변환 행렬 정의 · 예시 1 · p.2 예시 2 (행 축소)</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§4.7 Change of Basis</strong> — <strong>pp. 277–284</strong></span></div>
+
+    </div>
+  </div>
+
+
+  <!-- ────────── CLASS 25 ────────── -->
+  <div class="section" id="c25">
+    <div class="section-header">
+      <span class="class-num">Class 25</span>
+      Row Space of A (행 공간)
+    </div>
+    <div class="section-body">
+
+      <!-- ★ 핵심 요약 -->
+      <div class="note-block">
+        <div class="label">⚡ 핵심 요약</div>
+        <p><strong>Col A vs Row A — 어떻게 다른가?</strong></p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <tr style="background:#e8f0f7;">
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;"></th>
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">Col A</th>
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">Row A</th>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">정의</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">열들의 선형결합</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">행들의 선형결합 $= \text{Col}\,A^T$</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">부분공간</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$\mathbb{R}^m$의 부분공간</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$\mathbb{R}^n$의 부분공간</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">행 축소 후 $(A \sim B)$</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$\text{Col}\,A \neq \text{Col}\,B$ (일반적으로)</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$\text{Row}\,A = \text{Row}\,B$ ✓</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">기저 구하기</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$A$의 pivot 열</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$B$(echelon form)의 비영 행</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">차원</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$\text{rank}\,A$</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$\text{rank}\,A$ (동일)</td>
+          </tr>
+        </table>
+        <p style="margin-top:10px;"><strong>IMT 추가 조건 (가역 $n\times n$ 행렬):</strong> 열들이 $\mathbb{R}^n$의 기저 $\Leftrightarrow$ $\text{Col}\,A = \mathbb{R}^n$ $\Leftrightarrow$ $\text{rank}\,A = n$ $\Leftrightarrow$ $\text{Nul}\,A = \{\mathbf{0}\}$ $\Leftrightarrow$ nullity $= 0$</p>
+      </div>
+
+      <hr class="divider"/>
+
+      <!-- 상세 개념 -->
+      <h3>1. Row Space 정의</h3>
+      <div class="def-block">
+        <div class="label">정의 · 행 공간 (Row Space)</div>
+        <p>$m\times n$ 행렬 $A$의 <strong>행 공간(row space)</strong>은 $A$의 행들의 모든 선형결합의 집합:</p>
+        $$\text{Row}\,A = \text{Col}\,A^T \subseteq \mathbb{R}^n$$
+        <p>$\text{Row}\,A$는 $\mathbb{R}^n$의 <strong>부분공간</strong>이며, $\dim\text{Row}\,A = \text{rank}\,A = \dim\text{Col}\,A$.</p>
+      </div>
+
+      <h3>2. Col A vs Row A — 행 축소 후 무엇이 보존되는가?</h3>
+      <div class="thm-block">
+        <div class="label">핵심 구분</div>
+        <p>$A \sim U$ (행 축소)이면:</p>
+        <p>✗ $\text{Col}\,A \neq \text{Col}\,U$ — 행 연산은 <em>열벡터 값</em>을 바꾼다.</p>
+        <p>✓ $\text{Row}\,A = \text{Row}\,U$ — 행 연산은 <em>행들의 선형결합 관계</em>를 보존한다.</p>
+        <p>✓ $\text{Nul}\,A = \text{Nul}\,U$ — 해집합도 보존된다.</p>
+      </div>
+
+      <h3>3. Row A의 기저 구하기</h3>
+      <div class="thm-block">
+        <div class="label">Theorem — Row 동치 행렬의 행 공간</div>
+        <p>두 행렬 $A$와 $B$가 행 동치이면 $\text{Row}\,A = \text{Row}\,B$.</p>
+        <p>$B$가 echelon form이면, <strong>$B$의 비영 행(nonzero rows)</strong>이 $\text{Row}\,A$의 기저가 된다.</p>
+        <p><em>증명 아이디어: 각 기본 행 연산은 행들의 선형결합 관계를 바꾸지 않는다 → 새 행 = 기존 행들의 선형결합 → span이 동일.</em></p>
+      </div>
+
+      <div class="example-block">
+        <div class="label">예시 — Row A의 기저</div>
+        <p>$A = \begin{bmatrix}-2&-5&8&0&-17\\1&3&-5&1&5\\3&11&-19&7&1\\1&7&-13&5&-3\end{bmatrix} \sim B = \begin{bmatrix}1&3&-5&1&5\\0&1&-2&2&-7\\0&0&0&-4&20\\0&0&0&0&0\end{bmatrix}$</p>
+        <p class='sol-step'>$B$의 비영 행 3개 → Basis for Row $A$:</p>
+        <p class='sol-step'>$\left\{[1,3,-5,1,5],\;[0,1,-2,2,-7],\;[0,0,0,-4,20]\right\}$</p>
+        <p><em>Note: $B$의 처음 3행이 LI → $A$의 처음 3행도 LI? 반드시 그렇지 않다. $B$의 행은 $A$의 행들의 선형결합이므로, 구체적인 "어느 행이 LI인지"는 $A$에서 직접 확인해야 한다. 단, 행들 사이의 종속 관계 자체는 행 연산으로 보존된다.</em></p>
+      </div>
+
+      <div class="example-block">
+        <div class="label">예시 — Rank-Nullity 응용</div>
+        <p>40개 방정식, 42개 변수의 동차 시스템에서 2개의 선형 독립 해가 발견됐고, 모든 해가 이 둘의 선형결합이다. 같은 계수의 비동차 시스템은 항상 해를 가지는가?</p>
+        <p class='sol-step'>nullity $A = 2$ (2차원 해 공간) $\Rightarrow$ rank $A = 42 - 2 = 40$</p>
+        <p class='sol-step'>$\dim\text{Col}\,A = 40 = m$ (행의 수) $\Rightarrow$ $\text{Col}\,A = \mathbb{R}^{40}$</p>
+        <p class='sol-step'>모든 $\mathbf{b} \in \mathbb{R}^{40}$에 대해 $A\mathbf{x} = \mathbf{b}$ consistent → <strong>Yes</strong>, 항상 해를 가진다.</p>
+      </div>
+
+      <h3>4. Invertible Matrix Theorem 확장 (m)–(r)</h3>
+      <div class="thm-block">
+        <div class="label">IMT 추가 동치 조건 — $A$가 $n\times n$ 가역행렬 $\Leftrightarrow$</div>
+        <p>(m) $A$의 열들이 $\mathbb{R}^n$의 <strong>기저(basis)</strong>를 이룬다.</p>
+        <p>(n) $\text{Col}\,A = \mathbb{R}^n$</p>
+        <p>(o) $\dim\text{Col}\,A = n$</p>
+        <p>(p) $\text{rank}\,A = n$</p>
+        <p>(q) $\text{Nul}\,A = \{\mathbf{0}\}$</p>
+        <p>(r) $\text{nullity}\,A = \dim\text{Nul}\,A = 0$</p>
+        <p><em>직관: $n\times n$ 가역 → pivot이 $n$개 → Col A가 $\mathbb{R}^n$ 전체 → Nul A = {0}이 동시에 성립.</em></p>
+      </div>
+
+      <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#25-RowA_handout.pdf</code> — <strong>pp. 1–2 전체</strong><br><span class="pdf-ref-detail">p.1 Row A 정의, Col vs Row 비교, 행 공간 기저 정리 · p.2 응용 예시, IMT (m)–(r)</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§4.6 Rank</strong> — <strong>pp. 271–276</strong></span></div>
+
+    </div>
+  </div>
+
+
 </main>
 
 <script>
+  // ── 연습문제 섹션 토글화 ──
+  document.querySelectorAll('.practice-section').forEach(section => {
+    const label = section.querySelector(':scope > .practice-label');
+    if (!label) return;
+
+    const details = document.createElement('details');
+    details.className = 'practice-toggle';
+    details.open = true; // 기본 펼침
+
+    const summary = document.createElement('summary');
+    summary.className = 'practice-label';
+    summary.innerHTML = label.innerHTML;
+    details.appendChild(summary);
+
+    const wrap = document.createElement('div');
+    wrap.className = 'practice-items-wrap';
+    [...section.children].forEach(child => {
+      if (child !== label) wrap.appendChild(child);
+    });
+    details.appendChild(wrap);
+
+    label.remove();
+    section.appendChild(details);
+  });
+
   // Active nav link highlighting
   const sections = document.querySelectorAll('.section');
   const navLinks = document.querySelectorAll('#nav ul li a');
