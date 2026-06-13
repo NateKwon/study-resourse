@@ -5329,6 +5329,200 @@ LU 방법:      LU구하기 + 28 × 10 = LU + 280 flops</pre>
 
       <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#25-RowA_handout.pdf</code> — <strong>pp. 1–2 전체</strong><br><span class="pdf-ref-detail">p.1 Row A 정의, Col vs Row 비교, 행 공간 기저 정리 · p.2 응용 예시, IMT (m)–(r)</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§4.6 Rank</strong> — <strong>pp. 271–276</strong></span></div>
 
+      <hr class="divider"/>
+
+      <!-- ────────── Practice #26 ────────── -->
+      <div class="practice-section">
+        <details class="practice-toggle">
+          <summary class="practice-label">📝 Practice #26 · Change of Basis</summary>
+          <div class="practice-items-wrap">
+
+            <div class="practice-item">
+              <div class="q-num">Problem 1</div>
+              <div class="q-body">
+                <p>In $\mathbf{P}_2$, find the change-of-coordinates matrix from the basis</p>
+                <p>$B = \{1 - 2t + t^2,\; 3 - 5t + 4t^2,\; 2t + 3t^2\}$ to the standard basis $S = \{1, t, t^2\}$.</p>
+                <p>If $p(t) = -1 + 2t$, what is the $S$-coordinate vector for $p(t)$?<br>
+                Then find the $B$-coordinate vector for $p(t)$ <em>using the change-of-coordinates matrix</em>.</p>
+              </div>
+              <div class="toggle-row">
+                <details class="hint-detail">
+                  <summary>💡 힌트 보기</summary>
+                  <div class="toggle-body">
+                    <p>$M_{S \leftarrow B}$는 각 기저 벡터를 $S$-좌표로 표현한 열들을 나란히 놓으면 된다.</p>
+                    <p>$[p(t)]_S$는 $p(t) = -1 + 2t + 0\cdot t^2$이므로 계수를 읽으면 된다.</p>
+                    <p>$[p(t)]_B = M_{S \leftarrow B}^{-1}\, [p(t)]_S$ — change-of-coordinates 행렬의 역행렬을 이용한다.</p>
+                  </div>
+                </details>
+                <details class="sol-detail">
+                  <summary>✅ 풀이 보기</summary>
+                  <div class="toggle-body">
+                    <p><strong>Change-of-coordinates matrix:</strong></p>
+                    <p class="sol-step">각 기저 벡터를 $S$-좌표로 표현: $b_1 = 1 - 2t + t^2 \to [1,-2,1]^T$, $b_2 = 3 - 5t + 4t^2 \to [3,-5,4]^T$, $b_3 = 2t + 3t^2 \to [0,2,3]^T$</p>
+                    $$M_{S \leftarrow B} = \begin{bmatrix} 1 & 3 & 0 \\ -2 & -5 & 2 \\ 1 & 4 & 3 \end{bmatrix}$$
+                    <p><strong>$S$-coordinate vector:</strong></p>
+                    <p class="sol-step">$p(t) = -1 + 2t + 0\cdot t^2$ 이므로 $[p(t)]_S = \begin{bmatrix}-1\\2\\0\end{bmatrix}$</p>
+                    <p><strong>$B$-coordinate vector:</strong></p>
+                    <p class="sol-step">$[p(t)]_B = M_{S \leftarrow B}^{-1}\,[p(t)]_S$를 계산하면:</p>
+                    $$[p(t)]_B = \begin{bmatrix} 5 \\ -2 \\ 1 \end{bmatrix}$$
+                    <p class="sol-step">검산: $5(1-2t+t^2) + (-2)(3-5t+4t^2) + 1(2t+3t^2) = 5 - 6 + (−10+10+2)t + (5−8+3)t^2 = -1 + 2t$ ✓</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+
+            <div class="practice-item">
+              <div class="q-num">Problem 2</div>
+              <div class="q-body">
+                <p>In $\mathbf{P}_1$, the following $B$ and $C$ are two bases. Find the change-of-coordinates matrix from $B$ to $C$, and the change-of-coordinates matrix from $C$ to $B$.</p>
+                $$B = \{7 + 5t,\; -3 - t\}, \quad C = \{1 - 5t,\; -2 + 2t\}$$
+              </div>
+              <div class="toggle-row">
+                <details class="hint-detail">
+                  <summary>💡 힌트 보기</summary>
+                  <div class="toggle-body">
+                    <p>$\mathbf{P}_1$과 $\mathbb{R}^2$ 사이의 동형사상(isomorphism)을 이용한다. 표준 기저 $S = \{1, t\}$ 에 대한 좌표 표현으로 변환하면, 수업에서 배운 $\mathbb{R}^n$ 알고리즘을 그대로 적용할 수 있다.</p>
+                    <p>즉 $B, C$의 원소를 $\mathbb{R}^2$ 벡터로 쓴 뒤 $[\,P_C \mid P_B\,]$를 row-reduce하여 $M_{C \leftarrow B}$를 구한다.</p>
+                  </div>
+                </details>
+                <details class="sol-detail">
+                  <summary>✅ 풀이 보기</summary>
+                  <div class="toggle-body">
+                    <p><strong>$S$-좌표 표현으로 변환 (isomorphism $\mathbf{P}_1 \cong \mathbb{R}^2$):</strong></p>
+                    <p class="sol-step">$B$: $b_1 = 7+5t \to [7,5]^T$, $b_2 = -3-t \to [-3,-1]^T$</p>
+                    <p class="sol-step">$C$: $c_1 = 1-5t \to [1,-5]^T$, $c_2 = -2+2t \to [-2,2]^T$</p>
+                    <p><strong>$M_{C \leftarrow B}$ 계산:</strong> $[P_C \mid P_B] \to [I \mid M_{C \leftarrow B}]$ row-reduce</p>
+                    $$\left[\begin{array}{cc|cc} 1 & -2 & 7 & -3 \\ -5 & 2 & 5 & -1 \end{array}\right] \xrightarrow{\text{row reduce}} \left[\begin{array}{cc|cc} 1 & 0 & -3 & 1 \\ 0 & 1 & -5 & 2 \end{array}\right]$$
+                    $$M_{C \leftarrow B} = \begin{bmatrix} -3 & 1 \\ -5 & 2 \end{bmatrix}, \quad M_{B \leftarrow C} = \begin{bmatrix} -2 & 1 \\ -5 & 3 \end{bmatrix}$$
+                    <p class="sol-step">$M_{B \leftarrow C} = M_{C \leftarrow B}^{-1}$임에 유의. (검산: 두 행렬의 곱이 $I$인지 확인)</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+
+          </div>
+        </details>
+      </div>
+
+      <!-- ────────── Practice #27 ────────── -->
+      <div class="practice-section">
+        <details class="practice-toggle">
+          <summary class="practice-label">📝 Practice #27 · Row Space</summary>
+          <div class="practice-items-wrap">
+
+            <div class="practice-item">
+              <div class="q-num">Problem 1</div>
+              <div class="q-body">
+                <p>Find bases for $\text{Row}\,A$ and $\text{Row}\,B$, where $A$ is row equivalent to $B$:</p>
+                $$A = \begin{bmatrix} 1 & 2 & -5 & 11 & -3 \\ 2 & 4 & -5 & 15 & 2 \\ 1 & 2 & 0 & 4 & 5 \\ 3 & 6 & -5 & 19 & -2 \end{bmatrix}, \quad B = \begin{bmatrix} 1 & 2 & 0 & 4 & 5 \\ 0 & 0 & 5 & -7 & 8 \\ 0 & 0 & 0 & 0 & -9 \\ 0 & 0 & 0 & 0 & 0 \end{bmatrix}$$
+              </div>
+              <div class="toggle-row">
+                <details class="hint-detail">
+                  <summary>💡 힌트 보기</summary>
+                  <div class="toggle-body">
+                    <p>$A \sim B$이면 $\text{Row}\,A = \text{Row}\,B$. $B$가 이미 echelon form이므로 $B$의 비영 행(nonzero rows)이 곧 기저가 된다. $A$와 $B$에 대해 <strong>동일한 기저 하나</strong>가 답이 된다.</p>
+                  </div>
+                </details>
+                <details class="sol-detail">
+                  <summary>✅ 풀이 보기</summary>
+                  <div class="toggle-body">
+                    <p class="sol-step">$A \sim B$이므로 $\text{Row}\,A = \text{Row}\,B$.</p>
+                    <p class="sol-step">$B$는 echelon form → 비영 행 3개가 $\text{Row}\,A = \text{Row}\,B$의 기저:</p>
+                    $$\text{Basis} = \left\{[1,2,0,4,5],\;[0,0,5,-7,8],\;[0,0,0,0,-9]\right\}$$
+                    <p class="sol-step">$\dim\text{Row}\,A = 3$ (= rank $A$). 하나의 기저가 $\text{Row}\,A$와 $\text{Row}\,B$ 모두에 적용된다.</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+
+            <div class="practice-item">
+              <div class="q-num">Problem 2</div>
+              <div class="q-body">
+                <p>Suppose that a nonhomogeneous system of six linear equations in eight unknowns has a solution, with two free variables. Is it possible to change some constants on the equations' right-hand-sides to make the new system inconsistent? Explain.</p>
+              </div>
+              <div class="toggle-row">
+                <details class="hint-detail">
+                  <summary>💡 힌트 보기</summary>
+                  <div class="toggle-body">
+                    <p>free variable이 2개이면 nullity = 2. Rank-Nullity Theorem으로 rank를 구한 뒤, rank와 $m$ (방정식의 수)을 비교해 $\text{Col}\,A$가 $\mathbb{R}^m$과 같은지 확인한다.</p>
+                  </div>
+                </details>
+                <details class="sol-detail">
+                  <summary>✅ 풀이 보기</summary>
+                  <div class="toggle-body">
+                    <p class="sol-step">$n = 8$ 변수, nullity $= 2$ → rank $= 8 - 2 = 6$.</p>
+                    <p class="sol-step">$m = 6$ (방정식 수) = rank $A = 6$ → $\dim\text{Col}\,A = 6 = m$.</p>
+                    <p class="sol-step">$\text{Col}\,A = \mathbb{R}^6$이므로 모든 $\mathbf{b} \in \mathbb{R}^6$에 대해 $A\mathbf{x} = \mathbf{b}$는 해를 가진다.</p>
+                    <p><strong>결론: No.</strong> 우변을 어떻게 바꾸어도 시스템을 inconsistent로 만들 수 없다.</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+
+            <div class="practice-item">
+              <div class="q-num">Problem 3</div>
+              <div class="q-body">
+                <p>Let $A$ be an $m \times n$ matrix. Which of the subspaces</p>
+                <p>$\text{Row}\,A,\; \text{Col}\,A,\; \text{Nul}\,A,\; \text{Row}\,A^T,\; \text{Col}\,A^T,\; \text{Nul}\,A^T$</p>
+                <p>are in $\mathbb{R}^m$ and which are in $\mathbb{R}^n$? How many distinct subspaces are in this list?</p>
+              </div>
+              <div class="toggle-row">
+                <details class="hint-detail">
+                  <summary>💡 힌트 보기</summary>
+                  <div class="toggle-body">
+                    <p>$A$가 $m \times n$이면 $A^T$는 $n \times m$. 각 subspace가 어떤 공간의 원소로 이루어져 있는지 생각해보면 된다.</p>
+                    <p>또한 $\text{Row}\,A = \text{Col}\,A^T$, $\text{Col}\,A = \text{Row}\,A^T$ 등 동치 관계에 유의한다.</p>
+                  </div>
+                </details>
+                <details class="sol-detail">
+                  <summary>✅ 풀이 보기</summary>
+                  <div class="toggle-body">
+                    <p><strong>$\mathbb{R}^n$의 부분공간:</strong></p>
+                    <p class="sol-step">$\text{Row}\,A$ — $A$의 행은 $n$-벡터 → $\mathbb{R}^n$</p>
+                    <p class="sol-step">$\text{Nul}\,A$ — $A\mathbf{x}=\mathbf{0}$의 해 $\mathbf{x} \in \mathbb{R}^n$ → $\mathbb{R}^n$</p>
+                    <p class="sol-step">$\text{Col}\,A^T = \text{Row}\,A$ → 동일</p>
+                    <p><strong>$\mathbb{R}^m$의 부분공간:</strong></p>
+                    <p class="sol-step">$\text{Col}\,A$ — $A$의 열은 $m$-벡터 → $\mathbb{R}^m$</p>
+                    <p class="sol-step">$\text{Nul}\,A^T$ — $A^T\mathbf{x}=\mathbf{0}$의 해 $\mathbf{x} \in \mathbb{R}^m$ → $\mathbb{R}^m$</p>
+                    <p class="sol-step">$\text{Row}\,A^T = \text{Col}\,A$ → 동일</p>
+                    <p><strong>결론:</strong> 6개의 표현이지만 실제 distinct subspace는 <strong>4개</strong> — $\text{Row}\,A$, $\text{Nul}\,A$ (in $\mathbb{R}^n$), $\text{Col}\,A$, $\text{Nul}\,A^T$ (in $\mathbb{R}^m$).</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+
+            <div class="practice-item">
+              <div class="q-num">Problem 4</div>
+              <div class="q-body">
+                <p>Let $A$ be an $m \times n$ matrix. Prove that the equation $A\mathbf{x} = \mathbf{b}$ has a solution for all $\mathbf{b} \in \mathbb{R}^m$ if and only if the equation $A^T\mathbf{x} = \mathbf{0}$ has only the trivial solution.</p>
+              </div>
+              <div class="toggle-row">
+                <details class="hint-detail">
+                  <summary>💡 힌트 보기</summary>
+                  <div class="toggle-body">
+                    <p>$A\mathbf{x} = \mathbf{b}$가 모든 $\mathbf{b}$에 대해 해를 가진다 $\Leftrightarrow$ $\text{Col}\,A = \mathbb{R}^m$ $\Leftrightarrow$ $\dim\text{Col}\,A = m$.</p>
+                    <p>수업에서 보인 관계: $\text{rank}\,A^T = \dim\text{Col}\,A^T = \dim\text{Row}\,A = \text{rank}\,A$를 활용한다.</p>
+                    <p>$A^T\mathbf{x} = \mathbf{0}$이 trivial solution만 가진다 $\Leftrightarrow$ $\text{Nul}\,A^T = \{\mathbf{0}\}$ $\Leftrightarrow$ nullity $A^T = 0$.</p>
+                  </div>
+                </details>
+                <details class="sol-detail">
+                  <summary>✅ 풀이 보기</summary>
+                  <div class="toggle-body">
+                    <p><strong>(⟹) 방향:</strong></p>
+                    <p class="sol-step">$A\mathbf{x} = \mathbf{b}$가 모든 $\mathbf{b} \in \mathbb{R}^m$에 대해 해를 가진다 $\Leftrightarrow$ $\text{Col}\,A = \mathbb{R}^m$ $\Leftrightarrow$ $\dim\text{Col}\,A = m$.</p>
+                    <p class="sol-step">$\dim\text{Col}\,A = \text{rank}\,A = \text{rank}\,A^T = \dim\text{Col}\,A^T$.</p>
+                    <p class="sol-step">$A^T$는 $n \times m$ 행렬이므로 Rank-Nullity: nullity $A^T = m - \text{rank}\,A^T = m - m = 0$.</p>
+                    <p class="sol-step">따라서 $\text{Nul}\,A^T = \{\mathbf{0}\}$, 즉 $A^T\mathbf{x} = \mathbf{0}$은 trivial solution만 가진다. $\square$</p>
+                    <p><strong>(⟸) 방향:</strong> 위 논리를 역으로 따라가면 동일하게 성립한다. $\square$</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+
+          </div>
+        </details>
+      </div>
+
     </div>
   </div>
 
