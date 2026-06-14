@@ -663,6 +663,34 @@ ot; = &quot;P이면 반드시 Q이다&quot;야.</strong></p></article>
       Linear System (선형 시스템)
     </div>
     <div class="section-body">
+      <!-- ★ 핵심 요약 -->
+      <div class="note-block">
+        <div class="label">⚡ 핵심 요약</div>
+        <p><strong>Linear System 핵심 개념</strong></p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <tr style="background:#e8f0f7;">
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">개념</th>
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">내용</th>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Linear Equation</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$a_1x_1 + \cdots + a_nx_n = b$, 계수 $a_i$ + 상수 $b$</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Linear System</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">같은 변수의 선형방정식 집합; 동치 ↔ 해집합 동일</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Elementary Row Ops</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">Replacement / Interchange / Scaling — 해집합 불변</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Row Equivalent</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">유한 번의 행 연산으로 연결된 두 행렬</td>
+          </tr>
+        </table>
+      </div>
+      <hr class="divider"/>
       <p>선형대수는 $\mathbb{R}^m \to \mathbb{R}^n$으로 가는 선형 함수를 분석한다.</p>
 
       <div class="def-block">
@@ -677,7 +705,7 @@ ot; = &quot;P이면 반드시 Q이다&quot;야.</strong></p></article>
         <p>두 선형 시스템이 <strong>동치(equivalent)</strong>이다 ↔ 해집합이 같다.</p>
       </div>
 
-      <h3>기본 행 연산(elementary row operation) (Elementary Row Operations)</h3>
+      <h3>1. 기본 행 연산 (Elementary Row Operations)</h3>
       <div class="thm-block">
         <div class="label">3가지 연산</div>
         <ul>
@@ -688,9 +716,7 @@ ot; = &quot;P이면 반드시 Q이다&quot;야.</strong></p></article>
         <p style="margin-top:8px;">→ 세 연산 모두 해집합을 <strong>바꾸지 않는다</strong>.</p>
       </div>
 
-          <div class="deepdive-block">
-        <p class="deepdive-label">📐 개념 심화 — 선형방정식계와 첨가행렬</p>
-        <p class="deepdive-intro"><strong>선형방정식계는 여러 선형방정식을 동시에 만족하는 해를 구하는 문제다.</strong> 핵심은 연립방정식을 첨가행렬(augmented matrix)로 압축한 뒤, 해집합을 바꾸지 않는 세 가지 기본 행 연산으로 단순화하는 것이다. 비선형 방정식(변수의 곱, 제곱, 함수 포함)은 이 틀에서 제외된다.</p>
+      <h3>2. 선형/비선형 구분 &amp; 첨가행렬</h3>
         <div class="def-block">
           <div class="label">선형방정식(linear equation) vs. 비선형</div>
           <p>변수 $x_1, \ldots, x_n$에 대한 <strong>선형방정식</strong>: $a_1 x_1 + a_2 x_2 + \cdots + a_n x_n = b$<br>
@@ -714,7 +740,6 @@ ot; = &quot;P이면 반드시 Q이다&quot;야.</strong></p></article>
         </div>
       
         <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#1_linear_system_handout.pdf</code> — <strong>pp. 1–2 전체</strong><br><span class="pdf-ref-detail">p.1 선형/비선형 방정식 · p.2 행 동치 연립방정식</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§1.1 Systems of Linear Equations</strong> — <strong>pp. 26–36</strong><span class="tb-ref-detail"> (행 연산, 행 동치, 첨가행렬)</span></span></div>
-      </div>
 <section class="qa-conv-block">
       <p class="qa-conv-label">💬 이전 대화 — 자주 묻는 개념 Q&amp;A</p>
       <details class="qa-toggle">
@@ -769,6 +794,38 @@ x₁ column    → 행렬에서 x₁에 해당하는 열 전체</pre>
       Matrices
     </div>
     <div class="section-body">
+      <!-- ★ 핵심 요약 -->
+      <div class="note-block">
+        <div class="label">⚡ 핵심 요약</div>
+        <p><strong>Matrices — 핵심 개념</strong></p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <tr style="background:#e8f0f7;">
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">개념</th>
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">내용</th>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Row Equivalent</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">행 연산으로 서로 변환 가능; 해집합 동일</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Consistent / Inconsistent</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">해 있음 / 해 없음</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">해의 종류</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">항상 0개 / 1개 / 무한히 많음 중 하나</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Echelon Form</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">선행원소가 계단식 아래-오른쪽; 영행은 맨 아래</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">RREF</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">Echelon + 피벗=1 + 피벗열 나머지=0; RREF는 유일</td>
+          </tr>
+        </table>
+      </div>
+      <hr class="divider"/>
       <div class="def-block">
         <div class="label">정의 · Row Equivalent</div>
         <p>행 연산으로 서로 변환 가능한 두 행렬은 <strong>row equivalent</strong>하다.</p>
@@ -788,7 +845,7 @@ x₁ column    → 행렬에서 x₁에 해당하는 열 전체</pre>
         <p>선형 시스템의 해는 항상 다음 세 경우 중 하나이다: (i) 해 없음, (ii) 해 하나, (iii) 무한히 많은 해(infinitely many solutions)</p>
       </div>
 
-      <h3>사다리꼴 형태(echelon form) (Echelon Form)</h3>
+      <h3>1. 사다리꼴 형태 (Echelon Form &amp; RREF)</h3>
       <div class="def-block">
         <div class="label">정의 · Echelon Form</div>
         <p>다음 조건을 만족하면 echelon form (사다리꼴형)이다:</p>
@@ -807,9 +864,7 @@ x₁ column    → 행렬에서 x₁에 해당하는 열 전체</pre>
         <p><strong>Fact</strong>: 행렬의 RREF는 유일하다. Echelon form은 유일하지 않을 수 있다.</p>
       </div>
 
-      <div class="deepdive-block">
-        <p class="deepdive-label">📐 개념 심화 — 행 사다리꼴과 해의 존재/유일성</p>
-        <p class="deepdive-intro"><strong>행 사다리꼴은 행렬을 체계적으로 단순화한 표준 형태로, 연립방정식의 해 구조를 한눈에 파악하게 해준다.</strong> REF는 피벗이 계단 모양으로 배열된 형태이고, RREF는 추가로 피벗=1이고 피벗 열의 나머지 원소=0인 완전 표준형이다. 어떤 경로로 축소해도 RREF는 유일하게 결정되며, 피벗 위치가 해의 구조를 결정한다.</p>
+      <h3>2. 존재/유일성 정리 &amp; RREF 유일성</h3>
         <div class="def-block">
           <div class="label">사다리꼴(echelon form) 판별 기준</div>
           <p><strong>REF(Row Echelon Form)</strong> 조건:<br>
@@ -837,7 +892,6 @@ x₁ column    → 행렬에서 x₁에 해당하는 열 전체</pre>
         </div>
       
         <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#2_matrices_handout.pdf</code> — <strong>pp. 1–2 전체</strong><br><span class="pdf-ref-detail">p.1 행 동치 정의 · p.2 선행 원소 &amp; 사다리꼴(echelon) 정의</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§1.2 Row Reduction and Echelon Forms</strong> — <strong>pp. 37–49</strong><span class="tb-ref-detail"> (사다리꼴, RREF, 피벗, 존재-유일성 정리)</span></span></div>
-      </div>
 
       <div class="practice-section">
         <div class="practice-label">📝 Practice #02 · Row Equivalence</div>
@@ -885,6 +939,38 @@ x₁ column    → 행렬에서 x₁에 해당하는 열 전체</pre>
       Row Reduction Algorithm
     </div>
     <div class="section-body">
+      <!-- ★ 핵심 요약 -->
+      <div class="note-block">
+        <div class="label">⚡ 핵심 요약</div>
+        <p><strong>Row Reduction Algorithm 핵심 개념</strong></p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <tr style="background:#e8f0f7;">
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">개념</th>
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">내용</th>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Pivot position</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">Echelon form에서 leading entry의 위치</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Pivot column</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">Pivot position이 있는 열</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Basic variable</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">Pivot column에 해당하는 변수</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Free variable</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">Non-pivot column 변수; 존재하면 해 무한히 많음</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">알고리즘 5단계</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">왼위→열처리→피벗아래0→반복→Back substitution</td>
+          </tr>
+        </table>
+      </div>
+      <hr class="divider"/>
       <div class="def-block">
         <div class="label">정의 · Pivot</div>
         <p><strong>Pivot position</strong>: 행렬의 echelon form에서 leading entry의 위치</p>
@@ -900,7 +986,7 @@ x₁ column    → 행렬에서 x₁에 해당하는 열 전체</pre>
         <p>→ Free variable이 존재하면 해가 무한히 많다.</p>
       </div>
 
-      <h3>알고리즘 순서</h3>
+      <h3>1. 알고리즘 순서 (Row Reduction)</h3>
       <ol>
         <li>가장 왼쪽의 0이 아닌 열 선택 → pivot column</li>
         <li>필요시 행 교환 → 위에 0이 아닌 entry 배치</li>
@@ -909,9 +995,7 @@ x₁ column    → 행렬에서 x₁에 해당하는 열 전체</pre>
         <li>Back substitution으로 RREF 완성 (Backward phase)</li>
       </ol>
 
-      <div class="deepdive-block">
-        <p class="deepdive-label">📐 개념 심화 — 벡터방정식과 선형결합</p>
-        <p class="deepdive-intro"><strong>임의의 행렬을 REF 또는 RREF로 체계적으로 변환하는 5단계 알고리즘이다.</strong> 왼쪽 위부터 열을 순서대로 처리하며 각 단계에서 피벗을 확정하고 그 아래(또는 위아래) 원소를 0으로 만든다. 이 과정에서 확정되는 피벗의 위치와 개수가 해의 존재성과 자유변수를 결정한다.</p>
+      <h3>2. $\mathbb{R}^n$ 대수적 성질 &amp; Span 판별</h3>
         <div class="def-block">
           <div class="label">$\mathbb{R}^n$ 벡터 연산의 대수적 성질 (8가지)</div>
           <p>① $\mathbf{u}+\mathbf{v} = \mathbf{v}+\mathbf{u}$ &nbsp; ② $(\mathbf{u}+\mathbf{v})+\mathbf{w} = \mathbf{u}+(\mathbf{v}+\mathbf{w})$<br>
@@ -934,7 +1018,6 @@ x₁ column    → 행렬에서 x₁에 해당하는 열 전체</pre>
         </div>
       
         <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#3_reduction_algorithm_handout.pdf</code> — <strong>pp. 1–2 전체</strong><br><span class="pdf-ref-detail">p.1 행 축소 알고리즘 예시 · p.2 피벗 위치/열 정의</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§1.2 Row Reduction and Echelon Forms</strong> — <strong>pp. 37–49</strong><span class="tb-ref-detail"> (행 축소 알고리즘, 피벗 위치)</span></span></div>
-      </div>
 
       <div class="practice-section">
         <div class="practice-label">📝 Practice #03 · Row Reduction Algorithm</div>
@@ -1054,6 +1137,38 @@ x₁ column    → 행렬에서 x₁에 해당하는 열 전체</pre>
       Solution Set of a System
     </div>
     <div class="section-body">
+      <!-- ★ 핵심 요약 -->
+      <div class="note-block">
+        <div class="label">⚡ 핵심 요약</div>
+        <p><strong>Solution Set 핵심 개념</strong></p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <tr style="background:#e8f0f7;">
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">개념</th>
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">내용</th>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Existence &amp; Uniqueness Thm</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">Consistent ↔ 증대행렬 오른쪽 열이 pivot column이 아님</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Homogeneous</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$A\mathbf{x}=\mathbf{0}$; 항상 자명해($\mathbf{x}=\mathbf{0}$) 존재</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Nonhomogeneous</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$A\mathbf{x}=\mathbf{b}$ ($\mathbf{b}\neq\mathbf{0}$); 일반해 = 특수해 + 동차해</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">General solution</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$\mathbf{x} = \mathbf{p} + t_1\mathbf{v}_1 + \cdots + t_k\mathbf{v}_k$ (parametric form)</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Function / Transformation</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">각 원소에 정확히 하나를 대응; Domain, Codomain, Range</td>
+          </tr>
+        </table>
+      </div>
+      <hr class="divider"/>
       <div class="thm-block">
         <div class="label">정리 · Existence and Uniqueness Theorem</div>
         <p>선형 시스템이 consistent ↔ 증대행렬의 오른쪽 열이 <strong>pivot column이 아니다</strong>.</p>
@@ -1074,10 +1189,7 @@ x₁ column    → 행렬에서 x₁에 해당하는 열 전체</pre>
         </ul>
       </div>
 
-      <div class="deepdive-block">
-        <p class="deepdive-label">📐 개념 심화 — 행렬방정식 $A\mathbf{x}=\mathbf{b}$</p>
-        <p class="deepdive-intro"><strong>행렬방정식 $A\mathbf{x}=\mathbf{b}$는 연립방정식·벡터방정식·행렬방정식의 세 표현이 동치임을 보여주는 핵심 연결고리다.</strong> $A\mathbf{x}$는 $A$의 열들의 선형결합으로 해석할 수 있다(column picture). 해의 존재 여부는 $\mathbf{b}$가 $A$의 열들의 span에 속하는지로 판별하며, $A$가 모든 행에 피벗을 가질 때만 모든 $\mathbf{b}$에 대해 해가 존재한다.</p>
-        <div class="thm-block">
+      <div class="thm-block">
           <div class="label">$A\mathbf{x}$의 두 가지 해석</div>
           <p>$A = [\mathbf{a}_1\;\mathbf{a}_2\;\cdots\;\mathbf{a}_n]$, $\mathbf{x} = (x_1,\ldots,x_n)^T$일 때:</p>
           <p><strong>열 결합(column picture):</strong> $A\mathbf{x} = x_1\mathbf{a}_1 + x_2\mathbf{a}_2 + \cdots + x_n\mathbf{a}_n$</p>
@@ -1098,7 +1210,6 @@ x₁ column    → 행렬에서 x₁에 해당하는 열 전체</pre>
         </div>
       
         <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#4_soln_set_handout.pdf</code> — <strong>pp. 1–2 전체</strong><br><span class="pdf-ref-detail">p.1 존재-유일성 정리 · p.2 함수/변환 정의 &amp; range</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§1.4–1.5 Matrix Eq. / Solution Sets</strong> — <strong>pp. 61–76</strong><span class="tb-ref-detail"> (Ax=b 구조, 특수해+동차해, 함수/변환 정의)</span></span></div>
-      </div>
 
       <div class="practice-section">
         <div class="practice-label">📝 Practice #04 · Solution Set — Existence &amp; Uniqueness</div>
@@ -1224,7 +1335,35 @@ non-pivot column →  free variable
       Linear Combination (선형 결합)
     </div>
     <div class="section-body">
-      <h3>벡터 연산</h3>
+      <!-- ★ 핵심 요약 -->
+      <div class="note-block">
+        <div class="label">⚡ 핵심 요약</div>
+        <p><strong>Linear Combination 핵심 개념</strong></p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <tr style="background:#e8f0f7;">
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">개념</th>
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">내용</th>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Linear Combination</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$\mathbf{y} = x_1\mathbf{u}_1 + \cdots + x_p\mathbf{u}_p$를 만족하는 weights $x_i$가 존재</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Span</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$\{\mathbf{u}_1,\ldots,\mathbf{u}_p\}$의 모든 선형결합의 집합</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Vector Equation</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$x_1\mathbf{a}_1+\cdots+x_n\mathbf{a}_n=\mathbf{b}$; 연립방정식과 동치</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">해집합 분해</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$\mathbf{x} = \mathbf{p} + \mathbf{v}_h$; 특수해 + Nul A의 원소</td>
+          </tr>
+        </table>
+      </div>
+      <hr class="divider"/>
+      <h3>1. 벡터 연산</h3>
       <p>$\mathbf{u}, \mathbf{v} \in \mathbb{R}^n$에 대해:</p>
       <ul>
         <li><strong>덧셈</strong>: $\mathbf{u} + \mathbf{v} = [u_i + v_i]$</li>
@@ -1244,9 +1383,7 @@ non-pivot column →  free variable
         <p>벡터 방정식 풀기 = 선형 시스템 풀기. 완전히 동치이다.</p>
       </div>
 
-      <div class="deepdive-block">
-        <p class="deepdive-label">📐 개념 심화 — 해집합의 구조: 특수해 + 동차해</p>
-        <p class="deepdive-intro"><strong>비동차 연립방정식 $A\mathbf{x}=\mathbf{b}$의 해집합은 특수해 하나와 영공간(null space)의 합으로 완전히 기술된다.</strong> 특수해 $\mathbf{p}$(하나를 고정)에 동차방정식 $A\mathbf{x}=\mathbf{0}$의 해공간을 더한 것이 전체 해집합이다. 자유변수 개수만큼의 방향 벡터로 매개변수화되며, 기하학적으로는 원점을 지나지 않는 affine 부분공간을 이룬다.</p>
+      <h3>2. 해집합의 구조: 특수해 + 동차해</h3>
         <div class="thm-block">
           <div class="label">해집합 분해 정리</div>
           <p>$A\mathbf{x}=\mathbf{b}$의 해집합: $\mathbf{x} = \mathbf{p} + \mathbf{v}_h$</p>
@@ -1268,7 +1405,6 @@ non-pivot column →  free variable
         </div>
       
         <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#5_linear_comb_handout.pdf</code> — <strong>pp. 1–3 전체</strong><br><span class="pdf-ref-detail">p.1 벡터 8가지 성질 · p.2 선형결합 정의 · p.3 관찰 &amp; 예제</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§1.3 Vector Equations</strong> — <strong>pp. 50–60</strong><span class="tb-ref-detail"> (벡터 8가지 성질, 선형결합, Span)</span></span></div>
-      </div>
 
       <div class="practice-section">
         <div class="practice-label">📝 Practice #05 · Linear Combination</div>
@@ -1368,13 +1504,41 @@ matrix equation       →   Ax = b 하나로 압축</pre>
       Span and Geometry
     </div>
     <div class="section-body">
+      <!-- ★ 핵심 요약 -->
+      <div class="note-block">
+        <div class="label">⚡ 핵심 요약</div>
+        <p><strong>Span &amp; Geometry 핵심 개념</strong></p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <tr style="background:#e8f0f7;">
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">개념</th>
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">내용</th>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Span 기하학</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">벡터 1개: 직선 / 독립 2개: 평면 / 독립 3개: $\mathbb{R}^3$ 전체</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Matrix Equation Ax=b</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$\mathbf{b}$가 $A$의 열들의 span에 속하면 consistent</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Col A</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$A$의 열들의 span; $A\mathbf{x}=\mathbf{b}$ 해 존재 ↔ $\mathbf{b} \in \text{Col}\,A$</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">선형 독립 판별</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">벡터 수 &gt; 차원 → 항상 종속; 영벡터 포함 → 항상 종속</td>
+          </tr>
+        </table>
+      </div>
+      <hr class="divider"/>
       <div class="def-block">
         <div class="label">정의 · Span</div>
         <p>$$\text{Span}\{\mathbf{u}_1, \ldots, \mathbf{u}_p\} = \{c_1\mathbf{u}_1 + \cdots + c_p\mathbf{u}_p : c_i \in \mathbb{R}\}$$</p>
         <p>즉, 주어진 벡터들의 <strong>모든 선형 결합의 집합</strong>이다.</p>
       </div>
 
-      <h3>기하학적 의미</h3>
+      <h3>1. 기하학적 의미</h3>
       <ul>
         <li>$\text{Span}\{\mathbf{u}\}$: $\mathbf{u}$와 $\mathbf{0}$을 지나는 <strong>직선</strong> (단, $\mathbf{u} \neq \mathbf{0}$)</li>
         <li>$\text{Span}\{\mathbf{u}, \mathbf{v}\}$: $\mathbf{u}, \mathbf{v}$가 independent하면 이 둘이 포함된 <strong>평면</strong></li>
@@ -1387,9 +1551,7 @@ matrix equation       →   Ax = b 하나로 압축</pre>
         <p>Dependent인 경우: $\text{Span}\{\mathbf{u},\mathbf{v}\} = \text{Span}\{\mathbf{u}\}$ (직선에 그침)</p>
       </div>
 
-      <div class="deepdive-block">
-        <p class="deepdive-label">📐 개념 심화 — 선형 독립과 종속의 판별</p>
-        <p class="deepdive-intro"><strong>벡터 집합이 선형 독립이라는 것은 어떤 벡터도 나머지 벡터들의 선형결합으로 표현될 수 없다는 의미다.</strong> 동치 조건: $A\mathbf{x}=\mathbf{0}$이 자명해(trivial solution, 모든 계수=0)만을 가짐. 행 축소로 피벗 수를 확인해 판별하며, 벡터 개수가 차원보다 많으면 항상 선형 종속이다.</p>
+      <h3>2. 선형 독립과 종속의 판별</h3>
         <div class="def-block">
           <div class="label">선형 독립(linearly independent) 정의</div>
           <p>$\{\mathbf{v}_1,\ldots,\mathbf{v}_p\}$가 <strong>선형 독립</strong> $\iff$ $c_1\mathbf{v}_1+\cdots+c_p\mathbf{v}_p=\mathbf{0}$의 유일한 해가 자명해(trivial solution): $c_1=c_2=\cdots=c_p=0$</p>
@@ -1411,7 +1573,6 @@ matrix equation       →   Ax = b 하나로 압축</pre>
         </div>
       
         <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#6_span_geometry_handout.pdf</code> — <strong>pp. 1–2 전체</strong><br><span class="pdf-ref-detail">p.1 벡터 시각화 &amp; Span 개념 · p.2 Span 예시 &amp; 기하학적 해석</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§1.3 Vector Equations + §1.7 Linear Indep.</strong> — <strong>pp. 50–60, 84–90</strong><span class="tb-ref-detail"> (Span 기하, 선형 독립/종속)</span></span></div>
-      </div>
 
       <div class="practice-section">
         <div class="practice-label">📝 Practice #06 · Span — Linear Combination of Vectors</div>
@@ -1616,6 +1777,34 @@ matrix equation       →   Ax = b 하나로 압축</pre>
       Transformation (변환)
     </div>
     <div class="section-body">
+      <!-- ★ 핵심 요약 -->
+      <div class="note-block">
+        <div class="label">⚡ 핵심 요약</div>
+        <p><strong>Transformation 핵심 개념</strong></p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <tr style="background:#e8f0f7;">
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">개념</th>
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">내용</th>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Linear Transformation</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$T(\mathbf{u}+\mathbf{v})=T(\mathbf{u})+T(\mathbf{v})$, $T(c\mathbf{u})=cT(\mathbf{u})$; $T(\mathbf{0})=\mathbf{0}$ 필수</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Standard Matrix</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$A = [T(\mathbf{e}_1)\;\cdots\;T(\mathbf{e}_n)]$; 표준기저의 상을 열로 나열</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">One-to-one (단사)</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$A\mathbf{x}=\mathbf{0}$의 해가 자명해만 ↔ $A$의 열들이 선형독립</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Onto (전사)</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">모든 $\mathbf{b}$에 $T(\mathbf{x})=\mathbf{b}$ 가능 ↔ $A$의 열들이 $\mathbb{R}^m$ span</td>
+          </tr>
+        </table>
+      </div>
+      <hr class="divider"/>
       <div class="def-block">
         <div class="label">정의 · Linear Transformation</div>
         <p>$T: \mathbb{R}^m \to \mathbb{R}^n$이 <strong>선형 변환</strong>이다 ↔ 다음 두 조건을 만족한다:</p>
@@ -1638,9 +1827,7 @@ matrix equation       →   Ax = b 하나로 압축</pre>
         <p>즉, 표준기저벡터들의 상(image)을 열로 나열하면 표준 행렬이 된다.</p>
       </div>
 
-      <div class="deepdive-block">
-        <p class="deepdive-label">📐 개념 심화 — 선형변환의 구조와 표준행렬 유도</p>
-        <p class="deepdive-intro"><strong>선형변환은 덧셈과 스칼라 곱을 보존하는 함수로, 행렬-벡터 곱 $A\mathbf{x}$의 기하학적 해석 틀을 제공한다.</strong> 모든 선형변환 $T: \mathbb{R}^n \to \mathbb{R}^m$은 표준행렬 $A = [T(\mathbf{e}_1)\;\cdots\;T(\mathbf{e}_n)]$으로 유일하게 표현된다. 단사(one-to-one)와 전사(onto) 여부는 각각 표준행렬의 열 선형독립성과 span 조건으로 판별한다.</p>
+      <h3>1. 선형변환의 구조와 표준행렬 유도</h3>
         <div class="def-block">
           <div class="label">선형변환(linear transformation) 두 가지 조건</div>
           <p>$T: \mathbb{R}^n \to \mathbb{R}^m$이 선형 $\iff$ 모든 $\mathbf{u},\mathbf{v} \in \mathbb{R}^n$, $c \in \mathbb{R}$에 대해:<br>
@@ -1667,7 +1854,6 @@ matrix equation       →   Ax = b 하나로 압축</pre>
         </div>
       
         <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#7_transformation_handout.pdf</code> — <strong>pp. 1–3 전체</strong><br><span class="pdf-ref-detail">p.1 행렬방정식 &amp; 변환 정의 · p.2 선형변환 정의 · p.3 선형/비선형 판별</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§1.8 Introduction to Linear Transformations</strong> — <strong>pp. 91–98</strong><span class="tb-ref-detail"> (선형변환 정의, 단사/전사)</span></span></div>
-      </div>
 
       <div class="practice-section">
         <div class="practice-label">📝 Practice #08 · Linear Transformation</div>
@@ -1852,6 +2038,34 @@ $$T(\mathbf{u} + \mathbf{v}) = T(\mathbf{u}) + T(\mathbf{v})$$
       Linear Models (응용)
     </div>
     <div class="section-body">
+      <!-- ★ 핵심 요약 -->
+      <div class="note-block">
+        <div class="label">⚡ 핵심 요약</div>
+        <p><strong>Linear Models 핵심 개념</strong></p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <tr style="background:#e8f0f7;">
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">개념</th>
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">내용</th>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">영양소 혼합 모델</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$B\mathbf{u}=\mathbf{b}$ 형태; 각 식품의 비율을 변수로 설정</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">인구 모델 (Difference Eq.)</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$\mathbf{x}_{k+1}=M\mathbf{x}_k$; 전이행렬 $M$으로 시간 변화 표현</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">기하학적 변환</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">회전: $\begin{bmatrix}\cos\theta&-\sin\theta\\\sin\theta&\cos\theta\end{bmatrix}$ / 반사 / 전단 / 투영</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">합성 변환</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$T_2 \circ T_1$의 표준행렬 = $A_2 A_1$ (오른쪽부터 적용)</td>
+          </tr>
+        </table>
+      </div>
+      <hr class="divider"/>
       <p>선형 시스템은 다양한 현실 문제를 모델링한다.</p>
       <div class="example-block">
         <div class="label">예시 1 · 영양소 혼합</div>
@@ -1862,9 +2076,7 @@ $$T(\mathbf{u} + \mathbf{v}) = T(\mathbf{u}) + T(\mathbf{v})$$
         <p>도시↔교외 인구 이동: 매년 도시 인구의 4%가 교외로, 교외의 3%가 도시로 이동. 차분 방정식(difference equation)으로 표현:</p>
         $$\mathbf{x}_{k+1} = M\mathbf{x}_k, \quad M = \begin{bmatrix}0.96 & 0.03 \\ 0.04 & 0.97\end{bmatrix}$$
       </div>
-      <div class="deepdive-block">
-        <p class="deepdive-label">📐 개념 심화 — 기하학적 선형변환 유형</p>
-        <p class="deepdive-intro"><strong>회전·반사·전단 등 기하학적 변환은 모두 선형변환이며, 각각 고유한 표준행렬로 표현된다.</strong> $\mathbf{e}_1, \mathbf{e}_2$의 상(image)을 계산하면 표준행렬을 즉시 구할 수 있다. 여러 변환의 합성은 표준행렬의 곱으로 계산하며(오른쪽부터 적용), 반시계 $\theta$ 회전의 표준행렬은 $\begin{bmatrix}\cos\theta & -\sin\theta \\ \sin\theta & \cos\theta\end{bmatrix}$이다.</p>
+      <h3>1. 기하학적 선형변환 유형</h3>
         <div class="def-block">
           <div class="label">$\mathbb{R}^2$의 주요 변환과 표준행렬</div>
           <p><strong>반시계 $\theta$ 회전(rotation):</strong><br>
@@ -1883,7 +2095,6 @@ $$T(\mathbf{u} + \mathbf{v}) = T(\mathbf{u}) + T(\mathbf{v})$$
         </div>
       
         <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#10_linear_independence_handout.pdf</code> — <strong>pp. 2–3</strong><br><span class="pdf-ref-detail">※ Class #8 handout은 응용(영양·인구 모델). 기하학적 변환은 Class #10 pp.2–3 (표준행렬 &amp; 회전 예시) 참고</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§1.9 Matrix of a LT + §2.7 Comp. Graphics</strong> — <strong>pp. 99–108, 171–178</strong><span class="tb-ref-detail"> (표준행렬 유도, 기하학적 변환(회전·반사·전단))</span></span></div>
-      </div>
 
     </div>
   </div>
@@ -1895,7 +2106,35 @@ $$T(\mathbf{u} + \mathbf{v}) = T(\mathbf{u}) + T(\mathbf{v})$$
       The Matrix Equation $A\mathbf{x} = \mathbf{b}$
     </div>
     <div class="section-body">
-      <h3>선형 변환의 성질</h3>
+      <!-- ★ 핵심 요약 -->
+      <div class="note-block">
+        <div class="label">⚡ 핵심 요약</div>
+        <p><strong>Matrix Equation Ax=b 핵심 개념</strong></p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <tr style="background:#e8f0f7;">
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">개념</th>
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">내용</th>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Superposition Principle</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$T(\sum c_i\mathbf{u}_i) = \sum c_i T(\mathbf{u}_i)$; 선형변환의 핵심 성질</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">4가지 동치 조건</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">모든 b에 consistent ↔ 모든 행에 pivot ↔ 열들이 $\mathbb{R}^m$ span ↔ 모든 벡터가 선형결합</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Ax의 성분</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$(A\mathbf{x})_i = $ 행 $i$와 $\mathbf{x}$의 내적 = 열 선형결합</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Spanning 조건</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$n \geq m$ 필요 (충분 아님); 모든 행에 pivot이 실질적 조건</td>
+          </tr>
+        </table>
+      </div>
+      <hr class="divider"/>
+      <h3>1. 선형 변환의 성질</h3>
       <div class="thm-block">
         <div class="label">중첩 원리 (Superposition Principle)</div>
         $$T\!\left(\sum_{i=1}^m c_i \mathbf{u}_i\right) = \sum_{i=1}^m c_i T(\mathbf{u}_i)$$
@@ -1915,9 +2154,7 @@ $$T(\mathbf{u} + \mathbf{v}) = T(\mathbf{u}) + T(\mathbf{v})$$
 
       <p><strong>Unit lower/upper triangular</strong>: 대각원소가 모두 1인 삼각행렬</p>
 
-      <div class="deepdive-block">
-        <p class="deepdive-label">📐 개념 심화 — 행렬-벡터 곱과 행렬 표현</p>
-        <p class="deepdive-intro"><strong>행렬-벡터 곱 $A\mathbf{x}$의 각 성분은 해당 행과 $\mathbf{x}$의 내적이며, $A$의 열 선형결합으로도 해석된다.</strong> $A$의 열들이 $\mathbb{R}^m$을 span하는 것은 모든 $\mathbf{b}$에 대해 $A\mathbf{x}=\mathbf{b}$가 풀리는 것과 동치이며, 이는 $A$의 모든 행에 피벗이 존재하는 조건과 다시 동치다.</p>
+      <h3>2. 행렬-벡터 곱과 Spanning 조건</h3>
         <div class="def-block">
           <div class="label">$A\mathbf{x}$의 각 성분 — 행-벡터 내적</div>
           <p>$A$가 $m \times n$, $\mathbf{x} \in \mathbb{R}^n$일 때: $(A\mathbf{x})_i = \sum_{j=1}^n a_{ij} x_j$ (행 $i$와 $\mathbf{x}$의 내적)</p>
@@ -1931,7 +2168,6 @@ $$T(\mathbf{u} + \mathbf{v}) = T(\mathbf{u}) + T(\mathbf{v})$$
           → 최소한 $n \geq m$ (열 수 $\geq$ 행 수) 이어야 함. 하지만 충분 조건은 아님.</p>
         </div>
         <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#9_matrix_equation_handout.pdf</code> — <strong>pp. 1–3 전체</strong><br><span class="pdf-ref-detail">p.1 T(0)=0 &amp; superposition · p.2 spanning 조건 정리 · p.3 최대 피벗 수</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§1.4 The Matrix Equation Ax=b + §1.9</strong> — <strong>pp. 61–68, 99–108</strong><span class="tb-ref-detail"> (Ax=b 성질, T(0)=0, Superposition)</span></span></div>
-      </div>
 
       <div class="practice-section">
         <div class="practice-label">📝 Practice #09 · The Matrix Equation $Ax=b$ — Applications</div>
@@ -2062,6 +2298,34 @@ Ax는 m × 1</pre>
       Linear Independence (선형 독립(linearly independent))
     </div>
     <div class="section-body">
+      <!-- ★ 핵심 요약 -->
+      <div class="note-block">
+        <div class="label">⚡ 핵심 요약</div>
+        <p><strong>Linear Independence 핵심 개념</strong></p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <tr style="background:#e8f0f7;">
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">개념</th>
+            <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">내용</th>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Linear Independence</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$c_1\mathbf{v}_1+\cdots+c_p\mathbf{v}_p=\mathbf{0}$의 유일한 해가 trivial solution ($c_i=0$)</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">Trivial solution</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">$\mathbf{x}=\mathbf{0}$; nontrivial solution 존재 ↔ linearly dependent</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">빠른 종속 판별</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">영벡터 포함 / 벡터 수 &gt; 차원 / 한 벡터가 나머지의 선형결합</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;border:1px solid #dde;">단사/전사 연결</td>
+            <td style="padding:7px 10px;border:1px solid #dde;">단사 ↔ 열 선형독립; 전사 ↔ 열이 $\mathbb{R}^m$ span</td>
+          </tr>
+        </table>
+      </div>
+      <hr class="divider"/>
       <div class="def-block">
         <div class="label">정의 · Linear Independence</div>
         <p>벡터 집합 $\{\mathbf{u}_1, \ldots, \mathbf{u}_p\}$이 <strong>linearly independent</strong>이다 ↔</p>
@@ -2070,7 +2334,7 @@ Ax는 m × 1</pre>
         <p>Non-trivial solution이 존재하면 <strong>linearly dependent</strong>이다.</p>
       </div>
 
-      <h3>판단 기준</h3>
+      <h3>1. 판단 기준</h3>
       <ul>
         <li>$\mathbf{0}$을 포함하는 집합은 항상 <strong>dependent</strong></li>
         <li>단일 비영 벡터로 이루어진 집합은 <strong>independent</strong></li>
@@ -2084,9 +2348,7 @@ Ax는 m × 1</pre>
         $$A = [T(\mathbf{e}_1) \;\; T(\mathbf{e}_2) \;\; \cdots \;\; T(\mathbf{e}_n)]$$
       </div>
 
-      <div class="deepdive-block">
-        <p class="deepdive-label">📐 개념 심화 — 선형변환의 단사/전사와 행렬 성질</p>
-        <p class="deepdive-intro"><strong>선형변환의 단사성·전사성은 표준행렬의 열 선형독립성·span 조건으로 완전히 판별된다.</strong> 단사(one-to-one): 표준행렬의 열들이 선형독립 $\iff$ $A\mathbf{x}=\mathbf{0}$의 해가 자명해만. 전사(onto): 열들이 $\mathbb{R}^m$ 전체를 span $\iff$ 모든 행에 피벗. $n=m$이고 두 조건 동시 만족 시 전단사(bijection)이며 가역행렬과 동치다.</p>
+      <h3>2. 선형변환의 단사/전사와 행렬 성질</h3>
         <div class="thm-block">
           <div class="label">단사 $\iff$ 선형독립 $\iff$ 자명해만</div>
           <p>$T: \mathbb{R}^n \to \mathbb{R}^m$, $T(\mathbf{x})=A\mathbf{x}$일 때:</p>
@@ -2109,7 +2371,6 @@ Ax는 m × 1</pre>
         </div>
       
         <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#10_linear_independence_handout.pdf</code> — <strong>pp. 1–4 전체</strong><br><span class="pdf-ref-detail">p.1 선형독립 정의 · p.2 표준행렬 동기 &amp; 회전 예시 · p.3 표준행렬 &amp; 단사/전사 · p.4 전단사</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§1.7 Linear Independence + §1.9 Std. Matrix</strong> — <strong>pp. 84–90, 99–108</strong><span class="tb-ref-detail"> (선형독립, 단사/전사 조건, 표준행렬)</span></span></div>
-      </div>
 
       <div class="practice-section">
         <div class="practice-label">📝 Practice #10 · Linear Independence</div>
@@ -2273,13 +2534,52 @@ det(A) = 0
       Matrix Operations
     </div>
     <div class="section-body">
+      <!-- ★ 핵심 요약 -->
+      <div class="note-block">
+        <div class="label">★ 핵심 요약</div>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <thead>
+            <tr style="background:#e8f0f7;">
+              <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">개념</th>
+              <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">정의 / 공식</th>
+              <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">핵심 성질</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:7px 10px;border:1px solid #dde;">Transpose $A^T$</td>
+              <td style="padding:7px 10px;border:1px solid #dde;">$(A^T)_{ij} = A_{ji}$</td>
+              <td style="padding:7px 10px;border:1px solid #dde;">$(AB)^T = B^T A^T$ (순서 역전)</td>
+            </tr>
+            <tr>
+              <td style="padding:7px 10px;border:1px solid #dde;">행렬 곱 $AB$</td>
+              <td style="padding:7px 10px;border:1px solid #dde;">$AB = [A\mathbf{b}_1 \cdots A\mathbf{b}_n]$</td>
+              <td style="padding:7px 10px;border:1px solid #dde;">일반적으로 $AB \neq BA$ (비가환)</td>
+            </tr>
+            <tr>
+              <td style="padding:7px 10px;border:1px solid #dde;">열-행 전개</td>
+              <td style="padding:7px 10px;border:1px solid #dde;">$AB = \sum_{k=1}^n \mathrm{col}_k(A)\cdot\mathrm{row}_k(B)$</td>
+              <td style="padding:7px 10px;border:1px solid #dde;">각 항이 rank-1 행렬의 합</td>
+            </tr>
+            <tr>
+              <td style="padding:7px 10px;border:1px solid #dde;">결합법칙</td>
+              <td style="padding:7px 10px;border:1px solid #dde;">$A(BC) = (AB)C$</td>
+              <td style="padding:7px 10px;border:1px solid #dde;">교환법칙은 성립하지 않음</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <hr class="divider"/>
+
+      <h3>1. Transpose (전치행렬)</h3>
       <div class="def-block">
         <div class="label">정의 · Transpose</div>
         <p>$A \in \mathbb{R}^{m \times n}$의 <strong>전치(transpose)</strong> $A^T \in \mathbb{R}^{n \times m}$: $i$번째 행이 $A$의 $i$번째 열.</p>
         <p>$(A^T)^T = A$</p>
       </div>
 
-      <h3>행렬 곱셈 (Matrix Multiplication)</h3>
+      <h3>2. 행렬 곱셈 (Matrix Multiplication)</h3>
       <p>$S(T(\mathbf{x})) = B(A\mathbf{x})$에서 합성 변환을 행렬로 나타내면:</p>
       $$BA = [B\mathbf{a}_1 \;\; B\mathbf{a}_2 \;\; \cdots \;\; B\mathbf{a}_n]$$
       <div class="note-block">
@@ -2296,10 +2596,8 @@ det(A) = 0
         </ul>
       </div>
 
-      <div class="deepdive-block">
-        <p class="deepdive-label">📐 개념 심화 — 행렬 곱셈의 구조와 전치행렬</p>
-        <p class="deepdive-intro"><strong>행렬 곱셈 $AB$는 두 선형변환의 합성을 행렬로 표현한 것으로, $B$의 각 열에 $A$를 적용한 결과를 나열한 것이다.</strong> 일반적으로 $AB \neq BA$ (비가환적)이며, 전치 연산은 순서가 역전되어 $(AB)^T = B^T A^T$가 성립한다. $AB$는 rank-1 행렬들의 합(열-행 전개)으로 분해할 수도 있다.</p>
-        <div class="thm-block">
+      <h3>3. 행렬 곱의 열 관점 · $(AB)^T = B^T A^T$ 증명</h3>
+      <div class="thm-block">
           <div class="label">행렬 곱 $AB$의 열 관점</div>
           <p>$AB$의 $j$번째 열 $= A \cdot (\text{B의 }j\text{번째 열}) = A\mathbf{b}_j$</p>
           <p>이것이 합성 변환 해석: $T_A \circ T_B(\mathbf{x}) = A(B\mathbf{x}) = (AB)\mathbf{x}$</p>
@@ -2317,14 +2615,15 @@ det(A) = 0
           $AB = AC$이어도 $B \neq C$일 수 있음 (소거법칙 불성립)<br>
           $AB = 0$이어도 $A = 0$ 또는 $B = 0$이 아닐 수 있음 (영인자 존재)</p>
         </div>
-        <div class="note-block">
+
+      <h3>4. 열-행 전개 (Column-Row Expansion)</h3>
+      <div class="note-block">
           <div class="label">열-행 전개 (Column-Row Expansion)</div>
           <p>$AB = \sum_{k=1}^{n} (\text{col}_k A)(\text{row}_k B) = \mathbf{a}_1\mathbf{b}_1^T + \cdots + \mathbf{a}_n\mathbf{b}_n^T$</p>
           <p>각 $\mathbf{a}_k\mathbf{b}_k^T$는 rank-1 행렬. 즉 $AB$는 rank-1 행렬들의 합으로 분해됨.</p>
         </div>
-      
+
         <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#11_matrix_operations_handout.pdf</code> — <strong>pp. 1–3 전체</strong><br><span class="pdf-ref-detail">p.1 전치행렬 · p.2 행렬 곱 유도(합성변환) · p.3 행렬 곱 성질 &amp; (AB)ᵀ=BᵀAᵀ 증명</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§2.1 Matrix Operations</strong> — <strong>pp. 122–134</strong><span class="tb-ref-detail"> (전치, 행렬 곱, (AB)ᵀ=BᵀAᵀ 증명)</span></span></div>
-      </div>
 
       <div class="practice-section">
         <div class="practice-label">📝 Practice #11 · Standard Matrix &amp; Matrix Operations</div>
@@ -2471,17 +2770,57 @@ det(A) = 0
       Inverse of a Matrix (역행렬)
     </div>
     <div class="section-body">
+      <!-- ★ 핵심 요약 -->
+      <div class="note-block">
+        <div class="label">★ 핵심 요약</div>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <thead>
+            <tr style="background:#e8f0f7;">
+              <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">개념</th>
+              <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">내용</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:7px 10px;border:1px solid #dde;">Invertible 정의</td>
+              <td style="padding:7px 10px;border:1px solid #dde;">$AC = CA = I$인 $C = A^{-1}$ 존재 ($n \times n$ 행렬)</td>
+            </tr>
+            <tr>
+              <td style="padding:7px 10px;border:1px solid #dde;">2×2 역행렬</td>
+              <td style="padding:7px 10px;border:1px solid #dde;">$\det A = ad-bc \neq 0$일 때 $A^{-1} = \frac{1}{ad-bc}\begin{bmatrix}d&-b\\-c&a\end{bmatrix}$</td>
+            </tr>
+            <tr>
+              <td style="padding:7px 10px;border:1px solid #dde;">역행렬 성질</td>
+              <td style="padding:7px 10px;border:1px solid #dde;">$(AB)^{-1} = B^{-1}A^{-1}$, $(A^T)^{-1} = (A^{-1})^T$, $(A^{-1})^{-1} = A$</td>
+            </tr>
+            <tr>
+              <td style="padding:7px 10px;border:1px solid #dde;">Elementary Matrix</td>
+              <td style="padding:7px 10px;border:1px solid #dde;">$I_n$에 행 연산 한 번 적용; $EA$ = $A$에 해당 연산 적용 결과</td>
+            </tr>
+            <tr>
+              <td style="padding:7px 10px;border:1px solid #dde;">역행렬 계산</td>
+              <td style="padding:7px 10px;border:1px solid #dde;">$[A \mid I] \xrightarrow{\text{row reduce}} [I \mid A^{-1}]$</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <hr class="divider"/>
+
+      <h3>1. 가역행렬 (Invertible Matrix) 정의</h3>
       <div class="def-block">
         <div class="label">정의 · Invertible Matrix</div>
         <p>$A \in \mathbb{R}^{n \times n}$에 대해 $AC = I = CA$를 만족하는 $C$가 존재하면 $A$는 <strong>invertible (nonsingular)</strong>이고 $C = A^{-1}$이라 쓴다.</p>
       </div>
 
+      <h3>2. 2×2 역행렬 공식</h3>
       <div class="thm-block">
         <div class="label">정리 · 2×2 역행렬</div>
         $$A = \begin{bmatrix} a & b \\ c & d \end{bmatrix} \implies A^{-1} = \frac{1}{ad-bc}\begin{bmatrix} d & -b \\ -c & a \end{bmatrix}$$
         <p>단, $\det A = ad - bc \neq 0$일 때만 존재.</p>
       </div>
 
+      <h3>3. 역행렬의 성질</h3>
       <div class="thm-block">
         <div class="label">정리 · 역행렬의 성질</div>
         <ul>
@@ -2492,15 +2831,14 @@ det(A) = 0
         </ul>
       </div>
 
+      <h3>4. 기본행렬 (Elementary Matrix)</h3>
       <div class="def-block">
         <div class="label">정의 · Elementary Matrix</div>
         <p>$n \times n$ 단위행렬에 단 하나의 행 연산을 적용하여 얻은 행렬. $EA$는 $A$에 해당 행 연산을 적용한 결과이다.</p>
       </div>
 
-      <div class="deepdive-block">
-        <p class="deepdive-label">📐 개념 심화 — 역행렬의 존재, 계산, 성질</p>
-        <p class="deepdive-intro"><strong>가역행렬 $A$의 역행렬 $A^{-1}$은 $AA^{-1}=A^{-1}A=I$를 만족하는 유일한 행렬이다.</strong> $2\times2$ 행렬의 역행렬은 $\det A \neq 0$일 때 공식으로 즉시 계산되고, 일반적으로는 $[A|I]\to[I|A^{-1}]$ 행 축소 방법을 사용한다. 여러 행렬의 곱의 역행렬은 $(AB)^{-1}=B^{-1}A^{-1}$로 순서가 역전된다.</p>
-        <div class="thm-block">
+      <h3>5. 역행렬 심화 — 유일성 증명 &amp; 성질</h3>
+      <div class="thm-block">
           <div class="label">$2 \times 2$ 역행렬 공식 유도</div>
           <p>$A = \begin{bmatrix}a&b\\c&d\end{bmatrix}$, $\det A = ad-bc \neq 0$일 때:</p>
           <p>$A^{-1} = \frac{1}{ad-bc}\begin{bmatrix}d&-b\\-c&a\end{bmatrix}$</p>
@@ -2521,9 +2859,8 @@ det(A) = 0
           <div class="label">역행렬 계산 vs. 행 축소</div>
           <p>역행렬로 $A\mathbf{x}=\mathbf{b}$를 풀면 $\mathbf{x}=A^{-1}\mathbf{b}$이지만, 실용적으로는 $[A|\mathbf{b}]$의 행 축소가 훨씬 효율적. 역행렬은 여러 $\mathbf{b}$에 대해 반복 풀이가 필요할 때 유용.</p>
         </div>
-      
+
         <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#12_inverse_handout.pdf</code> — <strong>pp. 2–3</strong><br><span class="pdf-ref-detail">p.2 기본행렬 &amp; 역행렬 정의 · p.3 2×2 공식 &amp; 유일성 증명</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§2.2 The Inverse of a Matrix</strong> — <strong>pp. 135–144</strong><span class="tb-ref-detail"> (역행렬 정의, 기본행렬, 2×2 공식, 유일성)</span></span></div>
-      </div>
 
       <div class="practice-section">
         <div class="practice-label">📝 Practice #12 · Elementary Matrices &amp; Inverse</div>
@@ -2695,9 +3032,51 @@ R²가 아니라 직선으로 찌그러졌어!
       Invertible Matrix Theorem (IMT)
     </div>
     <div class="section-body">
-      <h3>역행렬 구하는 알고리즘</h3>
+      <!-- ★ 핵심 요약 -->
+      <div class="note-block">
+        <div class="label">★ 핵심 요약</div>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+          <thead>
+            <tr style="background:#e8f0f7;">
+              <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">동치 조건 (TFAE)</th>
+              <th style="padding:7px 10px;border:1px solid #c5d8ee;text-align:left;">설명</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:7px 10px;border:1px solid #dde;">① $A$ 가역</td>
+              <td style="padding:7px 10px;border:1px solid #dde;">$A^{-1}$ 존재</td>
+            </tr>
+            <tr>
+              <td style="padding:7px 10px;border:1px solid #dde;">③ $n$개의 pivot</td>
+              <td style="padding:7px 10px;border:1px solid #dde;">모든 열/행에 pivot</td>
+            </tr>
+            <tr>
+              <td style="padding:7px 10px;border:1px solid #dde;">④⑤ $A\mathbf{x}=\mathbf{0}$ trivial</td>
+              <td style="padding:7px 10px;border:1px solid #dde;">열이 선형독립</td>
+            </tr>
+            <tr>
+              <td style="padding:7px 10px;border:1px solid #dde;">⑥⑨ one-to-one / onto</td>
+              <td style="padding:7px 10px;border:1px solid #dde;">동시에 성립 ($n\times n$)</td>
+            </tr>
+            <tr>
+              <td style="padding:7px 10px;border:1px solid #dde;">⑦⑧ $A\mathbf{x}=\mathbf{b}$ consistent</td>
+              <td style="padding:7px 10px;border:1px solid #dde;">열이 $\mathbb{R}^n$ span</td>
+            </tr>
+            <tr>
+              <td style="padding:7px 10px;border:1px solid #dde;">⑫ $A^T$ 가역</td>
+              <td style="padding:7px 10px;border:1px solid #dde;">행 공간 = $\mathbb{R}^n$</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <hr class="divider"/>
+
+      <h3>1. 역행렬 계산 알고리즘 $[A \mid I] \to [I \mid A^{-1}]$</h3>
       <p>$[A \mid I]$에 행 연산을 적용하여 $A$를 $I$로 만들면 $[I \mid A^{-1}]$이 된다. $A$가 $I$로 환원 안 되면 역행렬이 없다.</p>
 
+      <h3>2. Invertible Matrix Theorem (IMT)</h3>
       <div class="thm-block">
         <div class="label">Invertible Matrix Theorem (IMT) — 핵심 동치 명제들</div>
         <p>$n \times n$ 행렬 $A$에 대해 다음은 모두 동치이다(TFAE):</p>
@@ -2717,26 +3096,8 @@ R²가 아니라 직선으로 찌그러졌어!
         </ol>
       </div>
 
-      <div class="deepdive-block">
-        <p class="deepdive-label">📐 개념 심화 — 가역행렬 정리 (IMT) 핵심</p>
-        <p class="deepdive-intro"><strong>가역행렬 정리(IMT)는 $n\times n$ 행렬 $A$의 가역성에 대한 12가지 동치 조건을 하나의 정리로 묶은 것이다.</strong> 피벗 수, 선형독립, 단사/전사, 해의 유일성, $\det A \neq 0$ 등 서로 다른 언어의 조건들이 사실 모두 동등한 표현임을 보여주며, 하나가 성립하면 나머지 11개도 자동으로 성립한다.</p>
-        <div class="thm-block">
-          <div class="label">Invertible Matrix Theorem (IMT) — 동치 조건</div>
-          <p>$n \times n$ 행렬 $A$에 대해 다음은 모두 동치:</p>
-          <p>① $A$는 가역(invertible)<br>
-          ② $A \sim I_n$ (행 동치, row equivalent)<br>
-          ③ $A$는 정확히 $n$개의 피벗<br>
-          ④ $A\mathbf{x}=\mathbf{0}$은 자명해만 가짐<br>
-          ⑤ $A$의 열들은 선형독립<br>
-          ⑥ $T(\mathbf{x})=A\mathbf{x}$는 단사(one-to-one)<br>
-          ⑦ 모든 $\mathbf{b} \in \mathbb{R}^n$에 대해 $A\mathbf{x}=\mathbf{b}$는 consistent<br>
-          ⑧ $A$의 열들이 $\mathbb{R}^n$을 span<br>
-          ⑨ $T(\mathbf{x})=A\mathbf{x}$는 전사(onto)<br>
-          ⑩ $CA=I$인 $C$ 존재 (left inverse)<br>
-          ⑪ $AD=I$인 $D$ 존재 (right inverse)<br>
-          ⑫ $A^T$ 가역</p>
-        </div>
-        <div class="example-block">
+      <h3>3. $[A \mid I] \to [I \mid A^{-1}]$ 예시</h3>
+      <div class="example-block">
           <div class="label">$[A|I] \to [I|A^{-1}]$ 알고리즘 예시</div>
           <p>$A=\begin{bmatrix}0&1&2\\1&0&3\\4&-3&8\end{bmatrix}$</p>
           <p>$\begin{bmatrix}0&1&2&1&0&0\\1&0&3&0&1&0\\4&-3&8&0&0&1\end{bmatrix} \xrightarrow{R_1\leftrightarrow R_2} \begin{bmatrix}1&0&3&0&1&0\\0&1&2&1&0&0\\4&-3&8&0&0&1\end{bmatrix}$</p>
@@ -2744,9 +3105,8 @@ R²가 아니라 직선으로 찌그러졌어!
           <p>$\xrightarrow{\frac{1}{2}R_3} \begin{bmatrix}1&0&3\\0&1&2\\0&0&1\end{bmatrix} \xrightarrow{R_1-3R_3,R_2-2R_3} \begin{bmatrix}1&0&0\\0&1&0\\0&0&1\end{bmatrix}$</p>
           <p>$A^{-1}=\frac{1}{2}\begin{bmatrix}-9&14&-3\\-4&8&-2\\3&-4&1\end{bmatrix}$</p>
         </div>
-      
+
         <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#13_characterization_invertible_handout.pdf</code> — <strong>pp. 2–3</strong><br><span class="pdf-ref-detail">p.2 [A|I]→[I|A⁻¹] 알고리즘 &amp; IMT · p.3 IMT 응용</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§2.3 Characterizations of Invertible Matrices</strong> — <strong>pp. 145–149</strong><span class="tb-ref-detail"> (IMT 12가지 동치, [A|I]→[I|A⁻¹])</span></span></div>
-      </div>
 
       <div class="practice-section">
         <div class="practice-label">📝 Practice #13 · Inverse &amp; Invertible Matrix Theorem</div>
@@ -5220,6 +5580,81 @@ LU 방법:      LU구하기 + 28 × 10 = LU + 280 flops</pre>
 
       <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#24-Change_of_Basis_handout.pdf</code> — <strong>pp. 1–2 전체</strong><br><span class="pdf-ref-detail">p.1 기저 변환 행렬 정의 · 예시 1 · p.2 예시 2 (행 축소)</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§4.7 Change of Basis</strong> — <strong>pp. 277–284</strong></span></div>
 
+      <hr class="divider"/>
+
+      <!-- ────────── Practice #26 ────────── -->
+      <div class="practice-section">
+        <details class="practice-toggle">
+          <summary class="practice-label">📝 Practice #26 · Change of Basis</summary>
+          <div class="practice-items-wrap">
+
+            <div class="practice-item">
+              <div class="q-num">Problem 1</div>
+              <div class="q-body">
+                <p>In $\mathbf{P}_2$, find the change-of-coordinates matrix from the basis</p>
+                <p>$B = \{1 - 2t + t^2,\; 3 - 5t + 4t^2,\; 2t + 3t^2\}$ to the standard basis $S = \{1, t, t^2\}$.</p>
+                <p>If $p(t) = -1 + 2t$, what is the $S$-coordinate vector for $p(t)$?<br>
+                Then find the $B$-coordinate vector for $p(t)$ <em>using the change-of-coordinates matrix</em>.</p>
+              </div>
+              <div class="toggle-row">
+                <details class="hint-detail">
+                  <summary>💡 힌트 보기</summary>
+                  <div class="toggle-body">
+                    <p>$M_{S \leftarrow B}$는 각 기저 벡터를 $S$-좌표로 표현한 열들을 나란히 놓으면 된다.</p>
+                    <p>$[p(t)]_S$는 $p(t) = -1 + 2t + 0\cdot t^2$이므로 계수를 읽으면 된다.</p>
+                    <p>$[p(t)]_B = M_{S \leftarrow B}^{-1}\, [p(t)]_S$ — change-of-coordinates 행렬의 역행렬을 이용한다.</p>
+                  </div>
+                </details>
+                <details class="sol-detail">
+                  <summary>✅ 풀이 보기</summary>
+                  <div class="toggle-body">
+                    <p><strong>Change-of-coordinates matrix:</strong></p>
+                    <p class="sol-step">각 기저 벡터를 $S$-좌표로 표현: $b_1 = 1 - 2t + t^2 \to [1,-2,1]^T$, $b_2 = 3 - 5t + 4t^2 \to [3,-5,4]^T$, $b_3 = 2t + 3t^2 \to [0,2,3]^T$</p>
+                    $$M_{S \leftarrow B} = \begin{bmatrix} 1 & 3 & 0 \\ -2 & -5 & 2 \\ 1 & 4 & 3 \end{bmatrix}$$
+                    <p><strong>$S$-coordinate vector:</strong></p>
+                    <p class="sol-step">$p(t) = -1 + 2t + 0\cdot t^2$ 이므로 $[p(t)]_S = \begin{bmatrix}-1\\2\\0\end{bmatrix}$</p>
+                    <p><strong>$B$-coordinate vector:</strong></p>
+                    <p class="sol-step">$[p(t)]_B = M_{S \leftarrow B}^{-1}\,[p(t)]_S$를 계산하면:</p>
+                    $$[p(t)]_B = \begin{bmatrix} 5 \\ -2 \\ 1 \end{bmatrix}$$
+                    <p class="sol-step">검산: $5(1-2t+t^2) + (-2)(3-5t+4t^2) + 1(2t+3t^2) = 5 - 6 + (−10+10+2)t + (5−8+3)t^2 = -1 + 2t$ ✓</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+
+            <div class="practice-item">
+              <div class="q-num">Problem 2</div>
+              <div class="q-body">
+                <p>In $\mathbf{P}_1$, the following $B$ and $C$ are two bases. Find the change-of-coordinates matrix from $B$ to $C$, and the change-of-coordinates matrix from $C$ to $B$.</p>
+                $$B = \{7 + 5t,\; -3 - t\}, \quad C = \{1 - 5t,\; -2 + 2t\}$$
+              </div>
+              <div class="toggle-row">
+                <details class="hint-detail">
+                  <summary>💡 힌트 보기</summary>
+                  <div class="toggle-body">
+                    <p>$\mathbf{P}_1$과 $\mathbb{R}^2$ 사이의 동형사상(isomorphism)을 이용한다. 표준 기저 $S = \{1, t\}$ 에 대한 좌표 표현으로 변환하면, 수업에서 배운 $\mathbb{R}^n$ 알고리즘을 그대로 적용할 수 있다.</p>
+                    <p>즉 $B, C$의 원소를 $\mathbb{R}^2$ 벡터로 쓴 뒤 $[\,P_C \mid P_B\,]$를 row-reduce하여 $M_{C \leftarrow B}$를 구한다.</p>
+                  </div>
+                </details>
+                <details class="sol-detail">
+                  <summary>✅ 풀이 보기</summary>
+                  <div class="toggle-body">
+                    <p><strong>$S$-좌표 표현으로 변환 (isomorphism $\mathbf{P}_1 \cong \mathbb{R}^2$):</strong></p>
+                    <p class="sol-step">$B$: $b_1 = 7+5t \to [7,5]^T$, $b_2 = -3-t \to [-3,-1]^T$</p>
+                    <p class="sol-step">$C$: $c_1 = 1-5t \to [1,-5]^T$, $c_2 = -2+2t \to [-2,2]^T$</p>
+                    <p><strong>$M_{C \leftarrow B}$ 계산:</strong> $[P_C \mid P_B] \to [I \mid M_{C \leftarrow B}]$ row-reduce</p>
+                    $$\left[\begin{array}{cc|cc} 1 & -2 & 7 & -3 \\ -5 & 2 & 5 & -1 \end{array}\right] \xrightarrow{\text{row reduce}} \left[\begin{array}{cc|cc} 1 & 0 & -3 & 1 \\ 0 & 1 & -5 & 2 \end{array}\right]$$
+                    $$M_{C \leftarrow B} = \begin{bmatrix} -3 & 1 \\ -5 & 2 \end{bmatrix}, \quad M_{B \leftarrow C} = \begin{bmatrix} -2 & 1 \\ -5 & 3 \end{bmatrix}$$
+                    <p class="sol-step">$M_{B \leftarrow C} = M_{C \leftarrow B}^{-1}$임에 유의. (검산: 두 행렬의 곱이 $I$인지 확인)</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+
+          </div>
+        </details>
+      </div>
+
     </div>
   </div>
 
@@ -5328,81 +5763,6 @@ LU 방법:      LU구하기 + 28 × 10 = LU + 280 flops</pre>
       </div>
 
       <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#25-RowA_handout.pdf</code> — <strong>pp. 1–2 전체</strong><br><span class="pdf-ref-detail">p.1 Row A 정의, Col vs Row 비교, 행 공간 기저 정리 · p.2 응용 예시, IMT (m)–(r)</span><br><span class="tb-ref">📘 <strong>Lay 교재:</strong> <strong>§4.6 Rank</strong> — <strong>pp. 271–276</strong></span></div>
-
-      <hr class="divider"/>
-
-      <!-- ────────── Practice #26 ────────── -->
-      <div class="practice-section">
-        <details class="practice-toggle">
-          <summary class="practice-label">📝 Practice #26 · Change of Basis</summary>
-          <div class="practice-items-wrap">
-
-            <div class="practice-item">
-              <div class="q-num">Problem 1</div>
-              <div class="q-body">
-                <p>In $\mathbf{P}_2$, find the change-of-coordinates matrix from the basis</p>
-                <p>$B = \{1 - 2t + t^2,\; 3 - 5t + 4t^2,\; 2t + 3t^2\}$ to the standard basis $S = \{1, t, t^2\}$.</p>
-                <p>If $p(t) = -1 + 2t$, what is the $S$-coordinate vector for $p(t)$?<br>
-                Then find the $B$-coordinate vector for $p(t)$ <em>using the change-of-coordinates matrix</em>.</p>
-              </div>
-              <div class="toggle-row">
-                <details class="hint-detail">
-                  <summary>💡 힌트 보기</summary>
-                  <div class="toggle-body">
-                    <p>$M_{S \leftarrow B}$는 각 기저 벡터를 $S$-좌표로 표현한 열들을 나란히 놓으면 된다.</p>
-                    <p>$[p(t)]_S$는 $p(t) = -1 + 2t + 0\cdot t^2$이므로 계수를 읽으면 된다.</p>
-                    <p>$[p(t)]_B = M_{S \leftarrow B}^{-1}\, [p(t)]_S$ — change-of-coordinates 행렬의 역행렬을 이용한다.</p>
-                  </div>
-                </details>
-                <details class="sol-detail">
-                  <summary>✅ 풀이 보기</summary>
-                  <div class="toggle-body">
-                    <p><strong>Change-of-coordinates matrix:</strong></p>
-                    <p class="sol-step">각 기저 벡터를 $S$-좌표로 표현: $b_1 = 1 - 2t + t^2 \to [1,-2,1]^T$, $b_2 = 3 - 5t + 4t^2 \to [3,-5,4]^T$, $b_3 = 2t + 3t^2 \to [0,2,3]^T$</p>
-                    $$M_{S \leftarrow B} = \begin{bmatrix} 1 & 3 & 0 \\ -2 & -5 & 2 \\ 1 & 4 & 3 \end{bmatrix}$$
-                    <p><strong>$S$-coordinate vector:</strong></p>
-                    <p class="sol-step">$p(t) = -1 + 2t + 0\cdot t^2$ 이므로 $[p(t)]_S = \begin{bmatrix}-1\\2\\0\end{bmatrix}$</p>
-                    <p><strong>$B$-coordinate vector:</strong></p>
-                    <p class="sol-step">$[p(t)]_B = M_{S \leftarrow B}^{-1}\,[p(t)]_S$를 계산하면:</p>
-                    $$[p(t)]_B = \begin{bmatrix} 5 \\ -2 \\ 1 \end{bmatrix}$$
-                    <p class="sol-step">검산: $5(1-2t+t^2) + (-2)(3-5t+4t^2) + 1(2t+3t^2) = 5 - 6 + (−10+10+2)t + (5−8+3)t^2 = -1 + 2t$ ✓</p>
-                  </div>
-                </details>
-              </div>
-            </div>
-
-            <div class="practice-item">
-              <div class="q-num">Problem 2</div>
-              <div class="q-body">
-                <p>In $\mathbf{P}_1$, the following $B$ and $C$ are two bases. Find the change-of-coordinates matrix from $B$ to $C$, and the change-of-coordinates matrix from $C$ to $B$.</p>
-                $$B = \{7 + 5t,\; -3 - t\}, \quad C = \{1 - 5t,\; -2 + 2t\}$$
-              </div>
-              <div class="toggle-row">
-                <details class="hint-detail">
-                  <summary>💡 힌트 보기</summary>
-                  <div class="toggle-body">
-                    <p>$\mathbf{P}_1$과 $\mathbb{R}^2$ 사이의 동형사상(isomorphism)을 이용한다. 표준 기저 $S = \{1, t\}$ 에 대한 좌표 표현으로 변환하면, 수업에서 배운 $\mathbb{R}^n$ 알고리즘을 그대로 적용할 수 있다.</p>
-                    <p>즉 $B, C$의 원소를 $\mathbb{R}^2$ 벡터로 쓴 뒤 $[\,P_C \mid P_B\,]$를 row-reduce하여 $M_{C \leftarrow B}$를 구한다.</p>
-                  </div>
-                </details>
-                <details class="sol-detail">
-                  <summary>✅ 풀이 보기</summary>
-                  <div class="toggle-body">
-                    <p><strong>$S$-좌표 표현으로 변환 (isomorphism $\mathbf{P}_1 \cong \mathbb{R}^2$):</strong></p>
-                    <p class="sol-step">$B$: $b_1 = 7+5t \to [7,5]^T$, $b_2 = -3-t \to [-3,-1]^T$</p>
-                    <p class="sol-step">$C$: $c_1 = 1-5t \to [1,-5]^T$, $c_2 = -2+2t \to [-2,2]^T$</p>
-                    <p><strong>$M_{C \leftarrow B}$ 계산:</strong> $[P_C \mid P_B] \to [I \mid M_{C \leftarrow B}]$ row-reduce</p>
-                    $$\left[\begin{array}{cc|cc} 1 & -2 & 7 & -3 \\ -5 & 2 & 5 & -1 \end{array}\right] \xrightarrow{\text{row reduce}} \left[\begin{array}{cc|cc} 1 & 0 & -3 & 1 \\ 0 & 1 & -5 & 2 \end{array}\right]$$
-                    $$M_{C \leftarrow B} = \begin{bmatrix} -3 & 1 \\ -5 & 2 \end{bmatrix}, \quad M_{B \leftarrow C} = \begin{bmatrix} -2 & 1 \\ -5 & 3 \end{bmatrix}$$
-                    <p class="sol-step">$M_{B \leftarrow C} = M_{C \leftarrow B}^{-1}$임에 유의. (검산: 두 행렬의 곱이 $I$인지 확인)</p>
-                  </div>
-                </details>
-              </div>
-            </div>
-
-          </div>
-        </details>
-      </div>
 
       <!-- ────────── Practice #27 ────────── -->
       <div class="practice-section">
