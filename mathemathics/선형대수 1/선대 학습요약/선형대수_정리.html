@@ -3832,6 +3832,21 @@ LU 방법:      LU구하기 + 28 × 10 = LU + 280 flops</pre>
             <div class="ans-body"><p>$P=\begin{bmatrix}0&1&0\\0&0&1\\1&0&0\end{bmatrix}$이면 $PA=\begin{bmatrix}1&2&3\\0&4&5\\0&0&6\end{bmatrix}$</p></div>
           </details>
         </div>
+        <div class="practice-item">
+          <div class="q-num">문제 4</div>
+          <p>True or False. Justify.</p>
+          <ol type="a">
+            <li>Suppose $V$ is a set of all $2\times2$ real matrices with nonnegative entries. With the sum and scalar multiplications defined as usual (elementwise), $V$ is a vector space.</li>
+            <li>Suppose $V$ is a set of $2\times2$ symmetric matrices. With the sum and scalar multiplications defined as usual (elementwise), $V$ is a vector space.</li>
+          </ol>
+          <details class="ans-detail">
+            <summary>정답 / 힌트 보기</summary>
+            <div class="ans-body">
+              <p><strong>(a) False</strong> — closed under scalar multiplication? 스칼라 $c=-1$을 곱하면 음수 원소가 생겨 $V$ 밖으로 나간다 (반례: $c=-1$).</p>
+              <p><strong>(b) True</strong> — 대칭행렬의 합도 대칭, 스칼라 배도 대칭, 영행렬도 대칭, 덧셈 역원도 대칭 → 10개 공리 모두 만족.</p>
+            </div>
+          </details>
+        </div>
         </details>
       </div>
 
