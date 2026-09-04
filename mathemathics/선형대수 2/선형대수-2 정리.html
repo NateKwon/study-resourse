@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>선형대수 2 공부 노트</title>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        tags: 'ams'
+      },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+    };
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+  <style>
+    :root {
+      --bg: #fafaf8;
+      --surface: #ffffff;
+      --border: #e8e4dd;
+      --accent: #2c5f8a;
+      --accent-light: #e8f0f7;
+      --accent2: #5a8a4a;
+      --accent2-light: #eaf2e8;
+      --warn: #8a5a2c;
+      --warn-light: #f7f0e8;
+      --text: #1a1a1a;
+      --text-sub: #555;
+      --text-muted: #888;
+      --nav-w: 260px;
+      --radius: 8px;
+      --shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', 'Apple SD Gothic Neo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    /* ── NAV ── */
+    #nav {
+      position: fixed;
+      top: 0; left: 0;
+      width: var(--nav-w);
+      height: 100vh;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 0 0 24px;
+      z-index: 100;
+    }
+    #nav-header {
+      padding: 20px 16px 12px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      position: sticky;
+      top: 0;
+    }
+    #nav-header span { font-weight: 400; opacity: 0.75; font-size: 12px; display: block; margin-top: 2px; }
+    #nav ul { list-style: none; padding: 8px 0; }
+    #nav ul li a {
+      display: block;
+      padding: 6px 16px;
+      color: var(--text-sub);
+      text-decoration: none;
+      font-size: 13px;
+      border-left: 3px solid transparent;
+      transition: all 0.15s;
+    }
+    #nav ul li a:hover,
+    #nav ul li a.active {
+      background: var(--accent-light);
+      color: var(--accent);
+      border-left-color: var(--accent);
+    }
+    #nav-section-label {
+      padding: 12px 16px 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+    }
+    .nav-divider {
+      height: 2px;
+      background: #4b5563;
+      margin: 6px 8px;
+      border-radius: 2px;
+      list-style: none;
+    }
+
+    /* ── MAIN ── */
+    #main {
+      margin-left: var(--nav-w);
+      padding: 40px 48px 80px;
+      max-width: 900px;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--accent);
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 12px;
+      margin-bottom: 6px;
+    }
+    .page-subtitle {
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-bottom: 40px;
+    }
+
+    /* ── SECTION ── */
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 32px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .section-header {
+      background: var(--accent);
+      color: #fff;
+      padding: 14px 20px;
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-header .class-num {
+      background: rgba(255,255,255,0.2);
+      border-radius: 4px;
+      padding: 1px 8px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+    .section-body { padding: 20px 24px; }
+
+    /* ── BLOCKS ── */
+    .def-block, .thm-block, .note-block, .qa-block, .example-block {
+      border-radius: 6px;
+      padding: 14px 16px;
+      margin: 14px 0;
+    }
+    .def-block {
+      background: var(--accent-light);
+      border-left: 4px solid var(--accent);
+    }
+    .def-block .label {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      color: var(--accent); margin-bottom: 4px;
+    }
+    .thm-block {
+      background: var(--accent2-light);
+      border-left: 4px solid var(--accent2);
+    }
+    .thm-block .label {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      color: var(--accent2); margin-bottom: 4px;
+    }
+    .note-block {
+      background: var(--warn-light);
+      border-left: 4px solid var(--warn);
+    }
+    .note-block .label {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      color: var(--warn); margin-bottom: 4px;
+    }
+    .qa-block {
+      background: #f5f0ff;
+      border-left: 4px solid #7c5cbf;
+    }
+    .qa-block .label {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      color: #7c5cbf; margin-bottom: 6px;
+    }
+    .qa-block .q { font-weight: 600; color: #3d2a7a; margin-bottom: 6px; }
+    .qa-block .a { color: var(--text); }
+    .example-block {
+      background: #f9f9f9;
+      border: 1px solid var(--border);
+    }
+    .example-block .label {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      color: var(--text-muted); margin-bottom: 4px;
+    }
+
+    h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 18px 0 6px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 4px;
+    }
+    p { margin: 8px 0; }
+    ul, ol { padding-left: 20px; margin: 8px 0; }
+    li { margin: 4px 0; }
+    code {
+      background: #f0f0f0;
+      border-radius: 3px;
+      padding: 1px 5px;
+      font-family: 'Consolas', monospace;
+      font-size: 13px;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      padding: 1px 7px;
+      border-radius: 10px;
+      font-weight: 600;
+      margin-left: 6px;
+    }
+    .tag-key { background: #fff3cd; color: #856404; }
+    .tag-q { background: #f5e9ff; color: #7c5cbf; }
+
+    .divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+
+    @media (max-width: 768px) {
+      #nav { display: none; }
+      #main { margin-left: 0; padding: 20px 16px 60px; }
+    }
+
+    /* ── PRACTICE ── */
+    .practice-section { margin-top: 22px; }
+    .practice-label {
+      font-size: 12px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.8px; color: #5a3e8a;
+      border-top: 2px solid #d0bef5;
+      padding-top: 14px; margin-top: 18px; margin-bottom: 10px;
+    }
+    details.practice-toggle > summary.practice-label {
+      cursor: pointer;
+      user-select: none;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 0;
+    }
+    details.practice-toggle > summary.practice-label::before {
+      content: '▶';
+      font-size: 9px;
+      color: #9b7fd4;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+    details.practice-toggle[open] > summary.practice-label::before {
+      transform: rotate(90deg);
+    }
+    details.practice-toggle > summary.practice-label:hover {
+      color: #7a2e9a;
+    }
+    details.practice-toggle > summary::-webkit-details-marker { display: none; }
+    details.practice-toggle .practice-items-wrap { margin-top: 10px; }
+    .practice-item {
+      background: #faf7ff;
+      border: 1px solid #d0bef5;
+      border-radius: 6px;
+      padding: 14px 16px;
+      margin: 10px 0;
+    }
+    .practice-item .q-num {
+      font-weight: 700; color: #5a3e8a; font-size: 13px; margin-bottom: 8px;
+    }
+    .practice-item .q-body { font-size: 14px; line-height: 1.8; }
+    .toggle-row { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+    details.hint-detail summary,
+    details.sol-detail summary {
+      cursor: pointer; font-size: 12px; font-weight: 700;
+      user-select: none; padding: 5px 12px; border-radius: 20px;
+      display: inline-block;
+    }
+    details.hint-detail summary {
+      background: #fff3e0; color: #b36200; border: 1px solid #ffcc80;
+    }
+    details.hint-detail summary:hover { background: #ffe0b2; }
+    details.hint-detail .toggle-body {
+      background: #fff8f0; border-left: 3px solid #ffb74d;
+      border-radius: 0 6px 6px 0; padding: 10px 14px; margin-top: 8px; font-size: 14px;
+    }
+    details.sol-detail summary {
+      background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7;
+    }
+    details.sol-detail summary:hover { background: #c8e6c9; }
+    details.sol-detail .toggle-body {
+      background: #f1f8f1; border-left: 3px solid #66bb6a;
+      border-radius: 0 6px 6px 0; padding: 10px 14px; margin-top: 8px; font-size: 14px;
+    }
+    .sol-step { margin: 6px 0; padding-left: 8px; }
+    .sol-step::before { content: "▸ "; color: #388e3c; font-size: 12px; }
+
+    /* ── Deep-dive explanation blocks ── */
+    .deepdive-block {
+      background: #f0f4ff;
+      border-left: 4px solid #3b5bdb;
+      border-radius: 6px;
+      padding: 14px 16px;
+      margin: 14px 0;
+    }
+    .deepdive-block .deepdive-label {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      color: #3b5bdb; margin: 0 0 10px 0;
+    }
+    .deepdive-block .thm-block {
+      background: #e8edff; border-left: 3px solid #3b5bdb; margin: 10px 0;
+    }
+    .deepdive-block .def-block {
+      background: #eef3ff; border-left: 3px solid #4c6ef5; margin: 10px 0;
+    }
+    .deepdive-block .example-block {
+      background: #f3f0ff; border-left: 3px solid #7950f2; margin: 10px 0;
+    }
+    .deepdive-block .note-block {
+      background: #fff9e6; border-left: 3px solid #f59f00; margin: 10px 0;
+    }
+    .deepdive-block .pdf-ref {
+      background: #e9ecef; border-radius: 4px;
+      padding: 6px 10px; margin-top: 10px;
+      font-size: 12px; color: #495057;
+      border-left: 3px solid #adb5bd;
+    }
+    .deepdive-block .pdf-ref code {
+      background: #dee2e6; border-radius: 3px;
+      padding: 1px 4px; font-size: 11px; color: #212529;
+    }
+    .deepdive-block .pdf-ref-detail {
+      color: #6c757d; font-size: 11px; display: block; margin-top: 2px;
+    }
+    .deepdive-block .deepdive-intro {
+      margin: 4px 0 12px 0;
+      font-size: 13.5px;
+      line-height: 1.65;
+      color: #1a1a2e;
+      border-bottom: 1px dashed #c5cfe8;
+      padding-bottom: 10px;
+    }
+    .deepdive-block .deepdive-intro strong {
+      color: #3b5bdb;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════ NAV ══════════ -->
+<nav id="nav">
+  <div id="nav-header">
+    선형대수 2 노트
+    <span>Linear Algebra II</span>
+  </div>
+  <ul>
+    <li><div id="nav-section-label">고유값과 고유벡터</div></li>
+    <li><a href="#c1">Class 1 · Eigenvalues &amp; Eigenvectors</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════ MAIN ══════════ -->
+<main id="main">
+
+  <h1 class="page-title">선형대수 2 공부 노트</h1>
+  <p class="page-subtitle">Class #1 · 교재 핸드아웃 기반 정리 (자료가 추가되는 대로 계속 보강됩니다)</p>
+
+  <!-- ────────── CLASS 1 ────────── -->
+  <div class="section" id="c1">
+    <div class="section-header">
+      <span class="class-num">Class 1</span>
+      고유값과 고유벡터 (Eigenvalues and Eigenvectors)
+    </div>
+    <div class="section-body">
+
+      <h3>1. 동기 — 미분방정식과 고유값</h3>
+      <p>1계 선형 미분방정식 시스템 $\dfrac{dx(t)}{dt} = Ax(t)$의 해는 행렬 $A$의 고유값(eigenvalue)에 의해 결정된다. 고유값·고유벡터는 이후 대각화, 미분방정식, 안정성 해석에서 핵심적으로 쓰인다.</p>
+
+      <h3>2. 정의 — 고유값과 고유벡터</h3>
+      <div class="def-block">
+        <div class="label">정의 (Eigenvector / Eigenvalue)</div>
+        <p>$n \times n$ 행렬 $A$에 대해, 스칼라 $\lambda$가 <strong>고유값(eigenvalue)</strong>이라는 것은 방정식 $Ax = \lambda x$가 <strong>0이 아닌(nontrivial)</strong> 해 $x$를 갖는다는 뜻이다.</p>
+        <p>이때 그 0이 아닌 해 $x$를 $\lambda$에 대응하는 <strong>고유벡터(eigenvector)</strong>라 한다.</p>
+      </div>
+      <div class="note-block">
+        <div class="label">주의</div>
+        <p>고유벡터는 정의상 <strong>0벡터가 될 수 없다</strong> ($x \ne 0$). 반면 고유값 $\lambda=0$ 자체는 얼마든지 가능하다 — "$\lambda=0$이 고유값이다"와 "고유벡터가 0벡터이다"는 서로 다른 이야기이다.</p>
+      </div>
+
+      <h3>3. 예제로 이해하기</h3>
+      <div class="example-block">
+        <div class="label">예제 1 — 영행렬(zero matrix)의 고유값</div>
+        <p>$A$가 $n\times n$ 영행렬일 때, 임의의 $x \ne 0$에 대해 $Ax = 0 = 0\cdot x$이므로 <strong>모든 0이 아닌 벡터가 $\lambda=0$에 대응하는 고유벡터</strong>이다.</p>
+        <p>$\lambda=1$은 고유값인가? $Ax=x$가 되려면 $0=x$이어야 하는데 고유벡터는 0이 될 수 없으므로 <strong>$\lambda=1$은 고유값이 아니다.</strong></p>
+      </div>
+
+      <div class="example-block">
+        <div class="label">예제 2 — 주어진 벡터가 고유벡터인지 확인</div>
+        <p>$x = \begin{bmatrix}4\\-3\\1\end{bmatrix}$이 $A=\begin{bmatrix}3&7&9\\-4&-5&1\\2&4&4\end{bmatrix}$의 고유벡터인지 확인하라.</p>
+        $$Ax = \begin{bmatrix}3(4)+7(-3)+9(1)\\-4(4)+(-5)(-3)+1(1)\\2(4)+4(-3)+4(1)\end{bmatrix} = \begin{bmatrix}0\\0\\0\end{bmatrix}$$
+        <p>$Ax = 0 = 0\cdot x$이므로 $x$는 <strong>$\lambda=0$에 대응하는 고유벡터이다.</strong></p>
+      </div>
+
+      <div class="example-block">
+        <div class="label">예제 3 — 특정 스칼라가 고유값인지 확인</div>
+        <p>$\lambda=4$가 $A=\begin{bmatrix}3&0&-1\\2&3&1\\-3&4&5\end{bmatrix}$의 고유값인지 확인하라.</p>
+        <p>$(A-4I)x=0$이 nontrivial 해를 갖는지 확인한다.</p>
+        $$A-4I = \begin{bmatrix}-1&0&-1\\2&-1&1\\-3&4&1\end{bmatrix}$$
+        <p class="sol-step">$R_2 \to R_2+2R_1$: $(0,\,-1,\,-1\;|\;0)$</p>
+        <p class="sol-step">$R_3 \to R_3-3R_1$: $(0,\,4,\,4\;|\;0)$, 이어서 $R_3 \to R_3+4R_2$: $(0,\,0,\,0\;|\;0)$</p>
+        <p>자유변수가 존재 → nontrivial 해 존재 → <strong>$\lambda=4$는 고유값이다.</strong></p>
+        <p>$x_3=t$로 두면 $x_1=-t,\ x_2=-t$. $t=-1$일 때 고유벡터 $x=\begin{bmatrix}1\\1\\-1\end{bmatrix}$.</p>
+        <p>검산: $Ax = \begin{bmatrix}4\\4\\-4\end{bmatrix} = 4x$. ✓</p>
+      </div>
+
+      <h3>4. 고유값의 판정 조건</h3>
+      <div class="thm-block">
+        <div class="label">고유값 판정</div>
+        <p>$\lambda$가 $A$의 고유값 $\iff$ 방정식 $(A-\lambda I)x=0$이 nontrivial 해를 가짐 $\iff$ 행렬 $A-\lambda I$의 열들이 <strong>선형종속(linearly dependent)</strong> $\iff$ $\det(A-\lambda I)=0$.</p>
+      </div>
+
+      <h3>5. 고유공간 (Eigenspace)</h3>
+      <div class="def-block">
+        <div class="label">정의 (Eigenspace)</div>
+        <p>방정식 $(A-\lambda I)x=0$의 해집합 전체를 $\lambda$에 대응하는 <strong>고유공간(eigenspace)</strong>이라 한다.</p>
+        <p>즉, $\lambda$에 대응하는 고유공간 $= \operatorname{Nul}(A-\lambda I)$이며, 이는 $\mathbb{R}^n$의 부분공간(subspace)이다.</p>
+      </div>
+      <div class="note-block">
+        <div class="label">기하 중복도 (Geometric Multiplicity)</div>
+        <p>$\dim(\text{고유공간}) = \operatorname{nullity}(A-\lambda I)$이며, 이 값을 $\lambda$의 <strong>기하 중복도(geometric multiplicity)</strong>라 한다.</p>
+      </div>
+
+      <div class="example-block">
+        <div class="label">예제 4 — 계산 없이 고유값 판단하기</div>
+        <p>$A=\begin{bmatrix}1&2&3\\1&2&3\\1&2&3\end{bmatrix}$일 때, 계산 없이 $\lambda=0$이 고유값임을 보여라.</p>
+        <p>$A$의 열을 보면 $c_2=2c_1$, $c_3=3c_1$로 <strong>열들이 선형종속</strong>이다. 따라서 $Ax=0$은 nontrivial 해를 가지므로 <strong>$\lambda=0$은 고유값이다</strong> (행 축소 계산이 전혀 필요 없다).</p>
+        <p>$\lambda=0$에 대응하는 고유공간의 기저: 모든 행이 같으므로 $Ax=0$은 방정식 하나 $x_1+2x_2+3x_3=0$과 동치. $x_2,x_3$을 자유변수로 두면</p>
+        $$x = x_2\begin{bmatrix}-2\\1\\0\end{bmatrix} + x_3\begin{bmatrix}-3\\0\\1\end{bmatrix}$$
+        <p>기저는 $\left\{\begin{bmatrix}-2\\1\\0\end{bmatrix}, \begin{bmatrix}-3\\0\\1\end{bmatrix}\right\}$이고, 기하 중복도는 <strong>2</strong>이다.</p>
+      </div>
+
+      <div class="note-block">
+        <div class="label">빈칸 채우기 — 고유벡터의 스칼라배</div>
+        <p>고유벡터의 <strong>0이 아닌 스칼라배(nonzero multiple)</strong>도 같은 고유값에 대응하는 고유벡터이다. ($Ax=\lambda x \Rightarrow A(cx)=c(Ax)=c(\lambda x)=\lambda(cx)$, $c\ne 0$)</p>
+      </div>
+
+      <h3>6. 삼각행렬의 고유값</h3>
+      <div class="thm-block">
+        <div class="label">정리 — 삼각행렬의 고유값</div>
+        <p>$A$가 $n\times n$ <strong>삼각행렬(triangular matrix)</strong>(상삼각/하삼각/대각행렬)이면, $A$의 <strong>대각원소(diagonal entries)</strong>가 바로 $A$의 고유값이다.</p>
+        <p><em>이유:</em> $A-\lambda I$도 삼각행렬이므로 $\det(A-\lambda I)=\prod_i(a_{ii}-\lambda)$. 이 값이 0이 되는 $\lambda$는 정확히 대각원소들이다.</p>
+      </div>
+
+      <div class="deepdive-block">
+        <p class="deepdive-label">📐 개념 심화 — 고유값·고유벡터가 중요한 이유</p>
+        <p class="deepdive-intro"><strong>고유벡터는 선형변환 $A$가 방향을 바꾸지 않고 크기만 $\lambda$배로 늘리거나 줄이는 특별한 방향이다.</strong> 이 성질 덕분에 행렬의 거듭제곱, 미분방정식, 대각화 같은 복잡한 계산을 고유값 단위로 단순화할 수 있다.</p>
+        <div class="thm-block">
+          <div class="label">기하학적 의미</div>
+          <p>일반적인 벡터 $v$에 $A$를 곱하면 방향과 크기가 모두 바뀐다. 그러나 고유벡터 $x$에 $A$를 곱하면 <strong>방향은 그대로, 크기만 $\lambda$배</strong>가 된다 ($\lambda<0$이면 방향이 반대로 뒤집힌다).</p>
+        </div>
+        <div class="note-block">
+          <div class="label">다음 내용과의 연결</div>
+          <p>고유값은 특성방정식(characteristic equation) $\det(A-\lambda I)=0$을 풀어서 구하고, 이후 대각화 $A=PDP^{-1}$로 이어진다. $\dfrac{dx}{dt}=Ax(t)$와 같은 미분방정식도 고유값·고유벡터를 이용해 $x(t)=c_1e^{\lambda_1 t}v_1+\cdots$ 형태의 해로 풀 수 있다.</p>
+        </div>
+        <div class="pdf-ref">📄 <strong>교재 PDF 참고:</strong> <code>Class#1-eigenvector_eigenvalue_handout.pdf</code> — <strong>pp. 1–3 전체</strong><br><span class="pdf-ref-detail">p.1 정의 &amp; 기본 예제 · p.2 고유값 판정 조건 &amp; 고유공간 · p.3 계산 없이 고유값 찾기 &amp; 삼각행렬</span></div>
+      </div>
+
+      <div class="practice-section">
+        <div class="practice-label">📝 Practice · Class 1 예제 다시 풀어보기</div>
+
+        <div class="practice-item">
+          <div class="q-num">Problem 1</div>
+          <div class="q-body"><p>$x=\begin{bmatrix}4\\-3\\1\end{bmatrix}$이 $A=\begin{bmatrix}3&7&9\\-4&-5&1\\2&4&4\end{bmatrix}$의 고유벡터인지 확인하고, 맞다면 대응하는 고유값을 구하라.</p></div>
+          <div class="toggle-row">
+            <details class="hint-detail">
+              <summary>💡 힌트 보기</summary>
+              <div class="toggle-body"><p>$Ax$를 직접 계산해서 $x$의 스칼라배가 나오는지 확인한다.</p></div>
+            </details>
+            <details class="sol-detail">
+              <summary>✅ 완전한 해설 보기</summary>
+              <div class="toggle-body"><p>$Ax=\begin{bmatrix}0\\0\\0\end{bmatrix}=0\cdot x$. 따라서 $x$는 고유벡터이고 대응하는 고유값은 $\lambda=0$이다.</p></div>
+            </details>
+          </div>
+        </div>
+
+        <div class="practice-item">
+          <div class="q-num">Problem 2</div>
+          <div class="q-body"><p>$\lambda=4$가 $A=\begin{bmatrix}3&0&-1\\2&3&1\\-3&4&5\end{bmatrix}$의 고유값인지 확인하고, 맞다면 대응하는 고유벡터를 하나 구하라.</p></div>
+          <div class="toggle-row">
+            <details class="hint-detail">
+              <summary>💡 힌트 보기</summary>
+              <div class="toggle-body"><p>$(A-4I)x=0$을 행 축소하여 nontrivial 해가 있는지 확인한다.</p></div>
+            </details>
+            <details class="sol-detail">
+              <summary>✅ 완전한 해설 보기</summary>
+              <div class="toggle-body"><p>$A-4I=\begin{bmatrix}-1&0&-1\\2&-1&1\\-3&4&1\end{bmatrix}$을 행 축소하면 자유변수가 존재한다. $x=\begin{bmatrix}1\\1\\-1\end{bmatrix}$이 고유벡터이며, 검산하면 $Ax=\begin{bmatrix}4\\4\\-4\end{bmatrix}=4x$. 따라서 $\lambda=4$는 고유값이다.</p></div>
+            </details>
+          </div>
+        </div>
+
+        <div class="practice-item">
+          <div class="q-num">Problem 3</div>
+          <div class="q-body"><p>$A=\begin{bmatrix}1&2&3\\1&2&3\\1&2&3\end{bmatrix}$에 대해, 계산 없이 $\lambda=0$이 고유값임을 보이고, 대응하는 고유공간의 기저와 기하 중복도를 구하라.</p></div>
+          <div class="toggle-row">
+            <details class="hint-detail">
+              <summary>💡 힌트 보기</summary>
+              <div class="toggle-body"><p>$A$의 열들 사이의 관계를 살펴보라 ($c_2, c_3$을 $c_1$으로 표현할 수 있는가?).</p></div>
+            </details>
+            <details class="sol-detail">
+              <summary>✅ 완전한 해설 보기</summary>
+              <div class="toggle-body"><p>$c_2=2c_1,\ c_3=3c_1$이므로 열이 선형종속 → $Ax=0$이 nontrivial 해를 가짐 → $\lambda=0$은 고유값. 고유공간 기저: $\left\{\begin{bmatrix}-2\\1\\0\end{bmatrix},\begin{bmatrix}-3\\0\\1\end{bmatrix}\right\}$, 기하 중복도 $=2$.</p></div>
+            </details>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<script>
+  // ── 연습문제 섹션 토글화 ──
+  document.querySelectorAll('.practice-section').forEach(section => {
+    const label = section.querySelector(':scope > .practice-label');
+    if (!label) return;
+
+    const details = document.createElement('details');
+    details.className = 'practice-toggle';
+    details.open = true; // 기본 펼침
+
+    const summary = document.createElement('summary');
+    summary.className = 'practice-label';
+    summary.innerHTML = label.innerHTML;
+    details.appendChild(summary);
+
+    const wrap = document.createElement('div');
+    wrap.className = 'practice-items-wrap';
+    [...section.children].forEach(child => {
+      if (child !== label) wrap.appendChild(child);
+    });
+    details.appendChild(wrap);
+
+    label.remove();
+    section.appendChild(details);
+  });
+
+  // Active nav link highlighting
+  const sections = document.querySelectorAll('.section');
+  const navLinks = document.querySelectorAll('#nav ul li a');
+
+  function updateActiveLink() {
+    let current = '';
+    sections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= 120) current = section.id;
+    });
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+    });
+  }
+
+  document.getElementById('main').addEventListener('scroll', updateActiveLink);
+  window.addEventListener('scroll', updateActiveLink);
+
+  // Smooth scroll
+  navLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+
+</body>
+</html>
